@@ -1,0 +1,31 @@
+﻿package:
+  name: pythonocc-core
+  version: 0.16.2
+
+source:
+  fn: 0.16.2.tar.gz
+  url: https://github.com/tpaviot/pythonocc-core/archive/0.16.2.tar.gz
+  patches:
+    - fixwindows.patch
+
+build:
+  features:
+    - vc9               [win and py27]
+
+requirements:
+  build:
+    - ninja
+    - patch
+    - python
+    - oce ==0.16.1
+    - cmake
+    - swig
+
+  run:
+    - oce ==0.16.1
+    - python
+
+about:
+  home: https://github.com/tpaviot/pythonocc-core
+  license: LGPL
+  summary: A python wrapper for the OCE library
