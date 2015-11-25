@@ -1,0 +1,19 @@
+﻿package:
+  name: ninja
+  version: 1.6.0
+
+source:
+  fn: v1.6.0.tar.gz
+  url: https://github.com/ninja-build/ninja/archive/v1.6.0.tar.gz
+
+build:
+  features:
+    - vc9               [win and py27]
+
+requirements:
+  build:
+    - python
+
+about:
+  home: https://ninja-build.org/
+  summary: A small build system with a focus on speed.

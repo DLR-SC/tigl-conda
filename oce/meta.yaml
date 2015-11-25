@@ -1,0 +1,26 @@
+﻿package:
+  name: oce
+  version: 0.16.1
+
+source:
+  fn: OCE-0.16.1.tar.gz
+  url: https://github.com/tpaviot/oce/archive/OCE-0.16.1.tar.gz
+#  path: D:\src\oce-OCE-0.16.1
+
+build:
+  features:
+    - vc9               [win and py27]
+
+requirements:
+  build:
+    - python
+    - freetype
+    - cmake
+
+  run:
+    - freetype
+
+about:
+  home: https://github.com/tpaviot/oce
+  license: LGPL
+  summary: OpenCASCADE community edition
