@@ -1,0 +1,20 @@
+package:
+  name: tixi
+  version: 2.2.2
+
+source:
+  fn: TIXI-2.2.2-win32.zip
+  url: https://github.com/DLR-SC/tixi/releases/download/v2.2.2/TIXI-2.2.2-win32.zip
+
+build:
+  features:
+    - vc9               [win and py27]
+
+requirements:
+  build:
+    - python
+
+about:
+  home: https://github.com/DLR-SC/tixi
+  license: Apache 2.0
+  summary: Fast and simple XML interface library
