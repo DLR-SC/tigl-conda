@@ -1,0 +1,69 @@
+diff --git CMakeLists.txt CMakeLists.txt
+index 8f8a648..c374ae6 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -72,7 +72,7 @@ IF(MINGW)
+ ENDIF()
+ 
+ 
+-SET( OCE_WIN_BUNDLE_INSTALL_DIR_BITS ${OCE_WIN_BUNDLE_INSTALL_DIR}/Win${BIT}/)
++SET( OCE_WIN_BUNDLE_INSTALL_DIR_BITS ${OCE_WIN_BUNDLE_INSTALL_DIR}/)
+ SET( OCE_BUNDLE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR} )
+ 
+ # Adds freetype and related variables
+diff --git libs/TBB/CMakeLists.txt libs/TBB/CMakeLists.txt
+index ca5843c..407ec66 100644
+--- libs/TBB/CMakeLists.txt
++++ libs/TBB/CMakeLists.txt
+@@ -131,11 +131,11 @@ if (TBB_BUILD_STATIC)
+   add_library(tbb_static STATIC ${tbb_src})
+   set_property(TARGET tbb_static APPEND PROPERTY COMPILE_DEFINITIONS "__TBB_BUILD=1")
+   set_property(TARGET tbb_static APPEND PROPERTY COMPILE_FLAGS ${ENABLE_RTTI})
+-  #install(TARGETS tbb_static ARCHIVE DESTINATION lib)
++  install(TARGETS tbb_static ARCHIVE DESTINATION lib)
+ endif()
+ 
+ if (TBB_BUILD_SHARED)
+-  add_library(tbb SHARED ${tbb_src})
++  add_library(tbb SHARED ${tbb_src} ${CMAKE_CURRENT_BINARY_DIR}/tbb.def)
+   set_property(TARGET tbb APPEND PROPERTY COMPILE_DEFINITIONS "__TBB_BUILD=1")
+   set_property(TARGET tbb APPEND PROPERTY COMPILE_FLAGS ${ENABLE_RTTI})
+   add_dependencies(tbb tbb_def_files)
+@@ -144,9 +144,9 @@ if (TBB_BUILD_SHARED)
+   elseif(UNIX)
+     set_property(TARGET tbb APPEND PROPERTY LINK_FLAGS "-Wl,-version-script,tbb.def")
+   elseif(WIN32)
+-    set_property(TARGET tbb APPEND PROPERTY LINK_FLAGS "/DEF:tbb.def")
++    # set_property(TARGET tbb APPEND PROPERTY LINK_FLAGS "/DEF:tbb.def")
+   endif()
+-  #install(TARGETS tbb DESTINATION lib)
++  install(TARGETS tbb DESTINATION lib RUNTIME DESTINATION bin)
+ endif()
+ 
+ if(TBB_BUILD_TBBMALLOC)
+@@ -155,11 +155,11 @@ if(TBB_BUILD_TBBMALLOC)
+     add_library(tbbmalloc_static STATIC ${tbbmalloc_static_src})
+     set_property(TARGET tbbmalloc_static APPEND PROPERTY COMPILE_DEFINITIONS "__TBBMALLOC_BUILD=1")
+     set_property(TARGET tbbmalloc_static APPEND PROPERTY COMPILE_FLAGS ${DISABLE_RTTI})
+-    #install(TARGETS tbbmalloc_static ARCHIVE DESTINATION lib)
++    install(TARGETS tbbmalloc_static ARCHIVE DESTINATION lib)
+   endif()
+ 
+   if (TBB_BUILD_SHARED)
+-    add_library(tbbmalloc SHARED ${tbbmalloc_src})
++    add_library(tbbmalloc SHARED ${tbbmalloc_src} ${CMAKE_CURRENT_BINARY_DIR}/tbbmalloc.def)
+     set_property(TARGET tbbmalloc APPEND PROPERTY COMPILE_DEFINITIONS "__TBBMALLOC_BUILD=1")
+     set_property(TARGET tbbmalloc APPEND PROPERTY COMPILE_FLAGS ${DISABLE_RTTI})
+     add_dependencies(tbbmalloc tbb_def_files)
+@@ -168,9 +168,9 @@ if(TBB_BUILD_TBBMALLOC)
+     elseif(UNIX)
+       set_property(TARGET tbbmalloc APPEND PROPERTY LINK_FLAGS "-Wl,-version-script,tbbmalloc.def")
+     elseif(WIN32)
+-      set_property(TARGET tbbmalloc APPEND PROPERTY LINK_FLAGS "/DEF:tbbmalloc.def")
++      #set_property(TARGET tbbmalloc APPEND PROPERTY LINK_FLAGS "/DEF:tbbmalloc.def")
+     endif()
+-    #install(TARGETS tbbmalloc DESTINATION lib)
++    install(TARGETS tbbmalloc DESTINATION lib RUNTIME DESTINATION bin)
+   endif()
+ endif()
+ 
