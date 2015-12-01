@@ -1,0 +1,24 @@
+package:
+  name: gl2ps
+  version: 1.3.8
+
+source:
+  fn: new-bundle.zip
+  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip
+  patches:
+    - installdir.patch
+
+build:
+  features:
+    - vc9               [win]
+
+requirements:
+  build:
+    - patch
+    - cmake
+
+
+about:
+  home: http://www.geuz.org/gl2ps/
+  license: GNU LPGL Version 2
+  summary: GL2PS, an OpenGL to PostScript printing library
