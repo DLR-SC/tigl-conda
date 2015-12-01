@@ -1,0 +1,24 @@
+package:
+  name: freeimage
+  version: 3.17.0
+
+source:
+  fn: new-bundle.zip
+  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip
+  patches:
+    - installdir.patch
+
+build:
+  features:
+    - vc9               [win]
+
+requirements:
+  build:
+    - patch
+    - cmake
+
+
+about:
+  home: http://freeimage.sourceforge.net/
+  license: GNU LPGL Version 2 and FreeImage Public License
+  summary: FreeImage, The productivity booster
