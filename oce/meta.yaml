@@ -8,16 +8,23 @@ source:
 #  path: D:\src\oce-OCE-0.16.1
 
 build:
+  number: 1
   features:
     - vc9               [win and py27]
 
 requirements:
   build:
+    - gl2ps
+    - freeimage
+    - tbb
     - python
     - freetype
     - cmake
 
   run:
+    - gl2ps
+    - freeimage
+    - tbb
     - freetype
 
 about:
