@@ -3,8 +3,10 @@ package:
   version: 2.2.2
 
 source:
-  fn: TIXI-2.2.2-win32.zip
-  url: https://github.com/DLR-SC/tixi/releases/download/v2.2.2/TIXI-2.2.2-win32.zip
+  fn: TIXI-2.2.2-win32.zip [win32]
+  url: https://github.com/DLR-SC/tixi/releases/download/v2.2.2/TIXI-2.2.2-win32.zip [win32]
+  fn: TIXI-2.2.2-win64.zip [win64]
+  url: https://github.com/DLR-SC/tixi/releases/download/v2.2.2/TIXI-2.2.2-win64.zip [win64]
 
 build:
   features:
