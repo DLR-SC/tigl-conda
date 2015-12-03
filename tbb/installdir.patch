@@ -12,9 +12,18 @@ index 8f8a648..c374ae6 100644
  
  # Adds freetype and related variables
 diff --git libs/TBB/CMakeLists.txt libs/TBB/CMakeLists.txt
-index ca5843c..407ec66 100644
+index ca5843c..46d5e8c 100644
 --- libs/TBB/CMakeLists.txt
 +++ libs/TBB/CMakeLists.txt
+@@ -84,7 +84,7 @@ elseif(WIN32)
+   if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+     list(APPEND tbb_src src/tbb/intel64-masm/atomic_support.asm
+       src/tbb/intel64-masm/itsx.asm src/tbb/intel64-masm/intel64_misc.asm)
+-    #list(APPEND tbbmalloc_src src/tbb/intel64-masm/atomic_support.asm)
++    list(APPEND tbbmalloc_src src/tbb/intel64-masm/atomic_support.asm)
+     set(CMAKE_ASM_MASM_FLAGS "/DEM64T=1")
+     set(ARCH_PREFIX "win64")
+   else()
 @@ -131,11 +131,11 @@ if (TBB_BUILD_STATIC)
    add_library(tbb_static STATIC ${tbb_src})
    set_property(TARGET tbb_static APPEND PROPERTY COMPILE_DEFINITIONS "__TBB_BUILD=1")
