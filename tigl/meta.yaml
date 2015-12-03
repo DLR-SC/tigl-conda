@@ -3,10 +3,11 @@ package:
   version: 2.1.7dev
 
 source:
-  fn: swig.zip
+  fn: tigl-2.1.7dev.zip
   url: https://github.com/DLR-SC/tigl/archive/swig.zip
 
 build:
+  number: 3
   features:
     - vc9               [win and py27]
 
