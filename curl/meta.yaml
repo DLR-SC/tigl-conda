@@ -14,8 +14,10 @@ build:
 requirements:
   build:
     - python
+    - gcc               [linux]
     - zlib              [unix]
   run:
+    - libgcc            [linux]
     - zlib              [unix]
 
 test:
