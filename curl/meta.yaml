@@ -7,6 +7,7 @@ source:
   url: http://curl.haxx.se/download/curl-7.46.0.tar.gz
 
 build:
+  number: 1
   features:
     - vc9               [win]
 
