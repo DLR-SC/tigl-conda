@@ -5,6 +5,8 @@ package:
 source:
   fn: tixi-2.2.3.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v2.2.3.tar.gz
+  patches:
+    - install.patch
 
 build:
   features:
@@ -16,6 +18,16 @@ requirements:
     - curl
     - libxml2
     - libxslt
+    - gcc                [linux]
+  run:
+    - libgcc             [linux]
+    - curl               [unix]
+    - libxml2            [unix]
+    - libxslt            [unix]
+
+test:
+  commands:
+    - tixiDemo
 
 about:
   home: https://github.com/DLR-SC/tixi
