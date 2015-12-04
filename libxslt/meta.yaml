@@ -1,0 +1,23 @@
+package:
+  name: libxslt
+  version: 1.1.28
+
+source:
+  fn: libxslt-1.1.28.tar.gz
+  url: ftp://xmlsoft.org/libxml2/libxslt-1.1.28.tar.gz
+
+build:
+  features:
+    - vc9               [win]
+
+requirements:
+  build:
+    - python
+    - libxml2
+
+  run:
+    - libxml2
+
+about:
+  home: http://xmlsoft.org/XSLT/
+  summary: The XSLT C library for GNOME
