@@ -12,10 +12,11 @@ source:
 
 requirements: [not win]
   build:      [not win]
-    - m4      [not win]
     - cmake   [not win]
-    - bison   [not win]
-    - flex    [not win]
+    - gcc     [not win]
+
+  run:
+    - libgcc  [not win]
 
 test:
   commands:
