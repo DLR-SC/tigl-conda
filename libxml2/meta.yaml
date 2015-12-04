@@ -10,6 +10,13 @@ build:
   features:
     - vc9               [win]
 
+requirements:
+  build:
+    - gcc               [linux]
+
+  run:
+    - libgcc            [linux]      
+
 about:
   home: http://www.xmlsoft.org/
   summary: The XML C parser and toolkit of Gnome
