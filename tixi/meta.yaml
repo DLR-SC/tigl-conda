@@ -1,12 +1,10 @@
 package:
   name: tixi
-  version: 2.2.2
+  version: 2.2.3
 
 source:
-  fn: TIXI-2.2.2-win32.zip [win32]
-  url: https://github.com/DLR-SC/tixi/releases/download/v2.2.2/TIXI-2.2.2-win32.zip [win32]
-  fn: TIXI-2.2.2-win64.zip [win64]
-  url: https://github.com/DLR-SC/tixi/releases/download/v2.2.2/TIXI-2.2.2-win64.zip [win64]
+  fn: tixi-2.2.3.tar.gz
+  url: https://github.com/DLR-SC/tixi/archive/v2.2.3.tar.gz
 
 build:
   features:
@@ -15,6 +13,9 @@ build:
 requirements:
   build:
     - python
+    - curl
+    - libxml2
+    - libxslt
 
 about:
   home: https://github.com/DLR-SC/tixi

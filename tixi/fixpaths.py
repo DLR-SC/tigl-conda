@@ -19,4 +19,8 @@ if __name__ == "__main__":
     filename = sys.argv[1]
     text = sys.argv[2]
 
+    text = text.replace("\\", "/")
+
+    replace(filename, text)
+    text = text[0].lower() + text[1:]
     replace(filename, text)
