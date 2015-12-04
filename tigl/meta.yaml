@@ -21,6 +21,7 @@ requirements:
     - pythonocc-core
     - cmake
     - swig
+    - doxygen
 
   run:
     - tixi
