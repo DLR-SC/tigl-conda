@@ -3,19 +3,27 @@ package:
   version: 1.3.8
 
 source:
-  fn: new-bundle.zip
-  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip
+  fn: new-bundle.zip [win]
+  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip [win]
+  fn: gl2ps-1.3.8.tgz [unix]
+  url: http://geuz.org/gl2ps/src/gl2ps-1.3.8.tgz [unix]
   patches:
-    - installdir.patch
+    - installdir.patch  [win]
 
 build:
+  binary_relocation: true
   features:
     - vc9               [win]
 
 requirements:
   build:
-    - patch
+    - patch             [win]
+    - zlib              [unix]
     - cmake
+    - gcc               [linux]
+  run:
+    - zlib              [unix]
+    - libgcc            [linux]
 
 
 about:
