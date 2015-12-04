@@ -14,9 +14,11 @@ requirements:
   build:
     - python
     - libxml2
+    - gcc               [linux]
 
   run:
     - libxml2
+    - libgcc            [linux]
 
 about:
   home: http://xmlsoft.org/XSLT/
