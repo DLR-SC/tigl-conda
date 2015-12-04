@@ -1,0 +1,15 @@
+package:
+  name: libxml2
+  version: 2.9.3
+
+source:
+  fn: libxml2-2.9.3.tar.gz
+  url: ftp://xmlsoft.org/libxml2/libxml2-2.9.3.tar.gz
+
+build:
+  features:
+    - vc9               [win]
+
+about:
+  home: http://www.xmlsoft.org/
+  summary: The XML C parser and toolkit of Gnome
