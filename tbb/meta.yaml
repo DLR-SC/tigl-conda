@@ -4,9 +4,12 @@ package:
 
 source:
   fn: new-bundle.zip
-  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip
+  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip [win]
+  fn: tbb43_20141009oss_src.tgz [unix]
+  url: https://www.threadingbuildingblocks.org/sites/default/files/software_releases/source/tbb43_20141009oss_src.tgz [unix]
+  
   patches:
-    - installdir.patch
+    - installdir.patch  [win]
 
 build:
   features:
@@ -14,8 +17,11 @@ build:
 
 requirements:
   build:
-    - patch
-    - cmake
+    - patch  [win]
+    - cmake  [win]
+    - gcc    [linux]
+  run:
+    - libgcc [linux]
 
 
 about:
