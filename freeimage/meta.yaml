@@ -3,10 +3,12 @@ package:
   version: 3.17.0
 
 source:
-  fn: new-bundle.zip
-  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip
+  fn: new-bundle.zip [win]
+  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip [win]
+  fn: FreeImage3170.zip [unix]
+  url: http://downloads.sourceforge.net/freeimage/FreeImage3170.zip [unix]
   patches:
-    - installdir.patch
+    - installdir.patch  [win]
 
 build:
   features:
@@ -14,8 +16,11 @@ build:
 
 requirements:
   build:
-    - patch
-    - cmake
+    - patch             [win]
+    - cmake             [win]
+    - gcc               [linux]
+  run:
+    - libgcc            [linux]
 
 
 about:
