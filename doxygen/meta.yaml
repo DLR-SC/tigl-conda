@@ -13,10 +13,10 @@ source:
 requirements: [not win]
   build:      [not win]
     - cmake   [not win]
-    - gcc     [not win]
+    - gcc     [linux]
 
   run:
-    - libgcc  [not win]
+    - libgcc  [linux]
 
 test:
   commands:
