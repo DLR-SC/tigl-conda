@@ -15,7 +15,7 @@ build:
 requirements:
   build:
     - ninja
-    - patch
+    - patch             [win]
     - python
     - oce ==0.16.1
     - cmake
