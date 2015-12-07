@@ -9,6 +9,7 @@ source:
     - fixwindows.patch
 
 build:
+  number: 1
   features:
     - vc9               [win and py27]
 
@@ -20,6 +21,7 @@ requirements:
     - oce ==0.16.1
     - cmake
     - swig
+    - gcc               [linux]
 
   run:
     - pyqt

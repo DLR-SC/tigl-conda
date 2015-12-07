@@ -13,6 +13,11 @@ build:
 requirements:
   build:
     - python
+    - gcc [linux]
+
+test:
+  commands:
+    - ninja --version
 
 about:
   home: https://ninja-build.org/

@@ -7,15 +7,13 @@ source:
   url: ftp://xmlsoft.org/libxml2/libxml2-2.9.3.tar.gz
 
 build:
+  number: 1
   features:
     - vc9               [win]
 
 requirements:
   build:
     - gcc               [linux]
-
-  run:
-    - libgcc            [linux]      
 
 about:
   home: http://www.xmlsoft.org/

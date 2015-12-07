@@ -11,6 +11,7 @@ source:
     - installdir.patch  [win]
 
 build:
+  number: 1
   binary_relocation: true
   features:
     - vc9               [win]
@@ -23,7 +24,6 @@ requirements:
     - gcc               [linux]
   run:
     - zlib              [unix]
-    - libgcc            [linux]
 
 
 about:

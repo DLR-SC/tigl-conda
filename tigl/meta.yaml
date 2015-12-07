@@ -9,7 +9,7 @@ source:
     - fixrpath.patch
 
 build:
-  number: 3
+  number: 4
   features:
     - vc9               [win and py27]
 
@@ -23,6 +23,7 @@ requirements:
     - cmake
     - swig
     - doxygen
+    - gcc              [linux]
 
   run:
     - tixi

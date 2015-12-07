@@ -15,9 +15,6 @@ requirements: [not win]
     - cmake   [not win]
     - gcc     [linux]
 
-  run:
-    - libgcc  [linux]
-
 test:
   commands:
     - doxygen -v
