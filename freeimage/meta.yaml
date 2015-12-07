@@ -8,9 +8,11 @@ source:
   fn: FreeImage3170.zip [unix]
   url: http://downloads.sourceforge.net/freeimage/FreeImage3170.zip [unix]
   patches:
-    - installdir.patch  [win]
+    - installdir.patch   [win]
+    - installlinux.patch [linux]
 
 build:
+  number: 1
   features:
     - vc9               [win]
 
@@ -19,8 +21,6 @@ requirements:
     - patch             [win]
     - cmake             [win]
     - gcc               [linux]
-  run:
-    - libgcc            [linux]
 
 
 about:
