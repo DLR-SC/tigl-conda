@@ -36,4 +36,4 @@ mkdir -p $SP_DIR/tigl
 touch $SP_DIR/tigl/__init__.py
 cp lib/tiglwrapper.py $SP_DIR/tigl/
 mv $PREFIX/share/tigl/python/internal/* $SP_DIR/tigl/
-python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl/tiglwrapper.py libTIGL.dylib
+python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl/tiglwrapper.py libTIGL
