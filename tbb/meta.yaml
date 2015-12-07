@@ -10,6 +10,7 @@ source:
   
   patches:
     - installdir.patch  [win]
+    - fixlinuxbuild.patch [linux]
 
 build:
   features:
@@ -20,9 +21,6 @@ requirements:
     - patch  [win]
     - cmake  [win]
     - gcc    [linux]
-  run:
-    - libgcc [linux]
-
 
 about:
   home: https://www.threadingbuildingblocks.org/

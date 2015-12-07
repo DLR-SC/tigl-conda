@@ -1,0 +1,17 @@
+diff --git build/linux.gcc.inc build/linux.gcc.inc
+index a4a30d2..97bbb81 100644
+--- build/linux.gcc.inc
++++ build/linux.gcc.inc
+@@ -49,9 +49,9 @@ ifneq (,$(shell gcc -dumpversion | egrep  "^(4\.[2-9]|[5-9])"))
+ endif
+ 
+ # gcc 4.8 and later support RTM intrinsics, but require command line switch to enable them
+-ifneq (,$(shell gcc -dumpversion | egrep  "^4\.[8-9]"))
+-    RTM_KEY = -mrtm
+-endif
++#ifneq (,$(shell gcc -dumpversion | egrep  "^4\.[8-9]"))
++#    RTM_KEY = -mrtm
++#endif
+ 
+ ifeq ($(cfg), release)
+         CPLUS_FLAGS = $(ITT_NOTIFY) -g -O2 -DUSE_PTHREAD
