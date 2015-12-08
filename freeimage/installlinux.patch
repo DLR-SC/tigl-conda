@@ -12,8 +12,8 @@ index 92f6358..85ed430 100644
 -DESTDIR ?= /
 -INCDIR ?= $(DESTDIR)/usr/include
 -INSTALLDIR ?= $(DESTDIR)/usr/lib
-+INCDIR ?= $PREFIX/include
-+INSTALLDIR ?= $PREFIX/lib
++INCDIR ?= $(PREFIX)/include
++INSTALLDIR ?= $(PREFIX)/lib
  
  # Converts cr/lf to just lf
  DOS2UNIX = dos2unix
