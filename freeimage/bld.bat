@@ -23,3 +23,8 @@ REM Install step
 ninja install
 if errorlevel 1 exit 1
 
+REM fix non-standard include location
+copy "%LIBRARY_PREFIX%"\include\FreeImage\FreeImage.h "%LIBRARY_PREFIX%"\include
+copy "%LIBRARY_PREFIX%"\include\FreeImage\FreeImagePlus.h "%LIBRARY_PREFIX%"\include
+rmdir /S /Q "%LIBRARY_PREFIX%"\include\FreeImage
+
