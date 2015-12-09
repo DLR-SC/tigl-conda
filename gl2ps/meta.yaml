@@ -11,7 +11,7 @@ source:
     - installdir.patch  [win]
 
 build:
-  number: 1
+  number: 2
   binary_relocation: true
   features:
     - vc9               [win]

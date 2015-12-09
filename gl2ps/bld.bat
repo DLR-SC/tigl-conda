@@ -23,3 +23,6 @@ REM Install step
 ninja install
 if errorlevel 1 exit 1
 
+REM Fix non-standard gl2ps include dir
+move "%LIBRARY_PREFIX%"\include\gl2ps\gl2ps.h "%LIBRARY_PREFIX%"\include
+rmdir /S /Q "%LIBRARY_PREFIX%"\include\gl2ps
