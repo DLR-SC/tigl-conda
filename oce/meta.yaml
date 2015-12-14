@@ -5,15 +5,18 @@
 source:
   fn: OCE-0.16.1.tar.gz
   url: https://github.com/tpaviot/oce/archive/OCE-0.16.1.tar.gz
-#  path: D:\src\oce-OCE-0.16.1
+  patches:
+    - fix_tkopengl_dll_path.patch [win]
 
 build:
-  number: 2
+  detect_binary_files_with_prefix: True
+  number: 5
   features:
     - vc9               [win and py27]
 
 requirements:
   build:
+    - patch             [win]
     - gl2ps
     - freeimage
     - tbb
