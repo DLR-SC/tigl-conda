@@ -1,14 +1,16 @@
 mkdir build
 cd build
 
-if [ `uname` == Darwin ]; then
-    PY_LIB="libpython${PY_VER}.dylib"
+if [ "$PY3K" == "1" ]; then
+    MY_PY_VER="${PY_VER}m"
 else
-    if [ "$PY3K" == "1" ]; then
-        PY_LIB="libpython${PY_VER}m.so"
-    else
-        PY_LIB="libpython${PY_VER}.so"
-    fi
+    MY_PY_VER="${PY_VER}"
+fi
+
+if [ `uname` == Darwin ]; then
+    PY_LIB="libpython${MY_PY_VER}.dylib"
+else
+    PY_LIB="libpython${MY_PY_VER}.so"
 fi
 
 # Configure step
@@ -20,7 +22,7 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DTIGL_PYTHON_INTERNAL=ON \
  -DPythonOCC_SOURCE_DIR=$PREFIX/src/pythonocc-core \
  -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
- -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$PY_VER \
+ -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$MY_PY_VER \
  -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/${PY_LIB} \
  ..
 
