@@ -5,6 +5,8 @@ package:
 source:
   fn: libxslt-1.1.28.tar.gz
   url: ftp://xmlsoft.org/libxml2/libxslt-1.1.28.tar.gz
+  patches:
+    - fix_build_vc.patch [win]
 
 build:
   number: 1
