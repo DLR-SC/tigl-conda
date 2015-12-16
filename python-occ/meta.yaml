@@ -3,13 +3,14 @@
   version: 0.16.3dev
 
 source:
-  fn: master.zip
+  fn: pythonocc-core-master.zip
   url: https://github.com/tpaviot/pythonocc-core/archive/master.zip
   patches:
-    - fixwindows.patch
+    - fix_graphicshr_location.patch
 
 build:
   number: 1
+  binary_relocation: true
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
@@ -29,6 +30,11 @@ requirements:
     - pyqt
     - oce ==0.16.1
     - python
+
+test:
+  imports:
+    - OCC
+    - OCC.BRepPrimAPI
 
 about:
   home: https://github.com/tpaviot/pythonocc-core
