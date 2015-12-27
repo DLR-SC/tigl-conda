@@ -20,3 +20,6 @@ make -j $CPU_COUNT
 # Install step
 make install
 
+if [ `uname` != Darwin ]; then
+    python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/oce-0.16/OCE-libraries-release.cmake
+fi
