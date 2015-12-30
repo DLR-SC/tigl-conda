@@ -4,12 +4,10 @@ package:
 
 source:
   fn: tigl-2.1.7dev.zip
-  url: https://github.com/DLR-SC/tigl/archive/swig.zip
-  patches:
-    - fixrpath.patch
+  url: https://github.com/DLR-SC/tigl/archive/master.zip
 
 build:
-  number: 4
+  number: 5
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
