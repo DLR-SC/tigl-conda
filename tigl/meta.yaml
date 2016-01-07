@@ -7,7 +7,7 @@ source:
   url: https://github.com/DLR-SC/tigl/archive/master.zip
 
 build:
-  number: 5
+  number: 6
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
@@ -35,7 +35,7 @@ requirements:
 test:
   imports:
     - tigl.tiglwrapper
-    - tigl.core
+    - tigl.geometry
 
 about:
   home: https://github.com/DLR-SC/tigl
