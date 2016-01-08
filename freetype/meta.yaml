@@ -1,0 +1,24 @@
+package:
+  name: freetype
+  version: 2.6.0
+
+source:
+  fn: freetype-2.6.tar.gz
+  url: http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.gz
+
+build:
+  number: 0
+  features:
+    - vc9               [win and py27]
+    - vc10              [win and py34]
+    - vc14              [win and py35]
+
+requirements:
+  build:
+    - cmake
+
+
+about:
+  home: http://www.freetype.org/
+  license: GNU GPL Version 2 and FreeType License
+  summary: FreeType is a freely available software library to render fonts
