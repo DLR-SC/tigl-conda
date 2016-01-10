@@ -13,8 +13,8 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DOCE_WITH_GL2PS=ON \
  -DOCE_MULTITHREAD_LIBRARY=TBB \
  -DOCE_INSTALL_PREFIX=$PREFIX -DOCE_ENABLE_DEB_FLAG=OFF ..
- 
-# Build step 
+
+# Build step
 make -j $CPU_COUNT
 
 # Install step
@@ -22,4 +22,6 @@ make install
 
 if [ `uname` != Darwin ]; then
     python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/oce-0.16/OCE-libraries-release.cmake
+else
+    python $RECIPE_DIR/remove-system-libs.py $PREFIX/OCE.framework/Versions/0.16/Resources/OCE-libraries-release.cmake
 fi
