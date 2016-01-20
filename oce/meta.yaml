@@ -7,10 +7,11 @@ source:
   url: https://github.com/tpaviot/oce/archive/OCE-0.16.1.tar.gz
   patches:
     - fix_tkopengl_dll_path.patch [win]
+    - oce-nullrefs-fix.patch
 
 build:
   detect_binary_files_with_prefix: True
-  number: 7
+  number: 8
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
