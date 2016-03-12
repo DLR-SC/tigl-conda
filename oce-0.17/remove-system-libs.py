@@ -25,7 +25,7 @@ def fix_paths(filename):
 
         # just select lines containing string IMPORTED_LINK_INTERFACE_LIBRARIES
         for i, line in enumerate(lines):
-            if "IMPORTED_LINK_INTERFACE_LIBRARIES" in line:
+            if "IMPORTED_LINK_INTERFACE_LIBRARIES" in line or "INTERFACE_LINK_LIBRARIES" in line:
                 lines[i] = remove_absolute_paths(line)
 
     fout = open(filename,'w')

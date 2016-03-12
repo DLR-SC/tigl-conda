@@ -1,3 +1,9 @@
+if [ `uname` == Darwin ]; then
+	# the vtk config files use some system specific libs which we have to remove
+    python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/cmake/vtk-6.3/VTKTargets.cmake
+fi
+
+
 mkdir build
 cd build
 
