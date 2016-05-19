@@ -7,7 +7,7 @@ source:
   url: http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.gz
 
 build:
-  number: 0
+  number: 1
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]

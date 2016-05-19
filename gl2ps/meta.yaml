@@ -11,7 +11,7 @@ source:
     - installdir.patch  [win]
 
 build:
-  number: 2
+  number: 3
   binary_relocation: true
   features:
     - vc9               [win and py27]

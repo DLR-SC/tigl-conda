@@ -8,10 +8,11 @@ source:
   patches:
     - fix_tkopengl_dll_path.patch [win]
     - oce-nullrefs-fix.patch
+    - oce-fix-msvc2015.patch
 
 build:
   detect_binary_files_with_prefix: True
-  number: 8
+  number: 9
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
