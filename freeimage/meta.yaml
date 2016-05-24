@@ -1,5 +1,5 @@
 package:
-  name: freeimage
+  name: freeimageplus
   version: 3.17.0
 
 source:
@@ -12,7 +12,7 @@ source:
     - installlinux.patch [linux]
 
 build:
-  number: 3
+  number: 0
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
