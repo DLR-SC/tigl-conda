@@ -3,11 +3,10 @@ package:
   version: 2.1.7dev
 
 source:
-  fn: tigl-2.1.7dev.zip
-  url: https://github.com/DLR-SC/tigl/archive/master.zip
+  git_url: https://github.com/DLR-SC/tigl.git
 
 build:
-  number: 6
+  number: 7
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
