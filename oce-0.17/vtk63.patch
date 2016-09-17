@@ -1,0 +1,19 @@
+diff --git CMakeLists.txt CMakeLists.txt
+index 74a854b..f1fe060 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -356,7 +356,6 @@ if(OCE_VISUALISATION AND OCE_WITH_VTK)
+ 		vtkInteractionStyle
+ 		vtkIOExport
+ 		vtkIOLegacy
+-		vtkRenderingFreeTypeOpenGL
+ 		vtkRenderingOpenGL
+ 		)
+ endif()
+@@ -1370,4 +1369,4 @@ add_custom_target(uninstall
+ # Final bundle step for dependencies
+ if(OCE_USE_BUNDLE)
+ 	include(oce-win-bundle/depends.cmake)
+-endif()
+\ No newline at end of file
++endif()
