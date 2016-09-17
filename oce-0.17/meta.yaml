@@ -8,6 +8,8 @@ source:
   patches:
     - fix_tkopengl_dll_path.patch [win]
     - vtk63.patch
+    - dlr-feature-coons_c2.patch
+    - fix-tiglviewer-selection.patch
 
 build:
   detect_binary_files_with_prefix: True
