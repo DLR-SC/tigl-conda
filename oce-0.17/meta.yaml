@@ -1,10 +1,12 @@
-﻿package:
+﻿{% set version = "0.17.2" %}
+
+package:
   name: oce
-  version: 0.17.2
+  version: {{ version }}
 
 source:
-  fn: OCE-0.17.2.tar.gz
-  url: https://github.com/tpaviot/oce/archive/OCE-0.17.2.tar.gz
+  fn: OCE-{{ version }}.tar.gz
+  url: https://github.com/tpaviot/oce/archive/OCE-{{ version }}.tar.gz
   patches:
     - fix_tkopengl_dll_path.patch [win]
     - vtk63.patch
@@ -13,27 +15,27 @@ source:
 
 build:
   detect_binary_files_with_prefix: True
-  number: 0
+  number: 1
   features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+    - vc9              # [win and py27]
+    - vc10             # [win and py34]
+    - vc14             # [win and py35]
 
 requirements:
   build:
-    - patch             [win]
+    - patch            # [win]
     - gl2ps
-    - freeimage
+    - freeimageplus
     - tbb
     - python
     - freetype
     - vtk >=6.3.0
     - cmake
-    - gcc [linux]
+    - gcc              # [linux]
 
   run:
     - gl2ps
-    - freeimage
+    - freeimageplus
     - tbb
     - freetype
     - vtk >=6.3.0
