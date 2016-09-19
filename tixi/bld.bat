@@ -2,7 +2,7 @@ mkdir build
 cd build
 
 REM Configure step
-cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_BUILD_TYPE=Release ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
@@ -10,11 +10,11 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
 if errorlevel 1 exit 1
 
 REM Build step 
-ninja
+nmake
 if errorlevel 1 exit 1
 
 REM Install step
-ninja install
+nmake install
 if errorlevel 1 exit 1
 
 REM install python packages

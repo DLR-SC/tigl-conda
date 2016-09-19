@@ -1,19 +1,21 @@
+{% set version = "2.2.4" %}
+
 package:
   name: tixi
-  version: 2.2.3
+  version: {{ version }}
 
 source:
-  fn: tixi-2.2.3.tar.gz
-  url: https://github.com/DLR-SC/tixi/archive/master.tar.gz
+  fn: tixi-{{ version }}.tar.gz
+  url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
   patches:
     - install.patch
 
 build:
   number: 1
   features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+    - vc9              # [win and py27]
+    - vc10             # [win and py34]
+    - vc14             # [win and py35]
 
 requirements:
   build:
@@ -21,14 +23,19 @@ requirements:
     - curl
     - libxml2
     - libxslt
-    - gcc                [linux]
+    - gcc               # [linux]
 
   run:
-    - curl               [unix]
-    - libxml2            [unix]
-    - libxslt            [unix]
+    - curl              # [unix]
+    - libxml2           # [unix]
+    - libxslt           # [unix]
 
 test:
+  requires:
+    - python 2.7.*     # [win and py27]
+    - python 3.4.*     # [win and py34]
+    - python 3.5.*     # [win and py35]
+
   commands:
     - tixiDemo
 
