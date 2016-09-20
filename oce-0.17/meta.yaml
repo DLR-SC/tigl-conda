@@ -16,7 +16,7 @@ source:
 
 build:
   detect_binary_files_with_prefix: True
-  number: 2
+  number: 3
   features:
     - vc9              # [win and py27]
     - vc10             # [win and py34]
@@ -30,7 +30,7 @@ requirements:
     - tbb
     - python
     - freetype
-    - vtk >=6.3.0
+    # - vtk >=6.3.0
     - cmake
     - gcc              # [linux]
 
@@ -39,7 +39,7 @@ requirements:
     - freeimageplus
     - tbb
     - freetype
-    - vtk >=6.3.0
+    # - vtk >=6.3.0
 
 about:
   home: https://github.com/tpaviot/oce
