@@ -1,0 +1,49 @@
+diff --git src/SWIG_files/wrapper/GeomFill.i src/SWIG_files/wrapper/GeomFill.i
+index bbb7c2b..a4d4c7a 100644
+--- src/SWIG_files/wrapper/GeomFill.i
++++ src/SWIG_files/wrapper/GeomFill.i
+@@ -985,7 +985,7 @@ class GeomFill_BSplineCurves {
+ 	:type Type: GeomFill_FillingStyle
+ 	:rtype: None
+ ") Init;
+-		void Init (const Handle_Geom_BSplineCurve & C1,const Handle_Geom_BSplineCurve & C2,const Handle_Geom_BSplineCurve & C3,const Handle_Geom_BSplineCurve & C4,const GeomFill_FillingStyle Type);
++		void Init (const Handle_Geom_BSplineCurve & C1,const Handle_Geom_BSplineCurve & C2,const Handle_Geom_BSplineCurve & C3,const Handle_Geom_BSplineCurve & C4,const GeomFill_FillingStyle Type, const Standard_Real Tolerance,const Standard_Boolean SetSameDistr = Standard_True);
+ 		%feature("compactdefaultargs") Init;
+ 		%feature("autodoc", "	* if the curves cannot be joined
+ 
+@@ -5521,7 +5521,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+ 	:type P4: TColgp_Array1OfPnt
+ 	:rtype: None
+ ") GeomFill_Coons;
+-		 GeomFill_Coons (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4);
++		 GeomFill_Coons (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4, const Standard_Boolean isC2 = Standard_False);
+ 		%feature("compactdefaultargs") GeomFill_Coons;
+ 		%feature("autodoc", "	:param P1:
+ 	:type P1: TColgp_Array1OfPnt
+@@ -5541,7 +5541,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+ 	:type W4: TColStd_Array1OfReal &
+ 	:rtype: None
+ ") GeomFill_Coons;
+-		 GeomFill_Coons (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3,const TColStd_Array1OfReal & W4);
++		 GeomFill_Coons (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3,const TColStd_Array1OfReal & W4, const Standard_Boolean isC2 = Standard_False);
+ 		%feature("compactdefaultargs") Init;
+ 		%feature("autodoc", "	:param P1:
+ 	:type P1: TColgp_Array1OfPnt
+@@ -5553,7 +5553,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+ 	:type P4: TColgp_Array1OfPnt
+ 	:rtype: None
+ ") Init;
+-		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4);
++		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4, const Standard_Boolean isC2 = Standard_False);
+ 		%feature("compactdefaultargs") Init;
+ 		%feature("autodoc", "	:param P1:
+ 	:type P1: TColgp_Array1OfPnt
+@@ -5573,7 +5573,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+ 	:type W4: TColStd_Array1OfReal &
+ 	:rtype: None
+ ") Init;
+-		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3,const TColStd_Array1OfReal & W4);
++		void Init (const TColgp_Array1OfPnt & P1,const TColgp_Array1OfPnt & P2,const TColgp_Array1OfPnt & P3,const TColgp_Array1OfPnt & P4,const TColStd_Array1OfReal & W1,const TColStd_Array1OfReal & W2,const TColStd_Array1OfReal & W3,const TColStd_Array1OfReal & W4, const Standard_Boolean isC2 = Standard_False);
+ };
+ 
+ 
