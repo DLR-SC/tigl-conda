@@ -11,7 +11,7 @@ source:
     - install.patch
 
 build:
-  number: 1
+  number: 2
   features:
     - vc9              # [win and py27]
     - vc10             # [win and py34]
@@ -29,13 +29,11 @@ requirements:
     - curl              # [unix]
     - libxml2           # [unix]
     - libxslt           # [unix]
+    - python 2.7.*      # [py27]
+    - python 3.4.*      # [py34]
+    - python 3.5.*      # [py35]
 
 test:
-  requires:
-    - python 2.7.*     # [win and py27]
-    - python 3.4.*     # [win and py34]
-    - python 3.5.*     # [win and py35]
-
   commands:
     - tixiDemo
 
