@@ -1,4 +1,4 @@
-{% set version = "2.1.7" %}
+{% set version = "2.2.0" %}
 
 package:
   name: tigl
@@ -9,7 +9,7 @@ source:
   url: https://github.com/DLR-SC/tigl/archive/v{{ version }}.tar.gz
 
 build:
-  number: 1
+  number: 0
   features:
     - vc9               # [win and py27]
     - vc10              # [win and py34]
