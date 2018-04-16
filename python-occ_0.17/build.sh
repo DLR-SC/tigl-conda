@@ -10,6 +10,7 @@ if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
 else
     PY_LIB="libpython${MY_PY_VER}.so"
+    export LDFLAGS="-Wl,--wrap=memcpy"
 fi
 
 # Configure step

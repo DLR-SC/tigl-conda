@@ -10,9 +10,10 @@ source:
   patches:
     - fix_graphicshr_location.patch     # [win]
     - pyocc_coons_c2.patch
+    - fixmemcpy.patch # [linux]
 
 build:
-  number: 0
+  number: 1
   binary_relocation: true
   features:
     - vc9               # [win and py27]
