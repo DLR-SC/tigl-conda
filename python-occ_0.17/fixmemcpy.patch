@@ -1,0 +1,30 @@
+diff --git CMakeLists.txt CMakeLists.txt
+index 6aa54c6..74f79d3 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -126,6 +126,9 @@ set(OCE_DATAEXCHANGE_LIBRARIES TKSTL TKXSBase TKSTEPBase TKIGES TKSTEPAttr TKSTE
+     TKSTEP TKVRML)
+ set(OCE_OCAF_LIBRARIES TKLCAF TKXCAF TKXDESTEP TKXDEIGES TKXSBase TKV3d)
+ 
++add_library(memcpywrap STATIC memcpy-wrap.c)
++set(OCE_MODEL_LIBRARIES ${OCE_MODEL_LIBRARIES} memcpywrap)
++
+ ######################################################
+ # Configure Build settings according to the platform #
+ ######################################################
+diff --git memcpy-wrap.c memcpy-wrap.c
+new file mode 100644
+index 0000000..d082d4d
+--- /dev/null
++++ memcpy-wrap.c
+@@ -0,0 +1,10 @@
++#include <string.h>
++
++void *__memcpy_glibc_2_2_5(void *, const void *, size_t);
++
++asm(".symver __memcpy_glibc_2_2_5, memcpy@GLIBC_2.2.5");
++void *__wrap_memcpy(void *dest, const void *src, size_t n)
++{
++    return __memcpy_glibc_2_2_5(dest, src, n); 
++}
++

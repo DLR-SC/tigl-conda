@@ -1,0 +1,26 @@
+diff --git src/Standard/Standard.cxx src/Standard/Standard.cxx
+index 717f8eb..4f02f94 100644
+--- src/Standard/Standard.cxx
++++ src/Standard/Standard.cxx
+@@ -69,6 +69,21 @@
+ //           to environment settings, and to ensure destruction upon exit
+ //=======================================================================
+ 
++
++#include <string.h>
++
++extern "C" {
++
++void *__memcpy_glibc_2_2_5(void *, const void *, size_t);
++
++asm(".symver __memcpy_glibc_2_2_5, memcpy@GLIBC_2.2.5");
++void *__wrap_memcpy(void *dest, const void *src, size_t n)
++{
++    return __memcpy_glibc_2_2_5(dest, src, n); 
++}
++
++}
++
+ static Standard_MMgrRoot* GetMMgr();
+ 
+ class Standard_MMgrFactory {

@@ -1,0 +1,21 @@
+diff --git src/tixiImpl.c src/tixiImpl.c
+index 7297602..d6acdcf 100644
+--- src/tixiImpl.c
++++ src/tixiImpl.c
+@@ -44,6 +44,16 @@
+ 
+ static xmlNsPtr nameSpace = NULL;
+ 
++#include <string.h>
++
++void *__memcpy_glibc_2_2_5(void *, const void *, size_t);
++
++asm(".symver __memcpy_glibc_2_2_5, memcpy@GLIBC_2.2.5");
++void *__wrap_memcpy(void *dest, const void *src, size_t n)
++{
++    return __memcpy_glibc_2_2_5(dest, src, n); 
++}
++
+ void tixiDefaultMessageHandler(MessageType type, const char* msg);
+ 
+ /**
