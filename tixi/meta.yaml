@@ -9,9 +9,10 @@ source:
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
   patches:
     - install.patch
+    - fixmemcpy.patch
 
 build:
-  number: 2
+  number: 3
   features:
     - vc9              # [win and py27]
     - vc10             # [win and py34]

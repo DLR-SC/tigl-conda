@@ -1,6 +1,8 @@
 mkdir build
 cd build
 
+export LDFLAGS="-Wl,--wrap=memcpy"
+
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DCMAKE_BUILD_TYPE=Release \
