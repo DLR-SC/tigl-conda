@@ -5,10 +5,12 @@ package:
 source:
   fn: libxslt-1.1.29.tar.gz
   url: ftp://xmlsoft.org/libxslt/libxslt-1.1.29.tar.gz
+  patches:
+   - fixmemcpy.patch
 
 
 build:
-  number: 1
+  number: 2
   features:
     - vc9               [win and py27]
     - vc10              [win and py34]
