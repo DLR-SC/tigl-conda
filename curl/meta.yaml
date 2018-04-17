@@ -7,9 +7,11 @@ package:
 source:
   fn: curl-{{ version }}.tar.gz
   url: http://curl.haxx.se/download/curl-{{ version }}.tar.gz
+  patches:
+   - fixmemcpy.patch # [linux]
 
 build:
-  number: 1
+  number: 2
   features:
     - vc9              # [win and py27]
     - vc10             # [win and py34]

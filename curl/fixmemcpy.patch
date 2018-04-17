@@ -1,0 +1,42 @@
+diff --git lib/easy.c lib/easy.c
+index 583de15..b6b0c90 100644
+--- lib/easy.c
++++ lib/easy.c
+@@ -78,6 +78,16 @@
+ #include "curl_memory.h"
+ #include "memdebug.h"
+ 
++#include <string.h>
++
++void *__memcpy_glibc_2_2_5(void *, const void *, size_t);
++
++asm(".symver __memcpy_glibc_2_2_5, memcpy@GLIBC_2.2.5");
++void *__wrap_memcpy(void *dest, const void *src, size_t n)
++{
++    return __memcpy_glibc_2_2_5(dest, src, n); 
++}
++
+ void Curl_version_init(void);
+ 
+ /* win32_cleanup() is for win32 socket cleanup functionality, the opposite
+diff --git src/tool_main.c src/tool_main.c
+index 7e742ff..54e813f 100644
+--- src/tool_main.c
++++ src/tool_main.c
+@@ -45,6 +45,16 @@
+ #include "tool_main.h"
+ #include "tool_libinfo.h"
+ 
++#include <string.h>
++
++void *__memcpy_glibc_2_2_5(void *, const void *, size_t);
++
++asm(".symver __memcpy_glibc_2_2_5, memcpy@GLIBC_2.2.5");
++void *__wrap_memcpy(void *dest, const void *src, size_t n)
++{
++    return __memcpy_glibc_2_2_5(dest, src, n); 
++}
++
+ /*
+  * This is low-level hard-hacking memory leak tracking and similar. Using
+  * the library level code from this client-side is ugly, but we do this
