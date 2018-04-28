@@ -14,10 +14,11 @@ source:
     - fix-tiglviewer-selection.patch
     - glibc.patch                     # [linux]
     - fixmemcpy.patch                 # [linux]
+    - fix-fonts.patch
 
 build:
   detect_binary_files_with_prefix: True
-  number: 5
+  number: 6
   features:
     - vc9              # [win and py27]
     - vc10             # [win and py34]
@@ -34,6 +35,7 @@ requirements:
     # - vtk >=6.3.0
     - cmake
     - gcc              # [linux]
+    - ninja
 
   run:
     - gl2ps
