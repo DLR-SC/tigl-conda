@@ -16,6 +16,7 @@ source:
     - fixmemcpy.patch                 # [linux]
     - fix-fonts.patch
     - fix-geomapi_extremacurvecurve.patch
+    - fix_time_osx.patch              # [osx]
 
 build:
   detect_binary_files_with_prefix: True

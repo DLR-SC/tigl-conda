@@ -1,6 +1,7 @@
 if [ `uname` == Darwin ]; then
 	# the vtk config files use some system specific libs which we have to remove
-    python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/cmake/vtk-6.3/VTKTargets.cmake
+    #python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/cmake/vtk-6.3/VTKTargets.cmake
+    export MACOSX_DEPLOYMENT_TARGET=10.8
 else
     export LDFLAGS="-Wl,--wrap=memcpy"
 fi
@@ -19,7 +20,6 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DOCE_INSTALL_BIN_DIR=bin \
  -DOCE_WITH_FREEIMAGE=ON \
  -DOCE_WITH_GL2PS=ON \
- -DOCE_WITH_VTK=ON \
  -DOCE_MULTITHREAD_LIBRARY=TBB \
  -DOCE_INSTALL_PREFIX=$PREFIX -DOCE_ENABLE_DEB_FLAG=OFF ..
 
