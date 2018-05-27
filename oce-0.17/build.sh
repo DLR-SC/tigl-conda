@@ -1,7 +1,7 @@
 if [ `uname` == Darwin ]; then
-	# the vtk config files use some system specific libs which we have to remove
+    # the vtk config files use some system specific libs which we have to remove
     #python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/cmake/vtk-6.3/VTKTargets.cmake
-    export MACOSX_DEPLOYMENT_TARGET=10.8
+    echo "MAC"
 else
     export LDFLAGS="-Wl,--wrap=memcpy"
 fi
