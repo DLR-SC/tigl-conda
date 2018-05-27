@@ -5,10 +5,10 @@
 include Makefile.srcs
  
 # General configuration variables:
-CC_X86_64 = clang 
-CPP_X86_64 = clang++ 
+CC_X86_64 = clang -stdlib=libc++
+CPP_X86_64 = clang++ -stdlib=libc++
 
-COMPILERFLAGS = -mmacosx-version-min=10.6 -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DDISABLE_PERF_MEASUREMENT
+COMPILERFLAGS = -mmacosx-version-min=10.9 -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DDISABLE_PERF_MEASUREMENT
 #COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS
 COMPILERFLAGS_X86_64 = -arch x86_64
 COMPILERPPFLAGS = -Wno-ctor-dtor-privacy
