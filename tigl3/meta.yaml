@@ -9,7 +9,7 @@ source:
   git_tag: cpacs_3
 
 build:
-  number: 5
+  number: 7
   features:
     - vc9               # [win and py27]
     - vc10              # [win and py34]
@@ -17,7 +17,7 @@ build:
 
 requirements:
   build:
-    - tixi3 ==3.0.0
+    - tixi3 >=3.0.2
     - ninja
     - python
     - oce ==0.17.2
@@ -27,7 +27,7 @@ requirements:
     - doxygen
 
   run:
-    - tixi3 ==3.0.0
+    - tixi3 >=3.0.2
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17
