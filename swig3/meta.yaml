@@ -1,12 +1,12 @@
 package:
   name: swig
-  version: 3.0.9
+  version: 3.0.12
 
 source:
-  fn: swigwin-3.0.9.zip [win]
-  url: http://prdownloads.sourceforge.net/swig/swigwin-3.0.9.zip [win]
-  fn: swig-3.0.9.tar.gz   [unix]
-  url: http://prdownloads.sourceforge.net/swig/swig-3.0.9.tar.gz   [unix]
+  fn: swigwin-3.0.12.zip [win]
+  url: http://prdownloads.sourceforge.net/swig/swigwin-3.0.12.zip [win]
+  fn: swig-3.0.12.tar.gz   [unix]
+  url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz   [unix]
 
 build:
   detect_binary_files_with_prefix: True    [unix]
