@@ -10,6 +10,7 @@ fi
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
 else
+    export LDFLAGS="-lrt -Wl,--wrap=memcpy"
     PY_LIB="libpython${MY_PY_VER}.so"
 fi
 

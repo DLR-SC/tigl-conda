@@ -8,10 +8,11 @@ source:
   fn: tigl-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tigl/archive/v{{ version }}.tar.gz
   patches:
-    - fix-exports.patch
+    - fix-exports.patch # [win]
+    - fixmemcpy.patch   # [linux]
 
 build:
-  number: 0
+  number: 1
   features:
     - vc9               # [win and py27]
     - vc10              # [win and py34]
