@@ -30,7 +30,7 @@ if errorlevel 1 exit 1
 
 REM install python packages
 mkdir %SP_DIR%\tigl3
-echo. 2> %SP_DIR%\tigl3\__init__.py
+xcopy ..\bindings\python_internal\tigl3\* %SP_DIR%\tigl3\ /e
 copy lib\tigl3wrapper.py %SP_DIR%\tigl3\
 copy bindings\python_internal\*.py %SP_DIR%\tigl3\
 copy bindings\python_internal\*.pyd %SP_DIR%\tigl3\

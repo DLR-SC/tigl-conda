@@ -9,7 +9,7 @@ source:
   git_tag: cpacs_3
 
 build:
-  number: 7
+  number: 8
   features:
     - vc9               # [win and py27]
     - vc10              # [win and py34]

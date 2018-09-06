@@ -22,7 +22,5 @@ ninja install
 
 # install python packages
 mkdir -p $SP_DIR/tigl3
-touch $SP_DIR/tigl3/__init__.py
-cp lib/tigl3wrapper.py $SP_DIR/tigl3/
-mv $PREFIX/share/tigl3/python/internal/* $SP_DIR/tigl3/
+mv $PREFIX/share/tigl3/python/tigl3/* $SP_DIR/tigl3/
 python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl3/tigl3wrapper.py libtigl3
