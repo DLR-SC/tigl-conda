@@ -1,0 +1,99 @@
+--- CMakeLists.txt.orig	2018-05-27 21:02:44.000000000 +0200
++++ CMakeLists.txt	2018-05-27 21:08:52.000000000 +0200
+@@ -192,6 +192,12 @@
+ set(CMAKE_SWIG_OUTDIR ${LIBRARY_OUTPUT_PATH})
+ message(STATUS "output_path: ${LIBRARY_OUTPUT_PATH}")
+ 
++if (UNIX)
++  # find out python linking commands
++  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_config_vars('CFLAGS')[0])" OUTPUT_VARIABLE PYTHON_CFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE )
++  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_config_vars('BLDSHARED')[0].split(' ', 1)[1])" OUTPUT_VARIABLE PYTHON_LDFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE )
++endif(UNIX)
++
+ ############################
+ # OpenCASCADE Modules list #
+ ############################
+@@ -211,7 +217,14 @@
+ 	set(FILE ${SWIG_FILES_PATH}/${OCE_MODULE}.i)
+ 	set_source_files_properties(${FILE} PROPERTIES CPLUSPLUS ON)
+   swig_add_module(${OCE_MODULE} python ${FILE})
+-  swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES})
++  swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES})
++
++  if (UNIX)
++    set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
++    set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
++  else(UNIX)
++    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
++  endif(UNIX)
+ endforeach(OCE_MODULE)
+ 
+ #################
+@@ -222,7 +235,14 @@
+     set(FILE ${SWIG_FILES_PATH}/${OCE_MODULE}.i)
+     set_source_files_properties(${FILE} PROPERTIES CPLUSPLUS ON)
+     swig_add_module(${OCE_MODULE} python ${FILE})
+-    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
++    swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
++
++    if (UNIX)
++      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
++      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
++    else(UNIX)
++      swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
++    endif(UNIX)
+   endforeach(OCE_MODULE)
+   # Build third part modules
+   # TODO : the following line is strange but necessary
+@@ -238,10 +258,18 @@
+   if(APPLE)
+     # on OSX, always add /System/Library/Frameworks/Cocoa.framework, even
+     # if GLX is enabled
+-    swig_link_libraries(Visualization ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} /System/Library/Frameworks/Cocoa.framework)
++    swig_link_libraries(Visualization  ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES} /System/Library/Frameworks/Cocoa.framework)
+   else(APPLE)
+-    swig_link_libraries(Visualization ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
++    swig_link_libraries(Visualization  ${OCE_MODEL_LIBRARIES} ${OCE_VISUALIZATION_LIBRARIES})
+   endif(APPLE)
++
++  if (UNIX)
++    set_target_properties(${SWIG_MODULE_Visualization_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
++    set_target_properties(${SWIG_MODULE_Visualization_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
++  else(UNIX)
++    swig_link_libraries(Visualization ${PYTHON_LIBRARIES})
++  endif(UNIX)
++
+ endif(PYTHONOCC_WRAP_VISU)
+ 
+ ################
+@@ -252,7 +280,14 @@
+     set(FILE ${SWIG_FILES_PATH}/${OCE_MODULE}.i)
+     set_source_files_properties(${FILE} PROPERTIES CPLUSPLUS ON)
+     swig_add_module(${OCE_MODULE} python ${FILE})
+-    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_DATAEXCHANGE_LIBRARIES})
++    swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES} ${OCE_DATAEXCHANGE_LIBRARIES})
++    if (UNIX)
++      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
++      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
++    else(UNIX)
++      swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
++    endif(UNIX)
++
+   endforeach(OCE_MODULE)
+ endif(PYTHONOCC_WRAP_DATAEXCHANGE)
+ 
+@@ -264,7 +299,13 @@
+     set(FILE ${SWIG_FILES_PATH}/${OCE_MODULE}.i)
+     set_source_files_properties(${FILE} PROPERTIES CPLUSPLUS ON)
+     swig_add_module(${OCE_MODULE} python ${FILE})
+-    swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES} ${OCE_MODEL_LIBRARIES} ${OCE_OCAF_LIBRARIES})
++    swig_link_libraries(${OCE_MODULE} ${OCE_MODEL_LIBRARIES} ${OCE_OCAF_LIBRARIES})
++    if (UNIX)
++      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES COMPILE_FLAGS ${PYTHON_CFLAGS})
++      set_target_properties(${SWIG_MODULE_${OCE_MODULE}_REAL_NAME} PROPERTIES LINK_FLAGS ${PYTHON_LDFLAGS})
++    else(UNIX)
++      swig_link_libraries(${OCE_MODULE} ${PYTHON_LIBRARIES})
++    endif(UNIX)
+   endforeach(OCE_MODULE)
+ endif(PYTHONOCC_WRAP_OCAF)
+ 

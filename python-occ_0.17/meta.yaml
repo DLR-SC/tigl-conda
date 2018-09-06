@@ -11,10 +11,12 @@ source:
     - fix_graphicshr_location.patch     # [win]
     - pyocc_coons_c2.patch
     - fixmemcpy.patch # [linux]
+    - link_python.patch
+    - jupyter-renderer.patch
 
 build:
-  number: 1
-  binary_relocation: true
+  number: 4
+  binary_relocation: false [osx]
   features:
     - vc9               # [win and py27]
     - vc10              # [win and py34]
@@ -27,6 +29,7 @@ requirements:
     - oce ==0.17.2
     - cmake
     - swig >=3.0.9
+    - patch [win]
 
   run:
     - pyqt
