@@ -7,44 +7,47 @@ package:
 source:
   fn: OCE-{{ version }}.tar.gz
   url: https://github.com/tpaviot/oce/archive/OCE-{{ version }}.tar.gz
+  md5: bf2226be4cd192606af677cf178088e5
   patches:
     - fix_tkopengl_dll_path.patch     # [win]
-    - vtk63.patch
     - dlr-feature-coons_c2.patch
     - fix-tiglviewer-selection.patch
-    - glibc.patch                     # [linux]
-    - fixmemcpy.patch                 # [linux]
     - fix-fonts.patch
     - fix-geomapi_extremacurvecurve.patch
     - fix_time_osx.patch              # [osx]
 
 build:
   detect_binary_files_with_prefix: True
-  number: 8
-  features:
-    - vc9              # [win and py27]
-    - vc10             # [win and py34]
-    - vc14             # [win and py35]
+  number: 10
+
 
 requirements:
   build:
+    - {{ compiler('cxx') }}
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - {{ cdt('libxcb') }}               # [linux]
+    - {{ cdt('libxi-devel') }}          # [linux]
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('libxau-devel') }}         # [linux]
+    - {{ cdt('libxext-devel') }}        # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
     - patch            # [win]
+    - cmake
+    - ninja
+
+  host:
+    - libglu
     - gl2ps
     - freeimageplus
     - tbb
     - python
     - freetype
-    # - vtk >=6.3.0
-    - cmake
-    - gcc              # [linux]
-    - ninja
 
   run:
     - gl2ps
     - freeimageplus
     - tbb
     - freetype
-    # - vtk >=6.3.0
 
 about:
   home: https://github.com/tpaviot/oce

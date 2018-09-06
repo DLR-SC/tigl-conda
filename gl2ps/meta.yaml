@@ -11,21 +11,21 @@ source:
     - installdir.patch  [win]
 
 build:
-  number: 3
+  number: 4
   binary_relocation: true
-  features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
 
 requirements:
   build:
-    - patch             [win]
-    - zlib              [unix]
+    - {{ compiler('c') }}
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - patch                             # [win]
     - cmake
-    - gcc               [linux]
+
+  host:
+    - zlib             # [unix]
+
   run:
-    - zlib              [unix]
+    - zlib             # [unix]
 
 
 about:

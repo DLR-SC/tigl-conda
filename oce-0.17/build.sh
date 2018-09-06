@@ -1,9 +1,15 @@
+#! /bin/bash
+
+declare -a CMAKE_PLATFORM_FLAGS
+if [[ ${HOST} =~ .*linux.* ]]; then
+    CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
+fi
+
+
 if [ `uname` == Darwin ]; then
     # the vtk config files use some system specific libs which we have to remove
     #python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/cmake/vtk-6.3/VTKTargets.cmake
     echo "MAC"
-else
-    export LDFLAGS="-Wl,--wrap=memcpy"
 fi
 
 
@@ -13,9 +19,9 @@ cd build
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DCMAKE_BUILD_TYPE=Release \
+  ${CMAKE_PLATFORM_FLAGS[@]} \
  -DOCE_TESTING=OFF \
- -DCMAKE_PREFIX_PATH=$PREFIX \
- -DCMAKE_SYSTEM_PREFIX_PATH=$PREFIX \
+ -DCMAKE_PREFIX_PATH=$CONDA_PREFIX \
  -DOCE_INSTALL_LIB_DIR=lib \
  -DOCE_INSTALL_BIN_DIR=bin \
  -DOCE_WITH_FREEIMAGE=ON \
