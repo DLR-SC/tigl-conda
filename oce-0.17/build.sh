@@ -18,6 +18,7 @@ cd build
 
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+ -G "Ninja" \
  -DCMAKE_BUILD_TYPE=Release \
   ${CMAKE_PLATFORM_FLAGS[@]} \
  -DOCE_TESTING=OFF \
@@ -30,13 +31,8 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DOCE_INSTALL_PREFIX=$PREFIX -DOCE_ENABLE_DEB_FLAG=OFF ..
 
 # Build step
-make -j $CPU_COUNT
+cmake --build . 
 
 # Install step
-make install
+cmake --build .  --target install
 
-if [ `uname` != Darwin ]; then
-    python $RECIPE_DIR/remove-system-libs.py $PREFIX/lib/oce-0.17/OCE-libraries-release.cmake
-else
-    python $RECIPE_DIR/remove-system-libs.py $PREFIX/OCE.framework/Versions/0.17/Resources/OCE-libraries-release.cmake
-fi
