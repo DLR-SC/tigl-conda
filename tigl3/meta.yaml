@@ -9,22 +9,25 @@ source:
   git_tag: cpacs_3
 
 build:
-  number: 8
-  features:
-    - vc9               # [win and py27]
-    - vc10              # [win and py34]
-    - vc14              # [win and py35]
+  number: 9
 
 requirements:
   build:
-    - tixi3 >=3.0.2
+    - {{ compiler('cxx') }}
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - ninja
     - python
-    - oce ==0.17.2
-    - pythonocc-core ==0.17
     - cmake
     - swig >=3.0.9
     - doxygen
+
+  host:
+    - tixi3 >=3.0.2
+    - oce ==0.17.2
+    - pythonocc-core ==0.17
+    - python
 
   run:
     - tixi3 >=3.0.2
@@ -37,6 +40,7 @@ test:
   imports:
     - tigl3.tigl3wrapper
     - tigl3.geometry
+    - tigl3.surface_factories
 
 about:
   home: https://github.com/DLR-SC/tigl
