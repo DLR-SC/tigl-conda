@@ -10,28 +10,32 @@ source:
   patches:
     - fix_graphicshr_location.patch     # [win]
     - pyocc_coons_c2.patch
-    - fixmemcpy.patch # [linux]
     - link_python.patch
     - jupyter-renderer.patch
 
 build:
-  number: 4
+  number: 5
   binary_relocation: false [osx]
-  features:
-    - vc9               # [win and py27]
-    - vc10              # [win and py34]
-    - vc14              # [win and py35]
 
 requirements:
   build:
+    - {{ compiler('cxx') }}
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - ninja
     - python
-    - oce ==0.17.2
     - cmake
     - swig >=3.0.9
     - patch [win]
 
+  host:
+    - python
+    - libglu [linux]
+    - oce ==0.17.2
+
   run:
+    - libglu [linux]
     - pyqt
     - oce ==0.17.2
     - python
