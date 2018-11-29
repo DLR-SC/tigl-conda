@@ -20,6 +20,7 @@ requirements:
     - {{ compiler('cxx') }}
     - patch             [win]
     - cmake
+    - ninja
 
 
 about:
