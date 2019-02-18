@@ -7,15 +7,11 @@ source:
   url: ftp://xmlsoft.org/libxml2/libxml2-2.9.3.tar.gz
 
 build:
-  number: 1
-  features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+  number: 2
 
 requirements:
   build:
-    - gcc               [linux]
+    - {{ compiler('c') }}
 
 about:
   home: http://www.xmlsoft.org/

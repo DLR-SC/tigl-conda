@@ -1,28 +1,26 @@
 package:
   name: freeimageplus
-  version: 3.17.0
+  version: 3.18.0
 
 source:
   fn: new-bundle.zip [win]
   url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip [win]
-  fn: FreeImage3170.zip [unix]
-  url: http://downloads.sourceforge.net/freeimage/FreeImage3170.zip [unix]
+  fn: FreeImage3180.zip [unix]
+  url: http://downloads.sourceforge.net/freeimage/FreeImage3180.zip [unix]
   patches:
     - installdir.patch   [win]
     - installlinux.patch [linux]
 
 build:
-  number: 1
-  features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+  number: 2
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - patch             [win]
-    - cmake             [win]
-    - gcc               [linux]
+    - cmake
+    - ninja
 
 
 about:

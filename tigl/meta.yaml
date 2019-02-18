@@ -12,28 +12,31 @@ source:
 
 build:
   number: 1
-  features:
-    - vc9               # [win and py27]
-    - vc10              # [win and py34]
-    - vc14              # [win and py35]
 
 requirements:
   build:
-    - tixi ==2.2.4
+    - {{ compiler('cxx') }}
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - ninja
-    - python
-    - oce ==0.17.2
-    - pythonocc-core ==0.17
+    - python {{ python }} 
     - cmake
     - swig >=3.0.9
     - doxygen
+
+  host:
+    - tixi ==2.2.4
+    - oce ==0.17.2
+    - pythonocc-core ==0.17
+    - python {{ python }}
 
   run:
     - tixi ==2.2.4
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17
-    - python
+    - python {{ python }}
 
 test:
   imports:

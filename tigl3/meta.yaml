@@ -10,21 +10,24 @@ source:
 
 build:
   number: 10
-  features:
-    - vc9               # [win and py27]
-    - vc10              # [win and py34]
-    - vc14              # [win and py35]
 
 requirements:
   build:
-    - tixi3 >=3.0.3
+    - {{ compiler('cxx') }}
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - ninja
     - python
+    - cmake
+    - swig >=3.0.9
+    - doxygen
+
+  host:
+    - tixi3 >=3.0.3
     - oce ==0.17.2
     - pythonocc-core ==0.17
-    - cmake
-    - swig =3.0.9
-    - doxygen
+    - python
 
   run:
     - tixi3 >=3.0.3
@@ -37,6 +40,7 @@ test:
   imports:
     - tigl3.tigl3wrapper
     - tigl3.geometry
+    - tigl3.surface_factories
 
 about:
   home: https://github.com/DLR-SC/tigl
