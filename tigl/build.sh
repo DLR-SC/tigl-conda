@@ -6,6 +6,10 @@ fi
 mkdir build
 cd build
 
+if [ `uname` != Darwin ]; then
+    export LDFLAGS="-lrt -Wl,--wrap=memcpy"
+fi
+
 
 # Configure step
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=$PREFIX \

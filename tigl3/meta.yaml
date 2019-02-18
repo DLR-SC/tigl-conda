@@ -24,13 +24,13 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 >=3.0.2
+    - tixi3 >=3.0.3
     - oce ==0.17.2
     - pythonocc-core ==0.17
     - python
 
   run:
-    - tixi3 >=3.0.2
+    - tixi3 >=3.0.3
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17

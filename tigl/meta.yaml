@@ -7,6 +7,8 @@ package:
 source:
   fn: tigl-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tigl/archive/v{{ version }}.tar.gz
+  patches:
+    - fixmemcpy.patch   # [linux]
 
 build:
   number: 1
