@@ -9,10 +9,15 @@ source:
   url: http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz   [unix]
 
 build:
+  number: 1
   detect_binary_files_with_prefix: True    [unix]
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+
+  host:
     - pcre      [unix]
     - python    [unix]
   run:
