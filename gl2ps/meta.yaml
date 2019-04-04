@@ -20,6 +20,7 @@ requirements:
     - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - patch                             # [win]
     - cmake
+    - ninja
 
   host:
     - zlib             # [unix]
