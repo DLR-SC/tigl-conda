@@ -1,8 +1,17 @@
+From 493d18ecd59bcf3efe7394cf303812d315ab56e5 Mon Sep 17 00:00:00 2001
+From: Martin Siggel <martin.siggel@dlr.de>
+Date: Thu, 4 Apr 2019 01:23:11 +0200
+Subject: [PATCH 1/2] Coons c2 fix
+
+---
+ src/SWIG_files/wrapper/GeomFill.i | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
 diff --git src/SWIG_files/wrapper/GeomFill.i src/SWIG_files/wrapper/GeomFill.i
-index bbb7c2b..a4d4c7a 100644
+index cc64a3b1..8ec3f20d 100644
 --- src/SWIG_files/wrapper/GeomFill.i
 +++ src/SWIG_files/wrapper/GeomFill.i
-@@ -985,7 +985,7 @@ class GeomFill_BSplineCurves {
+@@ -1010,7 +1010,7 @@ class GeomFill_BSplineCurves {
  	:type Type: GeomFill_FillingStyle
  	:rtype: None
  ") Init;
@@ -11,7 +20,7 @@ index bbb7c2b..a4d4c7a 100644
  		%feature("compactdefaultargs") Init;
  		%feature("autodoc", "	* if the curves cannot be joined
  
-@@ -5521,7 +5521,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+@@ -5721,7 +5721,7 @@ class GeomFill_Coons : public GeomFill_Filling {
  	:type P4: TColgp_Array1OfPnt
  	:rtype: None
  ") GeomFill_Coons;
@@ -20,7 +29,7 @@ index bbb7c2b..a4d4c7a 100644
  		%feature("compactdefaultargs") GeomFill_Coons;
  		%feature("autodoc", "	:param P1:
  	:type P1: TColgp_Array1OfPnt
-@@ -5541,7 +5541,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+@@ -5741,7 +5741,7 @@ class GeomFill_Coons : public GeomFill_Filling {
  	:type W4: TColStd_Array1OfReal &
  	:rtype: None
  ") GeomFill_Coons;
@@ -29,7 +38,7 @@ index bbb7c2b..a4d4c7a 100644
  		%feature("compactdefaultargs") Init;
  		%feature("autodoc", "	:param P1:
  	:type P1: TColgp_Array1OfPnt
-@@ -5553,7 +5553,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+@@ -5753,7 +5753,7 @@ class GeomFill_Coons : public GeomFill_Filling {
  	:type P4: TColgp_Array1OfPnt
  	:rtype: None
  ") Init;
@@ -38,7 +47,7 @@ index bbb7c2b..a4d4c7a 100644
  		%feature("compactdefaultargs") Init;
  		%feature("autodoc", "	:param P1:
  	:type P1: TColgp_Array1OfPnt
-@@ -5573,7 +5573,7 @@ class GeomFill_Coons : public GeomFill_Filling {
+@@ -5773,7 +5773,7 @@ class GeomFill_Coons : public GeomFill_Filling {
  	:type W4: TColStd_Array1OfReal &
  	:rtype: None
  ") Init;
@@ -47,3 +56,6 @@ index bbb7c2b..a4d4c7a 100644
  };
  
  
+-- 
+2.21.0.windows.1
+
