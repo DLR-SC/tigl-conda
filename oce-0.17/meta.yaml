@@ -18,7 +18,7 @@ source:
 
 build:
   detect_binary_files_with_prefix: True
-  number: 10
+  number: 11
 
 
 requirements:
@@ -36,10 +36,11 @@ requirements:
     - ninja
 
   host:
-    - libglu
+    - libglu # [linux]
     - gl2ps
     - freeimageplus
     - tbb
+    - tbb-devel
     - python
     - freetype
 
