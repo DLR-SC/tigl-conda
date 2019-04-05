@@ -9,7 +9,8 @@ source:
   git_tag: cpacs_3
 
 build:
-  number: 10
+  number: 11
+
 
 requirements:
   build:
@@ -26,14 +27,14 @@ requirements:
   host:
     - tixi3 >=3.0.3
     - oce ==0.17.2
-    - pythonocc-core ==0.17
+    - pythonocc-core ==0.17.3
     - python
 
   run:
     - tixi3 >=3.0.3
     - pyqt
     - oce ==0.17.2
-    - pythonocc-core ==0.17
+    - pythonocc-core ==0.17.3
     - python
 
 test:
