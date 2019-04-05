@@ -1,22 +1,22 @@
-From 6a0ef8e55c7a835ec207462459ce494a8de12559 Mon Sep 17 00:00:00 2001
+From 3b183927762e6e270e346c10b58739fea8722268 Mon Sep 17 00:00:00 2001
 From: Martin Siggel <martin.siggel@dlr.de>
 Date: Thu, 4 Apr 2019 01:47:17 +0200
-Subject: [PATCH 2/2] Backported jupyter renderer
+Subject: [PATCH] Improved jupyter renderer
 
 ---
  CMakeLists.txt                        |   1 +
- src/Display/OCCViewer.py              | 349 +++++++++++-----
- src/Display/WebGl/jupyter_renderer.py | 537 +++++++++++++++++++++++++
- src/Extend/DataExchange.py            | 461 ++++++++++++++++++++++
- src/Extend/ShapeFactory.py            | 239 +++++++++++
- src/Extend/TopologyUtils.py           | 546 ++++++++++++++++++++++++++
+ src/Display/OCCViewer.py              | 349 +++++++++++----
+ src/Display/WebGl/jupyter_renderer.py | 618 ++++++++++++++++++++++++++
+ src/Extend/DataExchange.py            | 461 +++++++++++++++++++
+ src/Extend/ShapeFactory.py            | 239 ++++++++++
+ src/Extend/TopologyUtils.py           | 546 +++++++++++++++++++++++
  src/Extend/__init__.py                |   0
- src/Visualization/Display3d.cpp       | 167 +++++++-
- src/Visualization/Tesselator.cpp      |  96 ++++-
+ src/Visualization/Display3d.cpp       | 167 ++++++-
+ src/Visualization/Tesselator.cpp      |  96 +++-
  src/Visualization/Tesselator.h        |   8 +-
  src/Visualization/Visualization.h     |  50 ++-
- src/Visualization/Visualization.i     | 112 ++++--
- 12 files changed, 2410 insertions(+), 156 deletions(-)
+ src/Visualization/Visualization.i     | 112 +++--
+ 12 files changed, 2491 insertions(+), 156 deletions(-)
  create mode 100644 src/Display/WebGl/jupyter_renderer.py
  create mode 100644 src/Extend/DataExchange.py
  create mode 100644 src/Extend/ShapeFactory.py
@@ -577,10 +577,10 @@ index 25d24110..a4b8b7b9 100644
 +        return r
 diff --git src/Display/WebGl/jupyter_renderer.py src/Display/WebGl/jupyter_renderer.py
 new file mode 100644
-index 00000000..50404794
+index 00000000..07e55d11
 --- /dev/null
 +++ src/Display/WebGl/jupyter_renderer.py
-@@ -0,0 +1,537 @@
+@@ -0,0 +1,618 @@
 +##Copyright 20117-2018 Thomas Paviot (tpaviot@gmail.com)
 +##
 +##This file is part of pythonOCC.
@@ -722,14 +722,16 @@ index 00000000..50404794
 +        # the default camera object
 +        self._camera_target = [0., 0., 0.]  # the point to look at
 +        self._camera_position = [0, 0., 100.]  # the camera initial position
-+        self._camera = None
++        self._camera = PerspectiveCamera(position=self._camera_position,
++                                         lookAt=self._camera_target,
++                                         up=[0, 0, 1],
++                                         aspect=self._size[0] / self._size[1],
++                                         fov=50,
++                                         children=[DirectionalLight(color='#ffffff', position=[50, 50, 50], intensity=0.9)])
 +
 +        # a dictionnary of all the shapes belonging to the renderer
 +        # each element is a key 'mesh_id:shape'
 +        self._shapes = {}
-+
-+        # we save the renderer so that is can be accessed
-+        self._renderer = None
 +
 +        # the group of 3d and 2d objects to render
 +        self._displayed_pickable_objects = Group()
@@ -737,13 +739,34 @@ index 00000000..50404794
 +        # the group of other objects (grid, trihedron etc.) that can't e selected
 +        self._displayed_non_pickable_objects = Group()
 +
-+        # event manager/selection manager
++                # event manager/selection manager
 +        self._picker = Picker(controlling=self._displayed_pickable_objects, event='mousedown')
++
++        self._controls = OrbitControls(controlling=self._camera, target=self._camera_target);
++
++        # we save the renderer so that is can be accessed
++        self._scene = Scene(children=[self._displayed_pickable_objects,
++                                    self._displayed_non_pickable_objects,
++                                    self._camera,
++                                    AmbientLight(color='#101010')])
++        self._renderer = Renderer(camera=self._camera,
++                                  background=self._background,
++                                  background_opacity=self._background_opacity,
++                                  scene=self._scene,
++                                  controls=[self._controls, self._picker],
++                                  width=self._size[0],
++                                  height=self._size[1],
++                                  antialias=True,
++                                  alpha=True,
++                                  clearOpacity=0)
++
 +
 +        self._current_shape_selection = None
 +        self._current_mesh_selection = None
 +        self._current_selection_material = None  # the color of the object currently being rendered
 +        self._select_callbacks = []  # a list of all functions called after an object is selected
++
++        self.GRID_ID = "__jupyter_renderer_grid__"
 +
 +
 +        def click(value):
@@ -759,10 +782,10 @@ index 00000000..50404794
 +                obj.material = default_selection_material
 +                # get the shape from this mesh id
 +                selected_shape = self._shapes[id_clicked]
-+                self.html.value = "<b>Shape id:</b> %s<br><b>Topology hierearchy</b>" % (selected_shape)
++                self.print_message("<b>Shape id:</b> %s<br><b>Topology hierearchy</b>" % (selected_shape))
 +                self._current_shape_selection = selected_shape
 +            else:
-+                self.html.value = "<b>Shape id:</b> None"
++                self.print_message("<b>Shape id:</b> None")
 +            # then execute calbacks
 +            for callback in self._select_callbacks:
 +                callback(self._current_shape_selection)
@@ -774,6 +797,10 @@ index 00000000..50404794
 +        #    print("key pressed")
 +        #self._picker2 = Picker(event='keypress')
 +        #self._picker.observe(key_pressed)
++
++
++    def print_message(self, text):
++        self.html.value = text
 +
 +
 +    def register_select_callback(self, callback):
@@ -800,12 +827,12 @@ index 00000000..50404794
 +            bb = reduce(operator.add, map(bounding_box, all_shapes))
 +            self._camera_target = [bb.x_center, bb.y_center, bb.z_center]
 +            self._camera_position = [0, bb.y_center - 2 * bb.y_size, bb.z_center + 2 * bb.z_center]
-+        self._camera = PerspectiveCamera(position=self._camera_position,
-+                                         lookAt=self._camera_target,
-+                                         up=[0, 0, 1],
-+                                         aspect=self._size[0] / self._size[1],
-+                                         fov=50,
-+                                         children=[DirectionalLight(color='#ffffff', position=[50, 50, 50], intensity=0.9)])
++        # self._camera.position = self._camera_position
++        self._camera.lookAt = self._camera_target
++        # this is buggy and works better without
++        # self._camera.position  = self._camera_position
++        self._controls.target = self._camera_target
++        self.Update()
 +
 +
 +    def GetSelectedShape(self):
@@ -814,13 +841,25 @@ index 00000000..50404794
 +        return self._current_shape_selection
 +
 +
-+    def DisplayGrid(self, sizex, sizey, nx, ny):
++    def GridOff(self, update=True):
++        grid = JupyterRenderer._get_object_by_name(self._displayed_non_pickable_objects, self.GRID_ID)
++
++        if grid is not None:
++            self._displayed_non_pickable_objects.remove(grid)
++
++        if update:
++            self.Update()
++
++    def DisplayGrid(self, sizex, sizey, nx, ny, update=True):
 +        """ Displays a grid in the renderer.
 +        sizex: float, grid size along x axis
 +        sizey: float, grid size along y axis
 +        nx: integer, number of segments along the x axis
 +        ny: integer, number of segments along the y axis
 +        """
++
++        self.GridOff(update=False)
++
 +        surf_geo = SurfaceGeometry(z=[0] * (nx + 1) * (ny + 1),
 +                                   width=sizex,
 +                                   height=sizey,
@@ -829,14 +868,17 @@ index 00000000..50404794
 +        surf_grid = SurfaceGrid(geometry=surf_geo,
 +                                material=LineBasicMaterial(color='#000000',
 +                                                           opacity=0.2,
-+                                                           transparent=True))
++                                                           transparent=True),
++                                name=self.GRID_ID)
 +        self._displayed_non_pickable_objects.add(surf_grid)
-+        return surf_geo
++        if update:
++            self.Update()
 +
 +
 +    def DisplayMesh(self,
 +                    mesh,
-+                    color=default_mesh_color):
++                    color=default_mesh_color,
++                    update=True):
 +        """ Display a MEFISTO2 triangle mesh
 +        """
 +        if not HAVE_SMESH:
@@ -897,29 +939,11 @@ index 00000000..50404794
 +                          material=edges_material,
 +                          name=mesh_id)
 +
++        self._displayed_pickable_objects.add(shape_mesh)
++        self._displayed_non_pickable_objects.add(edges_mesh)
 +
-+        # a special display for the mesh
-+        camera_target = [0., 0., 0.]  # the point to look at
-+        camera_position = [0, 0., 100.]  # the camera initial position
-+        camera = PerspectiveCamera(position=camera_position,
-+                                   lookAt=camera_target,
-+                                   up=[0, 0, 1],
-+                                   fov=50,
-+                                   children=[DirectionalLight(color='#ffffff',
-+                                                              position=[50, 50, 50],
-+                                                              intensity=0.9)])
-+        scene_shp = Scene(children=[shape_mesh, edges_mesh, camera, AmbientLight(color='#101010')])
-+
-+        renderer = Renderer(camera=camera,
-+                            background=self._background,
-+                            background_opacity=self._background_opacity,
-+                            scene=scene_shp,
-+                            controls=[OrbitControls(controlling=camera, target=camera_target)],
-+                            width=self._size[0],
-+                            height=self._size[1],
-+                            antialias=True)
-+
-+        display(renderer)
++        if update:
++            self.Update()
 +
 +
 +    def DisplayShape(self,
@@ -952,7 +976,7 @@ index 00000000..50404794
 +        update: optional, False by default. If True, render all the shapes.
 +        """
 +        if is_wire(shp) or is_edge(shp):
-+            self.AddCurveToScene(shp, shape_color)
++            self.AddCurveToScene(shp, shape_color, quality=quality)
 +        if topo_level != "default":
 +            t = TopologyExplorer(shp)
 +            map_type_and_methods = {"Solid": t.solids, "Face": t.faces, "Shell": t.shells,
@@ -963,17 +987,28 @@ index 00000000..50404794
 +        else:
 +            self.AddShapeToScene(shp, shape_color, render_edges, edge_color, compute_uv_coords, quality,
 +                                 transparency, opacity)
++
++        self._update_camera()
++        self._renderer.render(self._scene, self._camera)
 +        if update:
 +            self.Display()
 +
++    def DisplayPoints(self, pointsArray, update=True, color='red', size=11, name='_vertices_'):
++        vertex_mesh = self._create_vertices_mesh(pointsArray, color=color, size=size)
++        vertex_mesh.name = name
++        self._displayed_non_pickable_objects.add(vertex_mesh)
 +
-+    def AddCurveToScene(self, shp, color):
++        if update:
++            self.Update()
++
++
++    def AddCurveToScene(self, shp, color, quality=0.5):
 +        """ shp is either a TopoDS_Wire or a TopodS_Edge.
 +        """
 +        if is_edge(shp):
-+            pnts = discretize_edge(shp)
++            pnts = discretize_edge(shp, quality)
 +        elif is_wire(shp):
-+            pnts = discretize_wire(shp)
++            pnts = discretize_wire(shp, quality)
 +        np_edge_vertices = np.array(pnts, dtype=np.float32)
 +        np_edge_indices = np.arange(np_edge_vertices.shape[0], dtype=np.uint32)
 +        edge_geometry = BufferGeometry(attributes={
@@ -981,7 +1016,10 @@ index 00000000..50404794
 +            'index'   : BufferAttribute(np_edge_indices)
 +        })
 +        edge_material = LineBasicMaterial(color=color, linewidth=2, fog=True)
-+        edge_lines = LineSegments(geometry=edge_geometry, material=edge_material)
++        edge_lines = Line(geometry=edge_geometry, material=edge_material)
++        mesh_id = "%d" % shp.HashCode(2147483647)
++        edge_lines.name = mesh_id
++        self._shapes[mesh_id] = shp
 +
 +        # Add geometries to pickable or non pickable objects
 +        self._displayed_pickable_objects.add(edge_lines)
@@ -1050,7 +1088,7 @@ index 00000000..50404794
 +                                         side='DoubleSide')
 +
 +        # create a mesh unique id
-+        mesh_id = uuid.uuid4().hex
++        mesh_id = "%d" % shp.HashCode(2147483647)
 +
 +        # finally create the mash
 +        shape_mesh = Mesh(geometry=shape_geometry,
@@ -1073,7 +1111,7 @@ index 00000000..50404794
 +                'index'   : BufferAttribute(np_edge_indices)
 +            })
 +            edge_material = LineBasicMaterial(color=edge_color, linewidth=1)
-+            edge_lines = LineSegments(geometry=edge_geometry, material=edge_material)
++            edge_lines = LineSegments(geometry=edge_geometry, material=edge_material, name=mesh_id)
 +
 +        # Add geometries to pickable or non pickable objects
 +        self._displayed_pickable_objects.add(shape_mesh)
@@ -1081,36 +1119,79 @@ index 00000000..50404794
 +            self._displayed_non_pickable_objects.add(edge_lines)
 +
 +
-+    def EraseAll(self):
++    @staticmethod
++    def _get_object_by_name(group, name):
++        for child in group.children:
++            if name == child.name:
++                return child
++        return None
++
++    def EraseObject(self, objectName, update=True):
++        obj = self._get_object_by_name(self._displayed_pickable_objects, objectName)
++        if obj is not None:
++            self._displayed_pickable_objects.remove(obj)
++
++        obj = self._get_object_by_name(self._displayed_non_pickable_objects, objectName)
++        if obj is not None:
++            self._displayed_non_pickable_objects.remove(obj)
++
++        if update:
++            self.Update()
++
++
++    def EraseShape(self, shape, update=True):
++        mesh_id = "%d" % shape.HashCode(2147483647)
++        self.EraseObject(mesh_id, update=update)
++
++
++    def EraseAll(self, update=True):
 +        self._shapes = {}
-+        self._displayed_pickable_objects = Group()
-+        self._displayed_non_pickable_objects = Group()
++        for child in self._displayed_pickable_objects.children:
++            self._displayed_pickable_objects.remove(child)
++        for child in self._displayed_non_pickable_objects.children:
++            self._displayed_non_pickable_objects.remove(child)
++
 +        self._current_shape_selection = None
 +        self._current_mesh_selection = None
 +        self._current_selection_material = None
-+        self._renderer.scene = Scene(children=[
-+           self._displayed_pickable_objects,
-+            self._displayed_non_pickable_objects,
-+            self._camera,
-+            AmbientLight(color='#101010') 
-+        ])
 +
++        if update:
++            self.Update()
++
++    def _create_vertices_mesh(self, vertex_array, color='black', size=9):
++        
++        def gen_cross_texture(size=7):
++            texture = np.zeros((size, size, 4), dtype=np.float32)
++            idx = np.arange(0,size)
++            texture[size//2, idx, :] = 1
++            texture[idx, size//2, :] = 1
++
++            data_tex = DataTexture(data=texture, format="RGBAFormat", type="FloatType")
++
++            return data_tex
++        
++        vertex_array = np.array(vertex_array)
++        
++        attributes = dict(
++            position = BufferAttribute(np.asarray(vertex_array, dtype=np.float32), normalized=False),
++        )
++
++        mat = PointsMaterial(color=color, sizeAttenuation=False, size=size)
++        mat.map = gen_cross_texture(size)
++        mat.alphaTest = 0.6
++
++
++        geom = BufferGeometry(attributes=attributes)
++        mesh_obj = Points(geometry=geom, material=mat)
++        
++        return mesh_obj
++
++    def Update(self):
++        self._renderer.render(self._scene, self._camera)
 +
 +    def Display(self):
-+        self._update_camera()
-+        scene_shp = Scene(children=[self._displayed_pickable_objects,
-+                                    self._displayed_non_pickable_objects,
-+                                    self._camera,
-+                                    AmbientLight(color='#101010')])
++        self.Update()
 +
-+        self._renderer = Renderer(camera=self._camera,
-+                                  background=self._background,
-+                                  background_opacity=self._background_opacity,
-+                                  scene=scene_shp,
-+                                  controls=[OrbitControls(controlling=self._camera, target=self._camera_target), self._picker],
-+                                  width=self._size[0],
-+                                  height=self._size[1],
-+                                  antialias=True)
 +        # then display both 3d widgets and webui
 +        display(HBox([self._renderer, self.html]))
 +
@@ -1832,7 +1913,7 @@ index 00000000..667711c9
 +    return BRepPrimAPI_MakePrism(face, vector).Shape()
 diff --git src/Extend/TopologyUtils.py src/Extend/TopologyUtils.py
 new file mode 100644
-index 00000000..6163f615
+index 00000000..657463e0
 --- /dev/null
 +++ src/Extend/TopologyUtils.py
 @@ -0,0 +1,546 @@
@@ -2307,7 +2388,7 @@ index 00000000..6163f615
 +# Edge and wire discretizers
 +#
 +
-+def discretize_wire(a_topods_wire):
++def discretize_wire(a_topods_wire, deflection=0.5):
 +    """ Returns a set of points
 +    """
 +    if not is_wire(a_topods_wire):
@@ -2316,7 +2397,7 @@ index 00000000..6163f615
 +    wire_pnts = []
 +    # loop over ordered edges
 +    for edg in wire_explorer.ordered_edges():
-+        edg_pnts = discretize_edge(edg)
++        edg_pnts = discretize_edge(edg, deflection=deflection)
 +        wire_pnts += edg_pnts
 +    return wire_pnts
 +
