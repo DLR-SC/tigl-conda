@@ -15,10 +15,11 @@ source:
     - fix-fonts.patch
     - fix-geomapi_extremacurvecurve.patch
     - fix_time_osx.patch              # [osx]
+    - fix_private_linking.patch
 
 build:
   detect_binary_files_with_prefix: True
-  number: 11
+  number: 12
 
 
 requirements:
@@ -31,7 +32,7 @@ requirements:
     - {{ cdt('libxau-devel') }}         # [linux]
     - {{ cdt('libxext-devel') }}        # [linux]
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
-    - patch            # [win]
+    - m2-patch            # [win]
     - cmake
     - ninja
 

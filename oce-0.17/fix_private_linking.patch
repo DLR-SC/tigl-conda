@@ -1,0 +1,25 @@
+From 2c99a20feef6d93ca9e92a50bfd1b9e036795400 Mon Sep 17 00:00:00 2001
+From: Martin Siggel <martin.siggel@dlr.de>
+Date: Tue, 16 Apr 2019 10:35:30 +0200
+Subject: [PATCH] Make linking to dependencies private
+
+---
+ adm/cmake/BuildToolkit.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git adm/cmake/BuildToolkit.cmake adm/cmake/BuildToolkit.cmake
+index 1b70df9a1..165a63ea0 100644
+--- adm/cmake/BuildToolkit.cmake
++++ adm/cmake/BuildToolkit.cmake
+@@ -244,7 +244,7 @@ endif()
+ if ( NOT "${TOOLKIT}" STREQUAL "TKernel" )
+ 	list(REMOVE_DUPLICATES TOOLKIT_DEPENDS)
+ endif ( NOT "${TOOLKIT}" STREQUAL "TKernel" )
+-target_link_libraries(${TOOLKIT} ${TOOLKIT_DEPENDS} ${TOOLKIT_LIBS} ${WIN32_LIBS})
++target_link_libraries(${TOOLKIT} PUBLIC ${TOOLKIT_DEPENDS} PRIVATE ${TOOLKIT_LIBS} ${WIN32_LIBS})
+ 
+ if(TOOLKIT_LIBS_OPTIMIZED)
+ 	foreach(lib ${TOOLKIT_LIBS_OPTIMIZED})
+-- 
+2.21.0.windows.1
+
