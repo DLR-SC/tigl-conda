@@ -5,7 +5,7 @@ if [[ ${HOST} =~ .*linux.* ]]; then
 fi
 
 
-mkdir build
+mkdir -p build
 cd build
 
 # Configure step
@@ -13,7 +13,6 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DCMAKE_BUILD_TYPE=Release \
  -DCMAKE_PREFIX_PATH=$PREFIX \
  -DTIGL_VIEWER=OFF \
- -DTIGL_OCE_COONS_PATCHED=ON \
  -DTIGL_CONCAT_GENERATED_FILES=ON \
  -DTIGL_BINDINGS_PYTHON_INTERNAL=ON \
  -DPythonOCC_SOURCE_DIR=$PREFIX/src/pythonocc-core \

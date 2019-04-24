@@ -21,7 +21,7 @@ requirements:
     - ninja
     - python
     - cmake
-    - swig >=3.0.9
+    - swig >=3.0.11
     - doxygen
 
   host:
