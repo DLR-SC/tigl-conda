@@ -13,7 +13,7 @@ if [ `uname` == Darwin ]; then
 fi
 
 
-mkdir build
+mkdir -p build
 cd build
 
 # Configure step
