@@ -25,8 +25,8 @@ requirements:
     - ninja
     - python
     - cmake
-    - swig >=3.0.9
-    - patch [win]
+    - swig >=3.0.11
+    - m2-patch [win]
 
   host:
     - python
