@@ -19,7 +19,7 @@ source:
 
 build:
   detect_binary_files_with_prefix: True
-  number: 13
+  number: 14
 
 
 requirements:
@@ -32,7 +32,6 @@ requirements:
     - {{ cdt('libxau-devel') }}         # [linux]
     - {{ cdt('libxext-devel') }}        # [linux]
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
-    - m2-patch            # [win]
     - cmake
     - ninja
 

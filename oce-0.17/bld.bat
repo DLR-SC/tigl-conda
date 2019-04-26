@@ -20,13 +20,10 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
 if errorlevel 1 exit 1
  
 REM Build step 
-ninja
+cmake --build .
 if errorlevel 1 exit 1
 
 REM Install step
-ninja install
+cmake --build . --target install
 if errorlevel 1 exit 1
 
-REM Fix hardcoded absolute freetype paths
-python %RECIPE_DIR%\fixpaths.py "%LIBRARY_PREFIX%\cmake\OCE-libraries-release.cmake" "%LIBRARY_PREFIX%"\lib\
-if errorlevel 1 exit 1

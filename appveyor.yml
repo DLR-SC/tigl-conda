@@ -38,6 +38,10 @@ environment:
       # CONDA_NPY: "18"
       # CONDA_INSTALL_LOCN: "C:\\Miniconda37-x64"
 
+build:
+  parallel: true
+  verbosity: quiet
+
 matrix:
   fast_finish: false
 
@@ -48,6 +52,7 @@ install:
   - cmd: conda install --yes conda-build anaconda-client gitpython
   - cmd: conda config --add channels dlr-sc
   - cmd: conda config --add channels dlr-sc/label/tigl-dev
+  - cmd: set PYTHONUNBUFFERED=1
 
 
 build_script:
