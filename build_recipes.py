@@ -29,7 +29,8 @@ def get_changed_recipes():
     d = hcommit.diff('HEAD~1')
     for path in d:
         dirs = split_dir_parts(path.a_path)
-        modules.add(dirs[0])
+        if os.path.isfile(dirs[0] + '/meta.yaml'):
+            modules.add(dirs[0])
 
     return modules
 
