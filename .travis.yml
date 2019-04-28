@@ -46,7 +46,8 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       /usr/bin/curl -o MacOSX10.9.sdk.tar.xz -L https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz;
       tar xf MacOSX10.9.sdk.tar.xz;
-      export CONDA_BUILD_SYSROOT=`pwd`/MacOSX10.9.sdk;
+      sudo mv MacOSX10.9.sdk /opt/;
+      ls /opt;
     fi;
   - chmod +x miniconda.sh
   # When we are installing the 32 Bit conda on a 64 Bit system, the miniconda
