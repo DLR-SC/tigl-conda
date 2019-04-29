@@ -1,22 +1,22 @@
-From 3b183927762e6e270e346c10b58739fea8722268 Mon Sep 17 00:00:00 2001
+From d740e0328830a84f496359c64664cc9551a593c2 Mon Sep 17 00:00:00 2001
 From: Martin Siggel <martin.siggel@dlr.de>
-Date: Thu, 4 Apr 2019 01:47:17 +0200
+Date: Mon, 29 Apr 2019 14:44:04 +0200
 Subject: [PATCH] Improved jupyter renderer
 
 ---
  CMakeLists.txt                        |   1 +
- src/Display/OCCViewer.py              | 349 +++++++++++----
- src/Display/WebGl/jupyter_renderer.py | 618 ++++++++++++++++++++++++++
- src/Extend/DataExchange.py            | 461 +++++++++++++++++++
- src/Extend/ShapeFactory.py            | 239 ++++++++++
- src/Extend/TopologyUtils.py           | 546 +++++++++++++++++++++++
+ src/Display/OCCViewer.py              | 349 ++++++++++++++-----
+ src/Display/WebGl/jupyter_renderer.py | 618 ++++++++++++++++++++++++++++++++++
+ src/Extend/DataExchange.py            | 461 +++++++++++++++++++++++++
+ src/Extend/ShapeFactory.py            | 239 +++++++++++++
+ src/Extend/TopologyUtils.py           | 546 ++++++++++++++++++++++++++++++
  src/Extend/__init__.py                |   0
- src/Visualization/Display3d.cpp       | 167 ++++++-
- src/Visualization/Tesselator.cpp      |  96 +++-
+ src/Visualization/Display3d.cpp       | 167 ++++++++-
+ src/Visualization/Tesselator.cpp      |  96 ++++--
  src/Visualization/Tesselator.h        |   8 +-
- src/Visualization/Visualization.h     |  50 ++-
- src/Visualization/Visualization.i     | 112 +++--
- 12 files changed, 2491 insertions(+), 156 deletions(-)
+ src/Visualization/Visualization.h     |  34 +-
+ src/Visualization/Visualization.i     | 112 ++++--
+ 12 files changed, 2482 insertions(+), 149 deletions(-)
  create mode 100644 src/Display/WebGl/jupyter_renderer.py
  create mode 100644 src/Extend/DataExchange.py
  create mode 100644 src/Extend/ShapeFactory.py
@@ -2885,26 +2885,10 @@ index bc123382..e008fd66 100644
  };
  #endif
 diff --git src/Visualization/Visualization.h src/Visualization/Visualization.h
-index bc2576e6..3217f479 100644
+index bc2576e6..b2d0f9b7 100644
 --- src/Visualization/Visualization.h
 +++ src/Visualization/Visualization.h
-@@ -20,24 +20,33 @@
- #if !defined __OCC3d_Renderer__
- #define __OCC3d_Renderer__
- 
-+#ifdef WNT
-+  #include <windows.h>
-+  #include <WNT_WClass.hxx>
-+  #include <WNT_Window.hxx>
-+#elif defined(__APPLE__) && !defined(MACOSX_USE_GLX)
-+  #include <Cocoa_Window.hxx>
-+#else
-+  #include <Xw_Window.hxx>
-+#endif
-+
- #include <AIS_InteractiveContext.hxx>
- #include <BRepPrimAPI_MakeBox.hxx>
- #include <V3d_Viewer.hxx>
+@@ -26,12 +26,19 @@
  #include <V3d_View.hxx>
  #include <AIS_Shape.hxx>
  #include <Handle_Graphic3d_GraphicDriver.hxx>
@@ -2918,18 +2902,13 @@ index bc2576e6..3217f479 100644
  
  #include <cstdlib>
    
--#ifdef WNT
--  #include <WNT_Window.hxx>
--#elif defined(__APPLE__) && !defined(MACOSX_USE_GLX)
--  #include <Cocoa_Window.hxx>
--#else
--  #include <Xw_Window.hxx>
--#endif
-+
- 
- class Display3d 
- {	
-@@ -45,15 +54,38 @@ public:
+ #ifdef WNT
++  #include <windows.h>
++  #include <WNT_WClass.hxx>
+   #include <WNT_Window.hxx>
+ #elif defined(__APPLE__) && !defined(MACOSX_USE_GLX)
+   #include <Cocoa_Window.hxx>
+@@ -45,15 +52,38 @@ public:
  	Standard_EXPORT Display3d();
  	Standard_EXPORT virtual ~Display3d();
  	Standard_EXPORT void Init(long window_handle);
@@ -3126,5 +3105,5 @@ index d21a2d16..a97c9835 100644
  };
  
 -- 
-2.21.0.windows.1
+2.12.3
 

@@ -26,7 +26,6 @@ requirements:
     - python
     - cmake
     - swig >=3.0.11
-    - m2-patch [win]
 
   host:
     - python
