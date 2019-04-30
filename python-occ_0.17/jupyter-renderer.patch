@@ -1,4 +1,4 @@
-From c54c16b9d5b36ac0c7d6fd9248fca7b19a530f07 Mon Sep 17 00:00:00 2001
+From 9642f2a667f01e3dc293e7363aeb06effc044b92 Mon Sep 17 00:00:00 2001
 From: Martin Siggel <martin.siggel@dlr.de>
 Date: Thu, 4 Apr 2019 01:47:17 +0200
 Subject: [PATCH] Improved jupyter renderer
@@ -24,7 +24,7 @@ Subject: [PATCH] Improved jupyter renderer
  create mode 100644 src/Extend/__init__.py
 
 diff --git CMakeLists.txt CMakeLists.txt
-index a442dc78..164aa54e 100644
+index a442dc7..164aa54 100644
 --- CMakeLists.txt
 +++ CMakeLists.txt
 @@ -351,6 +351,7 @@ endif(PYTHONOCC_WRAP_VISU)
@@ -36,7 +36,7 @@ index a442dc78..164aa54e 100644
  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE DESTINATION ${PYTHONOCC_INSTALL_DIRECTORY} )
  # install AUTHORS file
 diff --git src/Display/OCCViewer.py src/Display/OCCViewer.py
-index 25d24110..a4b8b7b9 100644
+index 25d2411..a4b8b7b 100644
 --- src/Display/OCCViewer.py
 +++ src/Display/OCCViewer.py
 @@ -1,6 +1,6 @@
@@ -577,7 +577,7 @@ index 25d24110..a4b8b7b9 100644
 +        return r
 diff --git src/Display/WebGl/jupyter_renderer.py src/Display/WebGl/jupyter_renderer.py
 new file mode 100644
-index 00000000..07e55d11
+index 0000000..07e55d1
 --- /dev/null
 +++ src/Display/WebGl/jupyter_renderer.py
 @@ -0,0 +1,618 @@
@@ -1201,7 +1201,7 @@ index 00000000..07e55d11
 +        return ""
 diff --git src/Extend/DataExchange.py src/Extend/DataExchange.py
 new file mode 100644
-index 00000000..140f4cea
+index 0000000..140f4ce
 --- /dev/null
 +++ src/Extend/DataExchange.py
 @@ -0,0 +1,461 @@
@@ -1668,7 +1668,7 @@ index 00000000..140f4cea
 +
 diff --git src/Extend/ShapeFactory.py src/Extend/ShapeFactory.py
 new file mode 100644
-index 00000000..667711c9
+index 0000000..667711c
 --- /dev/null
 +++ src/Extend/ShapeFactory.py
 @@ -0,0 +1,239 @@
@@ -1913,7 +1913,7 @@ index 00000000..667711c9
 +    return BRepPrimAPI_MakePrism(face, vector).Shape()
 diff --git src/Extend/TopologyUtils.py src/Extend/TopologyUtils.py
 new file mode 100644
-index 00000000..657463e0
+index 0000000..657463e
 --- /dev/null
 +++ src/Extend/TopologyUtils.py
 @@ -0,0 +1,546 @@
@@ -2465,9 +2465,9 @@ index 00000000..657463e0
 +    return topods_shape.ShapeType() == TopAbs_COMPSOLID
 diff --git src/Extend/__init__.py src/Extend/__init__.py
 new file mode 100644
-index 00000000..e69de29b
+index 0000000..e69de29
 diff --git src/Visualization/Display3d.cpp src/Visualization/Display3d.cpp
-index 147247ec..3d3a8ada 100644
+index 147247e..3d3a8ad 100644
 --- src/Visualization/Display3d.cpp
 +++ src/Visualization/Display3d.cpp
 @@ -21,6 +21,7 @@
@@ -2663,7 +2663,7 @@ index 147247ec..3d3a8ada 100644
  {
        BRepPrimAPI_MakeBox S(100,50,40);
 diff --git src/Visualization/Tesselator.cpp src/Visualization/Tesselator.cpp
-index e373369d..8d5c7946 100644
+index dd99323..3e1606a 100644
 --- src/Visualization/Tesselator.cpp
 +++ src/Visualization/Tesselator.cpp
 @@ -74,6 +74,7 @@ Tesselator::Tesselator(TopoDS_Shape   aShape,
@@ -2860,7 +2860,7 @@ index e373369d..8d5c7946 100644
  
  }
 diff --git src/Visualization/Tesselator.h src/Visualization/Tesselator.h
-index bc123382..e008fd66 100644
+index 8185266..4685072 100644
 --- src/Visualization/Tesselator.h
 +++ src/Visualization/Tesselator.h
 @@ -96,9 +96,9 @@ class Tesselator
@@ -2885,7 +2885,7 @@ index bc123382..e008fd66 100644
  };
  #endif
 diff --git src/Visualization/Visualization.h src/Visualization/Visualization.h
-index bc2576e6..570a03e2 100644
+index bc2576e..570a03e 100644
 --- src/Visualization/Visualization.h
 +++ src/Visualization/Visualization.h
 @@ -20,21 +20,32 @@
@@ -2965,7 +2965,7 @@ index bc2576e6..570a03e2 100644
       Handle_WNT_Window myWindow;
     #elif defined(__APPLE__) && !defined(MACOSX_USE_GLX)
 diff --git src/Visualization/Visualization.i src/Visualization/Visualization.i
-index d21a2d16..a97c9835 100644
+index 366a6e2..147b3ea 100644
 --- src/Visualization/Visualization.i
 +++ src/Visualization/Visualization.i
 @@ -26,8 +26,11 @@
