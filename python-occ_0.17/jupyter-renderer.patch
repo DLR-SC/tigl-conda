@@ -1,21 +1,21 @@
-From 6ab09481bf38ab4fbaee887c247a90c886f9fce0 Mon Sep 17 00:00:00 2001
+From c54c16b9d5b36ac0c7d6fd9248fca7b19a530f07 Mon Sep 17 00:00:00 2001
 From: Martin Siggel <martin.siggel@dlr.de>
-Date: Mon, 29 Apr 2019 14:44:04 +0200
+Date: Thu, 4 Apr 2019 01:47:17 +0200
 Subject: [PATCH] Improved jupyter renderer
 
 ---
  CMakeLists.txt                        |   1 +
- src/Display/OCCViewer.py              | 349 ++++++++++++++-----
- src/Display/WebGl/jupyter_renderer.py | 618 ++++++++++++++++++++++++++++++++++
- src/Extend/DataExchange.py            | 461 +++++++++++++++++++++++++
- src/Extend/ShapeFactory.py            | 239 +++++++++++++
- src/Extend/TopologyUtils.py           | 546 ++++++++++++++++++++++++++++++
+ src/Display/OCCViewer.py              | 349 +++++++++++----
+ src/Display/WebGl/jupyter_renderer.py | 618 ++++++++++++++++++++++++++
+ src/Extend/DataExchange.py            | 461 +++++++++++++++++++
+ src/Extend/ShapeFactory.py            | 239 ++++++++++
+ src/Extend/TopologyUtils.py           | 546 +++++++++++++++++++++++
  src/Extend/__init__.py                |   0
- src/Visualization/Display3d.cpp       | 167 ++++++++-
- src/Visualization/Tesselator.cpp      |  96 ++++--
+ src/Visualization/Display3d.cpp       | 167 ++++++-
+ src/Visualization/Tesselator.cpp      |  96 +++-
  src/Visualization/Tesselator.h        |   8 +-
- src/Visualization/Visualization.h     |  42 ++-
- src/Visualization/Visualization.i     | 112 ++++--
+ src/Visualization/Visualization.h     |  42 +-
+ src/Visualization/Visualization.i     | 112 +++--
  12 files changed, 2488 insertions(+), 151 deletions(-)
  create mode 100644 src/Display/WebGl/jupyter_renderer.py
  create mode 100644 src/Extend/DataExchange.py
@@ -3120,5 +3120,5 @@ index d21a2d16..a97c9835 100644
  };
  
 -- 
-2.12.2
+2.21.0.windows.1
 
