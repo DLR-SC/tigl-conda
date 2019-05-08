@@ -14,13 +14,13 @@ source:
     - private_linking.patch
 
 build:
-  number: 6
+  number: 7
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - doxygen =1.8.10
+    - doxygen >=1.8.10
 
   host:
     - curl-static ==7.50.3
