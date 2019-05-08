@@ -7,35 +7,32 @@ package:
 source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
+  md5: 4db741d2deebb55f3fa5fdbc057dad81
   patches:
     - install.patch
-    - fixmemcpy.patch
+    - fixmemcpy.patch  # [linux]
+    - private_linking.patch
 
 build:
-  number: 3
-  features:
-    - vc9              # [win and py27]
-    - vc10             # [win and py34]
-    - vc14             # [win and py35]
+  number: 5
 
 requirements:
   build:
-    - python
-    - curl
-    - libxml2
-    - libxslt
-    - gcc               # [linux]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - doxygen =1.8.10
 
+  host:
+    - curl-static ==7.50.3
+    - libxml2-static ==2.9.3
+    - libxslt-static ==1.1.29
+    - python {{ python }}
+  
   run:
-    - curl              # [unix]
-    - libxml2           # [unix]
-    - libxslt           # [unix]
-    - python 2.7.*      # [py27]
-    - python 3.4.*      # [py34]
-    - python 3.5.*      # [py35]
+    - python
 
 test:
-  commands:
+    commands:
     - tixiDemo
 
 about:

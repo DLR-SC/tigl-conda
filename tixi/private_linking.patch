@@ -1,0 +1,31 @@
+From 8c149a2c44cea1bebf59ef3da5ccd43d4e599ecd Mon Sep 17 00:00:00 2001
+From: Martin Siggel <martin.siggel@dlr.de>
+Date: Wed, 8 May 2019 23:56:50 +0200
+Subject: [PATCH] Make linking deps private
+
+---
+ src/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git src/CMakeLists.txt src/CMakeLists.txt
+index 563070b..2e06d5f 100644
+--- src/CMakeLists.txt
++++ src/CMakeLists.txt
+@@ -28,12 +28,12 @@ if(WIN32)
+ endif(WIN32)
+ 
+ add_library(TIXI SHARED ${TIXI_SRC} ${TIXI_HDR})
+-target_link_libraries (TIXI  ${TIXI_LIBS})
++target_link_libraries (TIXI  PRIVATE ${TIXI_LIBS})
+ set_target_properties( TIXI PROPERTIES VERSION ${TIXI_VERSION})
+ set_target_properties( TIXI PROPERTIES SOVERSION "${TIXI_VERSION_MAJOR}")
+ 
+ add_library(TIXI_static ${TIXI_SRC} ${TIXI_HDR})
+-target_link_libraries (TIXI_static  ${TIXI_LIBS})
++target_link_libraries (TIXI_static  PRIVATE ${TIXI_LIBS})
+ 
+ set(CMAKE_INSTALL_INCLUDE_DIR "include")
+ set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/tixi")
+-- 
+2.21.0.windows.1
+
