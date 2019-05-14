@@ -29,8 +29,4 @@ ninja install
 if errorlevel 1 exit 1
 
 REM install python packages
-mkdir %SP_DIR%\tigl3
-xcopy ..\bindings\python_internal\tigl3\* %SP_DIR%\tigl3\ /e
-copy lib\tigl3wrapper.py %SP_DIR%\tigl3\
-copy bindings\python_internal\*.py %SP_DIR%\tigl3\
-copy bindings\python_internal\*.pyd %SP_DIR%\tigl3\
+move %LIBRARY_PREFIX%\share\tigl3\python\tigl3 %SP_DIR%
