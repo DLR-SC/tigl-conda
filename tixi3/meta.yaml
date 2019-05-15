@@ -9,7 +9,6 @@ source:
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
   md5: 62befb444108b6db6e89b7ebd865b5a7
   patches:
-    - fixmemcpy.patch  # [linux]
     - fixvs2008.patch # [win]
 
 build:

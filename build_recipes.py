@@ -18,6 +18,47 @@ def split_dir_parts(path):
     return allparts
 
 
+def sorted_packages(packages_to_build):
+
+    if len(packages_to_build) == 0:
+        return ()
+
+    build_order = ['ninja',
+                   'swig3',
+                   'doxygen',
+                   'tbb',
+                   'freeimage',
+                   'freetype',
+                   'gl2ps',
+                   'curl',
+                   'curl-static'
+                   'libxml2',
+                   'libxml2-static',
+                   'libxslt',
+                   'libxstl-static',
+                   'tixi',
+                   'tixi3',
+                   'oce-0.16',
+                   'oce-0.17',
+                   'python-occ',
+                   'python-occ_0.17',
+                   'pythreejs',
+                   'tigl',
+                   'tigl3']
+
+    index_array = []
+    for lib in packages_to_build:
+        try:
+            lib_idx = build_order.index(lib)
+        except ValueError:
+            lib_idx = -1
+        index_array.append(lib_idx)
+
+    build_idx, to_build_sorted = zip(*sorted(zip(index_array, packages_to_build)))
+
+    return to_build_sorted
+
+
 def get_changed_recipes():
     repo = Repo(path=".")
     assert not repo.bare
@@ -42,6 +83,7 @@ def main():
         print ("No anaconda API token given. Packages will not be uploaded.  Define environment variable ANACONDA_API_TOKEN")
 
     modules = get_changed_recipes()
+    modules = sorted_packages(modules)
 
     if len(modules) > 0:
         print("conda build " + " ".join(modules))

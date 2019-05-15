@@ -8,7 +8,6 @@ cd build
 if [ `uname` == Darwin ]; then
     EXTRA_LIBS="-lm -liconv -framework Foundation -lz -framework Security $LDFLAGS"
 else
-    export LDFLAGS="-lrt -Wl,--wrap=memcpy"
     EXTRA_LIBS="-lm -lrt $LDFLAGS"
 fi
 
@@ -16,7 +15,6 @@ export CXXFLAGS="$CXXFLAGS -DGTEST_USE_OWN_TR1_TUPLE=1"
 
 # Configure step
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
- -DCMAKE_PREFIX_PATH=$CONDA_PREFIX \
  -DCMAKE_SHARED_LINKER_FLAGS="$EXTRA_LIBS" \
  -DCMAKE_EXE_LINKER_FLAGS="$EXTRA_LIBS" \
  -DTIXI_BUILD_TESTS=OFF \
