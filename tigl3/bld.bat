@@ -20,11 +20,11 @@ cmake -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
 if errorlevel 1 exit 1
 
 REM Build step 
-cmake --build .
+cmake --build . --config Release
 if errorlevel 1 exit 1
 
 REM Install step
-cmake --build . --target install
+cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
 REM install python packages
