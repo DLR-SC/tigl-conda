@@ -5,7 +5,7 @@ REM Remove dot from PY_VER for use in library name
 set MY_PY_VER=%PY_VER:.=%
 
 REM Configure step
-cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DTIGL_VIEWER=ON ^
@@ -19,11 +19,11 @@ cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
 if errorlevel 1 exit 1
 
 REM Build step 
-cmake --build . --config Release
+cmake --build .
 if errorlevel 1 exit 1
 
 REM Install step
-cmake --build . --target install --config Release
+cmake --build . --target install
 if errorlevel 1 exit 1
 
 REM install python packages
