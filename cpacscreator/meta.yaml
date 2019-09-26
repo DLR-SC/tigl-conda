@@ -9,7 +9,7 @@ source:
   git_tag: creator_pre_release
 
 build:
-  number: 1
+  number: 2
 
 
 requirements:
@@ -18,6 +18,7 @@ requirements:
     - {{ cdt('libx11-devel') }}         # [linux]
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
     - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - {{ cdt(''mesa-dri-drivers') }}    # [linux]
     - {{ cdt('libxcb') }}               # [linux]
     - {{ cdt('libxi-devel') }}          # [linux]
     - {{ cdt('libxau-devel') }}         # [linux]
