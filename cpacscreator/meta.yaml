@@ -9,7 +9,7 @@ source:
   git_tag: cpacs_creator_dev
 
 build:
-  number: 2
+  number: 3
 
 
 requirements:
@@ -23,6 +23,10 @@ requirements:
     - {{ cdt('libxi-devel') }}          # [linux]
     - {{ cdt('libxau-devel') }}         # [linux]
     - {{ cdt('libxext-devel') }}        # [linux]
+    - {{ cdt('libselinux') }}           # [linux]
+    - {{ cdt('libXdamage') }}           # [linux]
+    - {{ cdt('libXfixes') }}            # [linux]
+    - {{ cdt('libXxf86vm') }}           # [linux]
     - ninja
     - python
     - cmake
