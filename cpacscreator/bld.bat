@@ -4,6 +4,11 @@ cd build
 REM Remove dot from PY_VER for use in library name
 set MY_PY_VER=%PY_VER:.=%
 
+REM We need own flags as conda turns on program size optimization
+REM which ends up in huge static library sizes
+set CFLAGS=
+set CXXFLAGS=
+
 REM Configure step
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
