@@ -1,0 +1,81 @@
+{% set version = "3.15.4" %}
+
+package:
+  name: cmake
+  version: {{ version }}
+
+source:
+  url: https://gitlab.kitware.com/cmake/cmake/-/archive/v{{ version }}/cmake-v{{ version }}.tar.bz2
+  sha256: 5424e2961b83d659520bd83a3304d1d84aa1e6320efc8b57fa9e0a6bd433a23a
+
+build:
+  number: 0
+  skip: True  # [win and vc<14]
+  ignore_run_exports:
+    - vc
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - make            # [unix]
+
+  host:
+    - bzip2           # [unix]
+    - curl 7.61.1           # [unix]
+    - expat           # [unix]
+    - ncurses         # [unix]
+    - xz              # [unix]
+    - zlib            # [unix]
+    - libuv           # [unix]
+    - rhash           # [unix]
+
+  run:
+    - bzip2           # [unix]
+    - curl            # [unix]
+    - expat           # [unix]
+    - ncurses         # [unix]
+    - xz              # [unix]
+    - zlib            # [unix]
+    - libuv           # [unix]
+    - rhash           # [unix]
+    - vs2015_runtime  # [win]
+
+test:
+  files:
+    - SSLTest.cmake
+  commands:
+    - cmake --version
+    - cmake -V -P SSLTest.cmake
+    - ctest --version
+    - cpack --version
+    - ccmake --version  # [unix]
+
+about:
+  home: http://www.cmake.org/
+  license: BSD 3-clause
+  license_family: BSD
+  license_file:
+    - Copyright.txt
+    - Utilities/cmbzip2/LICENSE         # [win]
+    - Utilities/cmcurl/COPYING          # [win]
+    - Utilities/cmexpat/COPYING         # [win]
+    - Utilities/cmliblzma/COPYING       # [win]
+    - Utilities/cmzlib/Copyright.txt    # [win]
+    - Utilities/cmlibuv/LICENSE         # [win]
+    - Utilities/cmlibrhash/COPYING      # [win]
+    - Utilities/cmlibarchive/COPYING
+    - Utilities/cmjsoncpp/LICENSE
+  summary: CMake is an extensible, open-source system that manages the build process
+
+extra:
+  recipe-maintainers:
+    - blowekamp
+    - groutr
+    - jakirkham
+    - jschueller
+    - ocefpaf
+    - msarahan
+    - scopatz
+    - tadeu
+    - marcelotrevisani

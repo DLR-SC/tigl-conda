@@ -23,7 +23,8 @@ def sorted_packages(packages_to_build):
     if len(packages_to_build) == 0:
         return ()
 
-    build_order = ['ninja',
+    build_order = ['cmake',
+                   'ninja',
                    'swig4',
                    'doxygen',
                    'tbb',
