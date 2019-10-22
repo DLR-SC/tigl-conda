@@ -24,7 +24,7 @@ def sorted_packages(packages_to_build):
         return ()
 
     build_order = ['ninja',
-                   'swig3',
+                   'swig4',
                    'doxygen',
                    'tbb',
                    'freeimage',

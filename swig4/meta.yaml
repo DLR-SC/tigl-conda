@@ -1,0 +1,38 @@
+{% set version = "4.0.1" %}
+
+
+package:
+  name: swig
+  version: {{version}}
+
+source:
+  fn: swigwin-{{version}}.zip [win]
+  url: http://prdownloads.sourceforge.net/swig/swigwin-{{version}}.zip [win]
+  fn: swig-{{version}}.tar.gz   [unix]
+  url: http://prdownloads.sourceforge.net/swig/swig-{{version}}.tar.gz   [unix]
+
+build:
+  number: 1
+  detect_binary_files_with_prefix: True    [unix]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+
+  host:
+    - pcre      [unix]
+    - python    [unix]
+    - zlib      [unix]
+  run:
+    - pcre      [unix]
+    - zlib      [unix]
+
+test:
+  commands:
+    - swig -help
+
+about:
+    home: http://www.swig.org/
+    license: GPLv3
+    summary: Simplified Wrapper Interface Generator
