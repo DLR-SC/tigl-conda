@@ -10,7 +10,7 @@ source:
 
 build:
   number: 0
-  skip: True  # [win and vc<14]
+  # skip: True  # [win and vc<14]
   ignore_run_exports:
     - vc
 
@@ -21,32 +21,17 @@ requirements:
     - make            # [unix]
 
   host:
-    - bzip2           # [unix]
-    - curl 7.61.1           # [unix]
-    - expat           # [unix]
-    - ncurses         # [unix]
-    - xz              # [unix]
     - zlib            # [unix]
     - libuv           # [unix]
-    - rhash           # [unix]
 
   run:
-    - bzip2           # [unix]
-    - curl            # [unix]
-    - expat           # [unix]
-    - ncurses         # [unix]
-    - xz              # [unix]
     - zlib            # [unix]
     - libuv           # [unix]
-    - rhash           # [unix]
     - vs2015_runtime  # [win]
 
 test:
-  files:
-    - SSLTest.cmake
   commands:
     - cmake --version
-    - cmake -V -P SSLTest.cmake
     - ctest --version
     - cpack --version
     - ccmake --version  # [unix]
