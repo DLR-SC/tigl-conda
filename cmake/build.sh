@@ -21,6 +21,7 @@ export DEBUG_CXXFLAGS=$(echo "$DEBUG_CXXFLAGS" |sed -e "s|-I$PREFIX/include||")
              -DCURSES_INCLUDE_PATH="${PREFIX}/include" \
              -DCMake_HAVE_CXX_MAKE_UNIQUE:INTERNAL=FALSE \
              -DCMAKE_PREFIX_PATH="${PREFIX}" \
+              -DBUILD_CursesDialog=ON \
              -DCMAKE_CXX_STANDARD:STRING=17
 
 make install -j${CPU_COUNT}

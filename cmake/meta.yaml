@@ -23,10 +23,15 @@ requirements:
   host:
     - zlib            # [unix]
     - libuv           # [unix]
+    - openssl         # [unix]
+    - ncurses         # [unix]
 
   run:
     - zlib            # [unix]
     - libuv           # [unix]
+    - openssl         # [unix]
+    - ncurses         # [unix]
+
     - vs2015_runtime  # [win]
 
 test:
