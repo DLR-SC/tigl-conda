@@ -36,7 +36,7 @@ requirements:
     - tbb-devel
     - python
     - freetype
-    - fontconfig
+    - fontconfig # [unix]
 
   run:
     - gl2ps
