@@ -10,7 +10,8 @@ source:
   patches:
     - pyocc_coons_c2.patch
     - link_python.patch
-    - jupyter-renderer.patch
+    - jupyter-renderer.patch # [win]
+    - jupyter-renderer-unix.patch # [unix]
 
 build:
   number: 10
