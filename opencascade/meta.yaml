@@ -13,7 +13,7 @@ source:
     - no-xmu.patch     # [linux]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: True
 
 requirements:
@@ -30,7 +30,6 @@ requirements:
     - ninja
   host:
     - libglu # [linux]
-    - gl2ps
     - freeimageplus
     - tbb
     - tbb-devel
@@ -39,11 +38,10 @@ requirements:
     - fontconfig # [unix]
 
   run:
-    - gl2ps
     - freeimageplus
     - tbb
     - freetype
-
+    - six
 
 test:
   requires:
