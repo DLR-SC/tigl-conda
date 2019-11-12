@@ -11,9 +11,10 @@ source:
   sha256: 9614c2075cef53e30b25317fc8fcfb71d60a69181d562e1c56469ed8e54ad758
   patches:
     - no-xmu.patch     # [linux]
+    - fix-private-linking.patch
 
 build:
-  number: 2
+  number: 3
   detect_binary_files_with_prefix: True
 
 requirements:
