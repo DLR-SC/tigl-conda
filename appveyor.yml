@@ -49,7 +49,7 @@ install:
   - call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
   - cmd: conda config --set always_yes yes --set changeps1 no
   - cmd: conda config --set show_channel_urls true
-  - cmd: conda install --yes conda-build anaconda-client gitpython
+  - cmd: conda install --yes conda-build=3.18.9 anaconda-client gitpython
   - cmd: conda config --add channels dlr-sc
   - cmd: conda config --add channels dlr-sc/label/tigl-dev
   - cmd: set PYTHONUNBUFFERED=1

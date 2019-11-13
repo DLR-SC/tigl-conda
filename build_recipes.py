@@ -41,8 +41,10 @@ def sorted_packages(packages_to_build):
                    'tixi3',
                    'oce-0.16',
                    'oce-0.17',
+                   'opencascade',
                    'python-occ',
                    'python-occ_0.17',
+                   'python-occ-7x',
                    'pythreejs',
                    'tigl',
                    'tigl3']

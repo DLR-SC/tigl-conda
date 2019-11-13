@@ -1,0 +1,45 @@
+{% set version = "7.4.0beta" %}
+
+package:
+  name: pythonocc-core
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/tpaviot/pythonocc-core.git
+  git_tag: review/occt7x-support
+
+build:
+  number: 1
+  binary_relocation: false [osx]
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - ninja
+    - python
+    - cmake
+    - swig >=3.0.11
+
+  host:
+    - python
+    - libglu [linux]
+    - opencascade ==7.4.0
+
+  run:
+    - libglu [linux]
+    - pyqt
+    - opencascade ==7.4.0
+    - python
+
+test:
+  imports:
+    - OCC
+    - OCC.Core.BRepPrimAPI
+
+about:
+  home: https://github.com/tpaviot/pythonocc-core
+  license: LGPL
+  summary: A python wrapper for the OCE library
