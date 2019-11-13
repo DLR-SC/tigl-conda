@@ -1,9 +1,6 @@
 mkdir build
 cd build
 
-REM Remove dot from PY_VER for use in library name
-set MY_PY_VER=%PY_VER:.=%
-
 REM We need to build with bigobj support, else compilation fails for stepbasic
 set CXXFLAGS=/wd4244 /bigobj
 
@@ -12,9 +9,8 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_BUILD_TYPE=Release ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
- -DPython3_EXECUTABLE:FILEPATH="%PYTHON%" ^
- -DPython3_INCLUDE_DIRS:PATH="%PREFIX%"/include ^
- -DPython3_LIBRARIES:FILEPATH="%PREFIX%"/libs/python%MY_PY_VER%.lib ^
+ -DPython3_FIND_STRATEGY=LOCATION ^
+ -DSWIG_HIDE_WARNINGS=ON ^
  ..
 if errorlevel 1 exit 1
  

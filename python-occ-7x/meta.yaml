@@ -9,7 +9,7 @@ source:
   git_tag: review/occt7x-support
 
 build:
-  number: 1
+  number: 2
   binary_relocation: false [osx]
 
 requirements:
@@ -19,20 +19,18 @@ requirements:
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
     - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - ninja
-    - python
+    - python {{ python }}
     - cmake
     - swig >=3.0.11
 
   host:
-    - python
-    - libglu [linux]
+    - python {{ python }}
     - opencascade ==7.4.0
 
   run:
-    - libglu [linux]
     - pyqt
     - opencascade ==7.4.0
-    - python
+    - python {{ python }}
 
 test:
   imports:
