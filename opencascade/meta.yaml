@@ -12,9 +12,10 @@ source:
   patches:
     - no-xmu.patch     # [linux]
     - fix-private-linking.patch
+    - fix_brepblend.patch
 
 build:
-  number: 3
+  number: 4
   detect_binary_files_with_prefix: True
 
 requirements:
