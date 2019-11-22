@@ -29,3 +29,15 @@ ninja install
 mkdir -p $SP_DIR/tigl3
 mv $PREFIX/share/tigl3/python/tigl3/* $SP_DIR/tigl3/
 python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl3/tigl3wrapper.py libtigl3
+
+# The egg-info file is necessary because some packages
+# might require tigl3 in their setup.py.
+# See https://setuptools.readthedocs.io/en/latest/pkg_resources.html#workingset-objects
+
+cat > $SP_DIR/tigl3-$PKG_VERSION.egg-info <<FAKE_EGG
+Metadata-Version: 2.1
+Name: tigl3
+Version: $PKG_VERSION
+Summary: The TiGL Geometry Library to process aircraft geometries in pre-design
+Platform: UNKNOWN
+FAKE_EGG
