@@ -34,3 +34,15 @@ if [ `uname` == Darwin ]; then
       install_name_tool -rpath $PREFIX/lib @loader_path/../../../ $lib
     done
 fi
+
+# The egg-info file is necessary because some packages,
+# might require OCC in their setup.py.
+# See https://setuptools.readthedocs.io/en/latest/pkg_resources.html#workingset-objects
+
+cat > $SP_DIR/OCC-$PKG_VERSION.egg-info <<FAKE_EGG
+Metadata-Version: 2.1
+Name: OCC
+Version: $PKG_VERSION
+Summary: A python wrapper for the OCE library
+Platform: UNKNOWN
+FAKE_EGG

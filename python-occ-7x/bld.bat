@@ -27,3 +27,14 @@ REM copy the source
 cd ..
 xcopy src "%LIBRARY_PREFIX%\src\pythonocc-core\src" /s /e /i
 if errorlevel 1 exit 1
+
+REM The egg-info file is necessary because some packages,
+REM might require OCC in their setup.py.
+REM See https://setuptools.readthedocs.io/en/latest/pkg_resources.html#workingset-objects
+
+set egg_info=%SP_DIR%\OCC-%PKG_VERSION%.egg-info
+echo>%egg_info% Metadata-Version: 2.1
+echo>>%egg_info% Name: OCC
+echo>>%egg_info% Version: %PKG_VERSION%
+echo>>%egg_info% Summary: A python wrapper for the OCE library
+echo>>%egg_info% Platform: UNKNOWN
