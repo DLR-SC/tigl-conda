@@ -6,10 +6,10 @@ package:
 
 source:
   git_url: https://github.com/tpaviot/pythonocc-core.git
-  git_tag: review/occt7x-support
+  git_tag: {{ version }}
 
 build:
-  number: 8
+  number: 10
   binary_relocation: false [osx]
 
 requirements:
@@ -27,9 +27,8 @@ requirements:
     - opencascade ==7.4.0
 
   run:
-    - pyqt
     - opencascade ==7.4.0
-    - python {{ python }}
+    - python
 
 test:
   imports:
