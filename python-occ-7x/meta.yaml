@@ -1,4 +1,4 @@
-{% set version = "7.4.0beta" %}
+{% set version = "7.4.0beta2" %}
 
 package:
   name: pythonocc-core
@@ -9,7 +9,7 @@ source:
   git_tag: {{ version }}
 
 build:
-  number: 10
+  number: 0
   binary_relocation: false [osx]
 
 requirements:
