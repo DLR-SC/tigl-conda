@@ -20,7 +20,7 @@ source:
     - find_iconv.patch                                                           # [not win]
 
 build:
-  number: 1
+  number: 2
   script:                                                  # [win]
       - mkdir %SCRIPTS%                                    # [win]
       - copy doxygen.exe %SCRIPTS%\ || goto :eof           # [win]
