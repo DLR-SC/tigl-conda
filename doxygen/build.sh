@@ -1,12 +1,10 @@
-mkdir build
-cd build
+#!/bin/bash
 
+mkdir build && cd build
 cmake \
-    -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX \
-    -DCMAKE_PREFIX_PATH=$PREFIX \
-    -DCMAKE_SYSTEM_PREFIX_PATH=$PREFIX \
-    ..
-
-make -j ${CPU_COUNT}
+	-DCMAKE_INSTALL_PREFIX=$PREFIX          \
+	-DCMAKE_BUILD_TYPE=Release              \
+	..
+make
+make tests
 make install
-
