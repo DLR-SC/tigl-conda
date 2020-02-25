@@ -19,6 +19,7 @@ cmake -G "Ninja" .. \
       -D BUILD_MODULE_Draw:BOOL=OFF \
       -D USE_TBB:BOOL=ON \
       -D USE_FREEIMAGE:BOOL=ON \
+      -D BUILD_RELEASE_DISABLE_EXCEPTIONS=OFF \
 
 # Build step
 cmake --build . 

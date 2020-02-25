@@ -15,7 +15,7 @@ source:
     - fix_brepblend.patch
 
 build:
-  number: 4
+  number: 5
   detect_binary_files_with_prefix: True
 
 requirements:
