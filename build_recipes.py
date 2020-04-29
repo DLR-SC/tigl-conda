@@ -79,21 +79,52 @@ def get_changed_recipes():
     return modules
 
 
-def main():
-    api_token = os.environ.get("ANACONDA_API_TOKEN")
+def get_current_branch():
 
+    active_branch = None
+    appveyor_branch = os.environ.get("APPVEYOR_REPO_BRANCH")
+    travis_branch = os.environ.get("TRAVIS_BRANCH")
+    if appveyor_branch is not None:
+        active_branch = appveyor_branch
+    elif travis_branch is not None:
+        active_branch = travis_branch
+    else:
+        repo = Repo(path=".")
+        try:
+            if not repo.head.is_detached:
+                active_branch = repo.active_branch.name
+        except TypeError:
+            pass # just return None
+    return active_branch
+
+
+def main():
+
+    upload_to_anaconda = True
+
+    api_token = os.environ.get("ANACONDA_API_TOKEN")
     if api_token is None:
         print ("No anaconda API token given. Packages will not be uploaded.  Define environment variable ANACONDA_API_TOKEN")
+        upload_to_anaconda = False
+
+    active_branch = get_current_branch()
+    if active_branch is not None:
+        print("On branch {}.".format(active_branch))
+    else:
+        print ("Could not determine branch name.")
+    if not active_branch == 'master':
+        print ("The current branch is not the master branch. Packages will not be uploaded.")
+        upload_to_anaconda = False
 
     modules = get_changed_recipes()
     modules = sorted_packages(modules)
 
     if len(modules) > 0:
         print("conda build " + " ".join(modules))
-        if api_token is None:
-            conda_build.api.build(modules)
-        else:
+        if upload_to_anaconda:
             conda_build.api.build(modules, user="dlr-sc", token=api_token)
+        else:
+            conda_build.api.build(modules)
 
 
 if __name__ == "__main__":
