@@ -80,20 +80,46 @@ def get_changed_recipes():
 
 
 def main():
-    api_token = os.environ.get("ANACONDA_API_TOKEN")
 
+    upload_to_anaconda = True
+
+    api_token = os.environ.get("ANACONDA_API_TOKEN")
     if api_token is None:
         print ("No anaconda API token given. Packages will not be uploaded.  Define environment variable ANACONDA_API_TOKEN")
+        upload_to_anaconda = False
+
+    active_branch = 'unknown'
+    appveyor_branch = os.environ.get("APPVEYOR_REPO_BRANCH")
+    travis_branch = os.environ.get("TRAVIS_BRANCH")
+    if appveyor_branch is not None:
+        active_branch = appveyor_branch
+    elif travis_branch is not None:
+        active_branch = travis_branch
+    else:
+        repo = Repo(path=".")
+        try:
+            if not repo.head.is_detached:
+                active_branch = repo.active_branch.name
+        except TypeError:
+            print("Could not determine branch name using the Git API")
+    if active_branch == 'unknown':
+        print ("Could not determine branch name.")
+    else:
+        print("On branch {}".format(active_branch))
+
+    if not active_branch == 'master':
+        print ("The current branch is not the master branch. Packages will not be uploaded.")
+        upload_to_anaconda = False
 
     modules = get_changed_recipes()
     modules = sorted_packages(modules)
 
     if len(modules) > 0:
         print("conda build " + " ".join(modules))
-        if api_token is None:
-            conda_build.api.build(modules)
-        else:
+        if upload_to_anaconda:
             conda_build.api.build(modules, user="dlr-sc", token=api_token)
+        else:
+            conda_build.api.build(modules)
 
 
 if __name__ == "__main__":
