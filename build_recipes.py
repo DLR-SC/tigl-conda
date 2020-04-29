@@ -79,16 +79,9 @@ def get_changed_recipes():
     return modules
 
 
-def main():
+def get_current_branch():
 
-    upload_to_anaconda = True
-
-    api_token = os.environ.get("ANACONDA_API_TOKEN")
-    if api_token is None:
-        print ("No anaconda API token given. Packages will not be uploaded.  Define environment variable ANACONDA_API_TOKEN")
-        upload_to_anaconda = False
-
-    active_branch = 'unknown'
+    active_branch = None
     appveyor_branch = os.environ.get("APPVEYOR_REPO_BRANCH")
     travis_branch = os.environ.get("TRAVIS_BRANCH")
     if appveyor_branch is not None:
@@ -101,12 +94,24 @@ def main():
             if not repo.head.is_detached:
                 active_branch = repo.active_branch.name
         except TypeError:
-            print("Could not determine branch name using the Git API")
-    if active_branch == 'unknown':
-        print ("Could not determine branch name.")
-    else:
-        print("On branch {}".format(active_branch))
+            pass # just return None
+    return active_branch
 
+
+def main():
+
+    upload_to_anaconda = True
+
+    api_token = os.environ.get("ANACONDA_API_TOKEN")
+    if api_token is None:
+        print ("No anaconda API token given. Packages will not be uploaded.  Define environment variable ANACONDA_API_TOKEN")
+        upload_to_anaconda = False
+
+    active_branch = get_current_branch()
+    if active_branch is not None:
+        print("On branch {}.".format(active_branch))
+    else:
+        print ("Could not determine branch name.")
     if not active_branch == 'master':
         print ("The current branch is not the master branch. Packages will not be uploaded.")
         upload_to_anaconda = False
