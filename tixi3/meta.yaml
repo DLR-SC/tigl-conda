@@ -9,7 +9,7 @@ source:
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
   md5: ab85e8484c6f153f5ecf49da512fece3
   patches:
-    - disable-fortran.patch
+    - disable-fortran.patch [osx]
 
 build:
   number: 4
