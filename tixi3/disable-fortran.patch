@@ -1,0 +1,87 @@
+From 191f90586b4c30b66f15ffe8846732b6f323d824 Mon Sep 17 00:00:00 2001
+From: Martin Siggel <martin.siggel@dlr.de>
+Date: Thu, 23 Jul 2020 22:30:39 +0200
+Subject: [PATCH] Use Fortran optionally
+
+Compiling fortran often causes problem.
+Hence, we now have a way to switch on / off Fortran usage.
+---
+ .travis.yml             |  2 +-
+ CMakeLists.txt          |  6 +++++-
+ appveyor.yml            |  4 ++--
+ bindings/CMakeLists.txt | 10 ++++++----
+ 4 files changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/.travis.yml b/.travis.yml
+index 12f292f..11a4271 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -13,7 +13,7 @@ before_script:
+   - cd build
+ 
+ script: 
+-  - cmake -DBUILD_SHARED_LIBS=ON -DTIXI_BUILD_TESTS=ON ..
++  - cmake -DBUILD_SHARED_LIBS=ON -DTIXI_BUILD_TESTS=ON -DTIXI_ENABLE_FORTRAN=ON ..
+   - make
+   - cd tests
+   - ./TIXI-unittests
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 427bf57..3c15738 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -53,6 +53,8 @@ if (NOT DEFINED CMAKE_DEBUG_POSTFIX)
+     set(CMAKE_DEBUG_POSTFIX "-d")
+ endif (NOT DEFINED CMAKE_DEBUG_POSTFIX)
+ 
++option (TIXI_ENABLE_FORTRAN "Enable Fortran examples and binding" OFF)
++
+ find_package(PythonInterp)
+ 
+ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+@@ -105,7 +107,9 @@ endif(TIXI_BUILD_TESTS)
+ 
+ #demos
+ add_subdirectory(examples/Demo)
+-add_subdirectory(examples/fortran77)
++if (TIXI_ENABLE_FORTRAN)
++  add_subdirectory(examples/fortran77)
++endif(TIXI_ENABLE_FORTRAN)
+ 
+ # create the doc
+ include(createDoc)
+diff --git a/appveyor.yml b/appveyor.yml
+index e9601b7..5d605b0 100644
+--- a/appveyor.yml
++++ b/appveyor.yml
+@@ -61,8 +61,8 @@ build_script:
+ - ps: |
+     md _build -Force | Out-Null
+     cd _build
+-    Write-Output "Running cmake:  -DBUILD_SHARED_LIBS=ON -DTIXI_BUILD_TESTS=ON -DMATLAB_DIR=c:\tixi-3rdparty\matlab-libs-win -DCMAKE_PREFIX_PATH=c:\tixi-3rdparty\$thirdparty -DCMAKE_INSTALL_PREFIX=install .."
+-    & cmake -G "$generator"  -DBUILD_SHARED_LIBS=ON -DTIXI_BUILD_TESTS=ON -DMATLAB_DIR=c:\tixi-3rdparty\matlab-libs-win -DCMAKE_PREFIX_PATH=c:\tixi-3rdparty\"$thirdparty" -DCMAKE_INSTALL_PREFIX=install ..
++    Write-Output "Running cmake: -DTIXI_ENABLE_FORTRAN=ON -DBUILD_SHARED_LIBS=ON -DTIXI_BUILD_TESTS=ON -DMATLAB_DIR=c:\tixi-3rdparty\matlab-libs-win -DCMAKE_PREFIX_PATH=c:\tixi-3rdparty\$thirdparty -DCMAKE_INSTALL_PREFIX=install .."
++    & cmake -G "$generator"  -DTIXI_ENABLE_FORTRAN=ON -DBUILD_SHARED_LIBS=ON -DTIXI_BUILD_TESTS=ON -DMATLAB_DIR=c:\tixi-3rdparty\matlab-libs-win -DCMAKE_PREFIX_PATH=c:\tixi-3rdparty\"$thirdparty" -DCMAKE_INSTALL_PREFIX=install ..
+     if ($LastExitCode -ne 0) {
+         throw "Exec: $ErrorMessage"
+     }
+diff --git a/bindings/CMakeLists.txt b/bindings/CMakeLists.txt
+index df85f68..3fc4fc1 100644
+--- a/bindings/CMakeLists.txt
++++ b/bindings/CMakeLists.txt
+@@ -1,7 +1,9 @@
+-add_subdirectory(fortran)
+ add_subdirectory(matlab)
+-
+ add_subdirectory(python)
+-add_subdirectory(fortran03)
+-
+ add_subdirectory(cpp)
++
++if (TIXI_ENABLE_FORTRAN)
++  add_subdirectory(fortran03)
++  add_subdirectory(fortran)
++endif(TIXI_ENABLE_FORTRAN)
++
+-- 
+2.26.2.windows.1
+

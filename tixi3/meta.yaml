@@ -8,9 +8,11 @@ source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
   md5: ab85e8484c6f153f5ecf49da512fece3
+  patches:
+    - disable-fortran.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
