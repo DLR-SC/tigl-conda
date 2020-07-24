@@ -1,4 +1,4 @@
-{% set version = "3.1.0" %}
+{% set version = "3.1.1" %}
 
 package:
   name: tixi3
@@ -7,12 +7,10 @@ package:
 source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
-  md5: ab85e8484c6f153f5ecf49da512fece3
-  patches:
-    - disable-fortran.patch [osx]
+  md5: d75e189d578aff8794355a1b180080d6
 
 build:
-  number: 4
+  number: 0
 
 requirements:
   build:
