@@ -1,5 +1,5 @@
 {% set name = "doxygen" %}
-{% set version = "1.8.18" %}
+{% set version = "1.8.15" %}
 
 package:
   name: {{ name|lower }}
@@ -7,8 +7,8 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.src.tar.gz                                 
-  url: http://doxygen.nl/files/{{ name }}-{{ version }}.src.tar.gz 
-  md5: e35b65a6d6dec179343116974ee83806 
+  url: https://sourceforge.net/projects/doxygen/files/rel-{{ version }}/doxygen-{{ version }}.src.tar.gz/download
+  md5: 2c98c73eba392d334f5bbaf15e09bae3 
 
   patches:                                                                       # [not win]
     # CMake finds iconv_open in glibc, but finds iconv.h from libiconv.
@@ -16,7 +16,7 @@ source:
     - find_iconv.patch                                                           # [not win]
 
 build:
-  number: 0
+  number: 100
 
 requirements:
   build:
