@@ -1,18 +1,14 @@
 {% set name = "doxygen" %}
-{% set version = "1.8.16" %}
+{% set version = "1.8.18" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.src.tar.gz                                    # [not win]
-  url: http://doxygen.nl/files/{{ name }}-{{ version }}.src.tar.gz           # [not win]
-  sha256: cc8f6cf3320bff0aada8268ccefe25de3118c47ff1212d83a457254bad8daa5d   # [not win]
-
-  fn: {{ name }}-{{ version }}.windows.x64.bin.zip                           # [win]
-  url: http://doxygen.nl/files/{{ name }}-{{ version }}.windows.x64.bin.zip  # [win]
-  sha256: c84890ec003841c1ee6ff35dd3b17fdfd5ae4c2914d1c8df11dcc3719d294ac5   # [win]
+  fn: {{ name }}-{{ version }}.src.tar.gz                                 
+  url: http://doxygen.nl/files/{{ name }}-{{ version }}.src.tar.gz 
+  md5: e35b65a6d6dec179343116974ee83806 
 
   patches:                                                                       # [not win]
     # CMake finds iconv_open in glibc, but finds iconv.h from libiconv.
@@ -20,26 +16,20 @@ source:
     - find_iconv.patch                                                           # [not win]
 
 build:
-  number: 2
-  script:                                                  # [win]
-      - mkdir %SCRIPTS%                                    # [win]
-      - copy doxygen.exe %SCRIPTS%\ || goto :eof           # [win]
-      - copy doxyindexer.exe %SCRIPTS%\ || goto :eof       # [win]
-      - copy doxysearch.cgi.exe %SCRIPTS%\ || goto :eof    # [win]
-      - copy libclang.dll %LIBRARY_BIN%\ || goto :eof      # [win]
-      - copy libclang.dll %LIBRARY_BIN%\ || goto :eof      # [win]
-      - copy %RECIPE_DIR%\LICENSE %SRC_DIR%\ || goto :eof  # [win]
+  number: 0
 
-requirements:       # [not win]
-  build:            # [not win]
-    - {{ compiler('c') }}  # [not win]
-    - {{ compiler('cxx') }}  # [not win]
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - bison         # [not win]
-    - cmake         # [not win]
+    - m2-bison      # [win]
+    - cmake
     - make          # [not win]
     - flex          # [not win]
+    - m2-flex       # [win]
     - m4            # [not win]
-    - python        # [not win]
+    - python
     - texlive-core  # [not win]
   host:             # [not win]
     - libiconv      # [not win]
