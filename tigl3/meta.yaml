@@ -31,7 +31,7 @@ requirements:
     - python
 
   run:
-    - tixi3 ==3.0.3
+    - tixi3 ==3.1.1
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
