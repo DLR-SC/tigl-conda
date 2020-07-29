@@ -5,6 +5,8 @@ if [[ ${HOST} =~ .*linux.* ]]; then
 fi
 
 
+cp $RECIPE_DIR/boost-patch/* thirdparty/
+
 mkdir -p build
 cd build
 
