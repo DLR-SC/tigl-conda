@@ -1,4 +1,4 @@
-{% set version = "3.0.0" %}
+{% set version = "3.1.0" %}
 
 package:
   name: tigl3
@@ -6,10 +6,12 @@ package:
 
 source:
   git_url: https://github.com/DLR-SC/tigl.git
-  git_tag: v3.0.0
+  git_tag: v{{ version }}
+  patches:
+    - bindings.patch   # [linux]
 
 build:
-  number: 9
+  number: 0
 
 
 requirements:
@@ -25,13 +27,13 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 ==3.0.3
+    - tixi3 ==3.1.1
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
     - python
 
   run:
-    - tixi3 ==3.0.3
+    - tixi3 ==3.1.1
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
