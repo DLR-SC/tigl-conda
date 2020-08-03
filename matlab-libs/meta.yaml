@@ -9,12 +9,23 @@ source:
   fn: matlab-libs-win.zip                                                          # [win]
   url: https://sourceforge.net/projects/tigl/files/Thirdparty/matlab-libs-win.zip  # [win]
 
+  fn: matlab-libs-macos.tar.gz                                                          # [osx]
+  url: https://sourceforge.net/projects/tigl/files/Thirdparty/matlab-libs-macos.tar.gz  # [osx]
+
 build:
   number: 0
   script:                                                  # [win]
       - mkdir %LIBRARY_PREFIX%\share\matlab\extern         # [win]
       - robocopy /E extern %LIBRARY_PREFIX%\share\matlab\extern || goto :eof     # [win]
 
+  script:                                                  # [osx]
+      - mkdir -p $PREFIX/share/matlab                      # [osx]
+      - cp -r bin extern  $PREFIX/share/matlab             # [osx]
+
+  missing_dso_whitelist:
+    - $PREFIX/share/matlab/bin/maci64/libmex.dylib # [osx]
+    - $PREFIX/share/matlab/bin/maci64/libmx.dylib  # [osx]
+    - $PREFIX/share/matlab/bin/maci64/libmat.dylib # [osx]
 
 about:
   home: https://www.mathworks.com/products/matlab.html
