@@ -14,15 +14,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86, x86_64]
+        arch: ['x86', 'x64']
         os: [windows-latest, ubuntu-latest, macos-latest]
-        python: [3.6, 3.7, 3.8]
-        exclude:
-          - arch: x86
-            os: macos-latest
-          - arch: x86
-            os: ubuntu-latest
-            python: 3.8
+        python: ['3.6', '3.7', '3.8']
+        #exclude:
+        #  - arch: x86
+        #    os: macos-latest
+        #  - arch: x86
+        #    os: ubuntu-latest
+        #    python: 3.8
 
     runs-on: ${{ matrix.os }}    
 
@@ -31,47 +31,32 @@ jobs:
       with:
         submodules: recursive
 
-    # we need a custom miniconda, at least for the 32 bit builds....
 
-    - name: Set installer url (ubuntu)
-      if: contains(matrix.os, 'ubuntu')
-      run: echo "::set-env name=INSTALLER_URL::https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-${{ matrix.arch }}.sh"
+    - name: Setup conda
+      uses: bryanwweber/setup-miniconda@fix-10
+      with:
+        auto-update-conda: true
+        activate-environment: tigl-conda
+        miniconda-version: 'latest'
+        architecture: ${{ matrix.arch }}
+        python-version: ${{ matrix.python }}
+        channels: dlr-sc,dlr-sc/label/tigl-dev
 
-    - name: Set installer url (macos)
-      if: contains(matrix.os, 'macos')
-      run: echo "::set-env name=INSTALLER_URL::https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-${{ matrix.arch }}.sh"
-
-
-    - name: Install and setup miniconda (ubuntu, macos)
+    - name: Install requirements (ubuntu, macos)
       if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
+      shell: bash -l {0}
       run: |
-        wget ${{ env.INSTALLER_URL }} -O miniconda.sh;
-        chmod +x miniconda.sh
-        yes | ./miniconda.sh -b -p $HOME/miniconda
-        echo "::set-env name=PYTHONUNBUFFERED::1"
-        echo "::add-path::$HOME/miniconda/bin"
-        echo "::add-path::$HOME/miniconda/lib"
-        hash -r
-        conda config --set always_yes yes --set changeps1 no
-        conda update -q conda
-        conda install python=${{ matrix.python }} -c anaconda
-        conda install conda-build gitpython anaconda-client mesa-dri-drivers-cos6-x86_64
-        conda config --add channels https://conda.anaconda.org/dlr-sc
-        conda config --add channels https://conda.anaconda.org/dlr-sc/label/tigl-dev
+        conda install -y conda-build gitpython anaconda-client mesa-dri-drivers-cos6-x86_64
+        conda info -a
+        conda list
 
-    - name: Install and setup miniconda (windows)
+    - name: Install requirements (windows)
       if: contains(matrix.os, 'windows')
+      shell: cmd /C call {0}
       run: |
-        curl --retry 3 -o miniconda.exe -L https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-${{matrix.arch}}.exe
-        start /wait "" ".\miniconda.exe /S /D=%UserProfile%\Miniconda3" -Wait
-        echo "::set-env name=PYTHONUNBUFFERED::1"
-        conda config --set always_yes yes --set changeps1 no
-        conda update -q conda
-        conda config --set show_channel_urls true
-        conda install python=${{ matrix.python }} -c anaconda
-        conda install conda-build=3.18.9 gitpython anaconda-client
-        conda config --add channels https://conda.anaconda.org/dlr-sc
-        conda config --add channels https://conda.anaconda.org/dlr-sc/label/tigl-dev
+        conda install -y conda-build=3.18.9 gitpython anaconda-client
+        conda info -a
+        conda list
 
     - name: build conda packages
       run: |
