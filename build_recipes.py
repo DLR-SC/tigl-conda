@@ -82,9 +82,12 @@ def get_changed_recipes():
 def get_current_branch():
 
     active_branch = None
+    github_actions_ref = os.environ.get("GITHUB_REF")
     appveyor_branch = os.environ.get("APPVEYOR_REPO_BRANCH")
     travis_branch = os.environ.get("TRAVIS_BRANCH")
-    if appveyor_branch is not None:
+    if github_actions_ref is not None:
+        active_branch = github_actions_ref.split('refs/heads/', 1)[1]
+    elif appveyor_branch is not None:
         active_branch = appveyor_branch
     elif travis_branch is not None:
         active_branch = travis_branch
