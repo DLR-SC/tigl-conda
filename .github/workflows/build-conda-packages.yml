@@ -22,6 +22,8 @@ jobs:
         exclude:
           - arch: x86
             os: macos-latest
+          - arch: x86
+            os: ubuntu-latest
 
     runs-on: ${{ matrix.os }}    
 
