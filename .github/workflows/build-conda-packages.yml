@@ -30,7 +30,7 @@ jobs:
 
 
     - name: Setup conda
-      uses: bryanwweber/setup-miniconda@fix-10
+      uses: joergbrech/setup-miniconda@fix-10
       with:
         auto-update-conda: true
         activate-environment: tigl-conda
