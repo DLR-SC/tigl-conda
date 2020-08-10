@@ -54,11 +54,20 @@ jobs:
       if: contains(matrix.os, 'windows')
       shell: cmd /C call {0}
       run: |
-        conda install -y conda-build=3.18.9 gitpython anaconda-client
+        conda install -y conda-build gitpython anaconda-client
         conda info -a
         conda list
 
     - name: build conda packages
+      if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
+      shell: bash -l {0}
+      run: |
+        python --version
+        python build_recipes.py
+
+    - name: build conda packages
+      if: contains(matrix.os, 'windows')
+      shell: cmd /C call {0}
       run: |
         python --version
         python build_recipes.py
