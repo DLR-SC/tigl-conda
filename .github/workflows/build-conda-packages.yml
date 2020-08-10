@@ -32,7 +32,7 @@ jobs:
 
 
     - name: Setup conda
-      uses: joergbrech/setup-miniconda@fix-10
+      uses: joergbrech/setup-miniconda@fix-10 # change this as soon as upstream PR is merged
       with:
         auto-update-conda: true
         activate-environment: tigl-conda
