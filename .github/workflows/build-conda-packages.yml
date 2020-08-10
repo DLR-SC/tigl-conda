@@ -6,6 +6,8 @@ on:
       - '**'
   pull_request: # this should be changed to pull_request_target before merge
 
+env:
+  GH_HEAD_REF: ${{ github.head_ref }}
  
 jobs:
 

@@ -86,7 +86,13 @@ def get_current_branch():
     appveyor_branch = os.environ.get("APPVEYOR_REPO_BRANCH")
     travis_branch = os.environ.get("TRAVIS_BRANCH")
     if github_actions_ref is not None:
-        active_branch = github_actions_ref.split('refs/heads/', 1)[1]
+        if 'refs/heads/' in github_actions_ref:
+            # try to determine branch name form GITHUB_REF env variable
+            active_branch = github_actions_ref.split('refs/heads/', 1)[1]
+        else:
+            # GITHUB_REF will not work on PR builds, fallback to github.head_ref
+            # manually added as env var from context var in config file
+            active_branch = os.environ.get("GH_HEAD_REF")
     elif appveyor_branch is not None:
         active_branch = appveyor_branch
     elif travis_branch is not None:
