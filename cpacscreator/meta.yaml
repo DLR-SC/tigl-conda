@@ -9,7 +9,7 @@ source:
   git_tag: cpacscreator-v0.1.1
 
 build:
-  number: 7
+  number: 8
 
 
 requirements:
@@ -34,14 +34,14 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 >=3.0.3
+    - tixi3 ==3.0.3
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
     - python
     - qt
 
   run:
-    - tixi3 >=3.0.3
+    - tixi3 ==3.0.3
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
