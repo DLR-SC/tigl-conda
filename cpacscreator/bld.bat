@@ -1,3 +1,5 @@
+copy %RECIPE_DIR%\boost-patch\* thirdparty\
+
 mkdir build
 cd build
 

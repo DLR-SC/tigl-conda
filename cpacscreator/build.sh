@@ -4,6 +4,7 @@ if [[ ${HOST} =~ .*linux.* ]]; then
     CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
 fi
 
+cp $RECIPE_DIR/boost-patch/* thirdparty/
 
 mkdir -p build
 cd build
