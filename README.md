@@ -1,7 +1,6 @@
 # Conda Recipes
 
-[![Build Status](https://travis-ci.com/DLR-SC/tigl-conda.svg?branch=master)](https://travis-ci.com/DLR-SC/tigl-conda)
-[![Build status](https://ci.appveyor.com/api/projects/status/wphitsex4eksw8r5/branch/master?svg=true)](https://ci.appveyor.com/project/rainman110/tigl-conda/branch/master)
+[![Build Conda Packages](https://github.com/DLR-SC/tigl-conda/actions/workflows/build-conda-packages.yml/badge.svg)](https://github.com/DLR-SC/tigl-conda/actions/workflows/build-conda-packages.yml)
 
 Recipies to build TiGL and its dependencies.  Use
 
