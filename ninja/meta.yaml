@@ -9,16 +9,12 @@ source:
   url: https://github.com/ninja-build/ninja/archive/v{{ version }}.tar.gz
 
 build:
-  number: 0
-  features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+  number: 1
 
 requirements:
   build:
     - python
-    - gcc [linux]
+    - {{ compiler('c') }}
 
 test:
   commands:
