@@ -1,10 +1,12 @@
-﻿package:
+﻿{% set version = "1.10.2" %}
+
+package:
   name: ninja
-  version: 1.7.1
+  version: {{ version }}
 
 source:
-  fn: ninja-1.7.1.tar.gz
-  url: https://github.com/ninja-build/ninja/archive/v1.7.1.tar.gz
+  fn: ninja-{{ version }}.tar.gz
+  url: https://github.com/ninja-build/ninja/archive/v{{ version }}.tar.gz
 
 build:
   number: 0
