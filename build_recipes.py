@@ -134,6 +134,8 @@ def main():
             conda_build.api.build(modules, user="dlr-sc", token=api_token)
         else:
             conda_build.api.build(modules)
+    else:
+        print("No packages changed. Nothing to be built.")
 
 
 if __name__ == "__main__":
