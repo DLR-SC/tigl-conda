@@ -117,8 +117,6 @@ def main():
         upload_to_anaconda = False
 
     active_branch = get_current_branch()
-    # FIXME / remove next line. this is just for testing the upload
-    active_branch = 'master'
     if active_branch is not None:
         print("On branch {}.".format(active_branch))
     else:
