@@ -62,6 +62,8 @@ jobs:
     - name: build conda packages
       if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
       shell: bash -l {0}
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
       run: |
         python --version
         python build_recipes.py
@@ -69,6 +71,8 @@ jobs:
     - name: build conda packages
       if: contains(matrix.os, 'windows')
       shell: cmd /C call {0}
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
       run: |
         python --version
         python build_recipes.py
