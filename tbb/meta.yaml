@@ -25,10 +25,9 @@ package:
 source:
   fn: tbb{{ vtag }}_oss_src.tgz
   url: https://github.com/01org/tbb/archive/{{ vtag }}.tar.gz
-  sha256: 2ea82d74dec50e18075b4982b8d360f8bd2bf2950f38e2db483aef82e0047444
 
 build:
-  number: 0
+  number: 1
   script_env:
     - OS    # [win]
 
