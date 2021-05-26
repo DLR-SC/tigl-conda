@@ -13,9 +13,10 @@ source:
     - no-xmu.patch     # [linux]
     - fix-private-linking.patch
     - fix_brepblend.patch
+    - dlr-feature-coons_c2.patch
 
 build:
-  number: 5
+  number: 6
   detect_binary_files_with_prefix: True
 
 requirements:
