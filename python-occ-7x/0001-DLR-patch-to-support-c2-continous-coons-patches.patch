@@ -1,0 +1,100 @@
+From d85c2c2f3fb5fcc3fb3caea4fe81511aa21491bb Mon Sep 17 00:00:00 2001
+From: Martin Siggel <martin.siggel@dlr.de>
+Date: Sat, 29 May 2021 01:50:17 +0200
+Subject: [PATCH] Added dlr patch to support c2 continous coons patches
+
+---
+ src/SWIG_files/wrapper/GeomFill.i | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/src/SWIG_files/wrapper/GeomFill.i b/src/SWIG_files/wrapper/GeomFill.i
+index e4e38c43..b9d66786 100644
+--- a/src/SWIG_files/wrapper/GeomFill.i
++++ b/src/SWIG_files/wrapper/GeomFill.i
+@@ -108,6 +108,7 @@ enum GeomFill_FillingStyle {
+ 	GeomFill_StretchStyle = 0,
+ 	GeomFill_CoonsStyle = 1,
+ 	GeomFill_CurvedStyle = 2,
++	GeomFill_CoonsC2Style = 3,
+ };
+ 
+ enum GeomFill_PipeError {
+@@ -1474,12 +1475,14 @@ C2: Geom_BSplineCurve
+ C3: Geom_BSplineCurve
+ C4: Geom_BSplineCurve
+ Type: GeomFill_FillingStyle
++Tol: Standard_Real
++SetSameDistr: Standard_Boolean
+ 
+ Returns
+ -------
+ None
+ ") GeomFill_BSplineCurves;
+-		 GeomFill_BSplineCurves(const opencascade::handle<Geom_BSplineCurve> & C1, const opencascade::handle<Geom_BSplineCurve> & C2, const opencascade::handle<Geom_BSplineCurve> & C3, const opencascade::handle<Geom_BSplineCurve> & C4, const GeomFill_FillingStyle Type);
++		 GeomFill_BSplineCurves(const opencascade::handle<Geom_BSplineCurve> & C1, const opencascade::handle<Geom_BSplineCurve> & C2, const opencascade::handle<Geom_BSplineCurve> & C3, const opencascade::handle<Geom_BSplineCurve> & C4, const GeomFill_FillingStyle Type, const Standard_Real Tol, const Standard_Boolean SetSameDistr);
+ 
+ 		/****************** GeomFill_BSplineCurves ******************/
+ 		/**** md5 signature: acb50b52f59852f0aa0519551cc6a635 ****/
+@@ -6817,12 +6820,13 @@ P1: TColgp_Array1OfPnt
+ P2: TColgp_Array1OfPnt
+ P3: TColgp_Array1OfPnt
+ P4: TColgp_Array1OfPnt
++isC2: Standard_Boolean
+ 
+ Returns
+ -------
+ None
+ ") GeomFill_Coons;
+-		 GeomFill_Coons(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4);
++		 GeomFill_Coons(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4, const Standard_Boolean isC2 = Standard_False);
+ 
+ 		/****************** GeomFill_Coons ******************/
+ 		/**** md5 signature: cbef7bb663e9994379c9aab840ba0fd0 ****/
+@@ -6839,12 +6843,13 @@ W1: TColStd_Array1OfReal
+ W2: TColStd_Array1OfReal
+ W3: TColStd_Array1OfReal
+ W4: TColStd_Array1OfReal
++isC2: Standard_Boolean
+ 
+ Returns
+ -------
+ None
+ ") GeomFill_Coons;
+-		 GeomFill_Coons(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4, const TColStd_Array1OfReal & W1, const TColStd_Array1OfReal & W2, const TColStd_Array1OfReal & W3, const TColStd_Array1OfReal & W4);
++		 GeomFill_Coons(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4, const TColStd_Array1OfReal & W1, const TColStd_Array1OfReal & W2, const TColStd_Array1OfReal & W3, const TColStd_Array1OfReal & W4, const Standard_Boolean isC2 = Standard_False);
+ 
+ 		/****************** Init ******************/
+ 		/**** md5 signature: d3ffe113a485ff934a537831bed2560b ****/
+@@ -6857,12 +6862,13 @@ P1: TColgp_Array1OfPnt
+ P2: TColgp_Array1OfPnt
+ P3: TColgp_Array1OfPnt
+ P4: TColgp_Array1OfPnt
++isC2: Standard_Boolean
+ 
+ Returns
+ -------
+ None
+ ") Init;
+-		void Init(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4);
++		void Init(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4, const Standard_Boolean isC2 = Standard_False);
+ 
+ 		/****************** Init ******************/
+ 		/**** md5 signature: 094f730897c039878a8e655c32e65678 ****/
+@@ -6879,12 +6885,13 @@ W1: TColStd_Array1OfReal
+ W2: TColStd_Array1OfReal
+ W3: TColStd_Array1OfReal
+ W4: TColStd_Array1OfReal
++isC2: Standard_Boolean
+ 
+ Returns
+ -------
+ None
+ ") Init;
+-		void Init(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4, const TColStd_Array1OfReal & W1, const TColStd_Array1OfReal & W2, const TColStd_Array1OfReal & W3, const TColStd_Array1OfReal & W4);
++		void Init(const TColgp_Array1OfPnt & P1, const TColgp_Array1OfPnt & P2, const TColgp_Array1OfPnt & P3, const TColgp_Array1OfPnt & P4, const TColStd_Array1OfReal & W1, const TColStd_Array1OfReal & W2, const TColStd_Array1OfReal & W3, const TColStd_Array1OfReal & W4, const Standard_Boolean isC2 = Standard_False);
+ 
+ };
+ 
+-- 
+2.31.1.windows.1
+
