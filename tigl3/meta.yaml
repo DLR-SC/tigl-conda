@@ -19,7 +19,6 @@ requirements:
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
     - {{ cdt('mesa-libgl-devel') }}     # [linux]
     - ninja
-    - python
     - cmake
     - swig >=3.0.11
     - doxygen
@@ -29,7 +28,7 @@ requirements:
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.0
     - tbb-devel ==2019.5
-    - python
+    - python {{ python }}
 
   run:
     - tixi3 ==3.1.1
