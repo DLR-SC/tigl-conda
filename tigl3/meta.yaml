@@ -26,7 +26,7 @@ requirements:
   host:
     - tixi3 ==3.1.1
     - opencascade ==7.4.0
-    - pythonocc-core ==7.4.0
+    - pythonocc-core ==7.4.1
     - tbb-devel ==2019.5
     - python {{ python }}
 
@@ -34,7 +34,7 @@ requirements:
     - tixi3 ==3.1.1
     - pyqt
     - opencascade ==7.4.0
-    - pythonocc-core ==7.4.0
+    - pythonocc-core ==7.4.1
     - tbb ==2019.5
     - python
 
