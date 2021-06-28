@@ -1,0 +1,25 @@
+diff --git src/api/tigl.cpp src/api/tigl.cpp
+index 8262aa9..1dc5ede 100644
+--- src/api/tigl.cpp
++++ src/api/tigl.cpp
+@@ -58,6 +58,20 @@
+ #include "TopoDS_Shape.hxx"
+ #include "TopoDS_Edge.hxx"
+ 
++#include <string.h>
++
++extern "C" {
++
++void *__memcpy_glibc_2_2_5(void *, const void *, size_t);
++
++asm(".symver __memcpy_glibc_2_2_5, memcpy@GLIBC_2.2.5");
++void *__wrap_memcpy(void *dest, const void *src, size_t n)
++{
++    return __memcpy_glibc_2_2_5(dest, src, n); 
++}
++
++} // extern C
++
+ /*****************************************************************************/
+ /* Private functions.                                                 */
+ /*****************************************************************************/

@@ -1,0 +1,43 @@
+{% set version = "2.2.3" %}
+
+package:
+  name: tigl-static
+  version: {{ version }}
+
+source:
+  fn: tigl-{{ version }}.tar.gz
+  url: https://github.com/DLR-SC/tigl/archive/v{{ version }}.tar.gz
+  patches:
+    - fixmemcpy.patch   # [linux]
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - ninja
+    - python {{ python }} 
+    - cmake
+    - doxygen
+
+  host:
+    - oce-static ==0.17.2
+    - tixi ==2.2.4
+    - python {{ python }}
+
+  run:
+    - tixi ==2.2.4
+    - python {{ python }}
+
+test:
+  imports:
+    - tigl.tiglwrapper
+
+about:
+  home: https://github.com/DLR-SC/tigl
+  license: Apache 2.0
+  summary: The TiGL Geometry Library to process aircraft geometries in pre-design
