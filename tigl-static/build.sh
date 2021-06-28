@@ -10,6 +10,8 @@ if [ `uname` != Darwin ]; then
     export LDFLAGS="-lrt -Wl,--wrap=memcpy"
 fi
 
+export LDFLAGS="$LDFLAGS -fopenmp"
+
 
 # Configure step
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=$PREFIX \
