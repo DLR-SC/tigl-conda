@@ -14,7 +14,7 @@ source:
     - private_linking.patch
 
 build:
-  number: 8
+  number: 9
 
 requirements:
   build:
