@@ -20,6 +20,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ compiler('gfortran') }}
     - doxygen >=1.8.10
 
   host:
