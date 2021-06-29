@@ -1,0 +1,48 @@
+﻿{% set version = "0.17.2" %}
+
+package:
+  name: oce-static
+  version: {{ version }}
+
+source:
+  fn: OCE-{{ version }}.tar.gz
+  url: https://github.com/tpaviot/oce/archive/OCE-{{ version }}.tar.gz
+  md5: bf2226be4cd192606af677cf178088e5
+  patches:
+    - fix_tkopengl_dll_path.patch     # [win]
+    - dlr-feature-coons_c2.patch
+    - fix-tiglviewer-selection.patch
+    - fix-fonts.patch
+    - fix-geomapi_extremacurvecurve.patch
+    - fix_time_osx.patch              # [osx]
+    - fix_private_linking.patch
+
+build:
+  detect_binary_files_with_prefix: True
+  number: 0
+
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - {{ cdt('libxcb') }}               # [linux]
+    - {{ cdt('libxi-devel') }}          # [linux]
+    - {{ cdt('libx11-devel') }}         # [linux]
+    - {{ cdt('libxau-devel') }}         # [linux]
+    - {{ cdt('libxext-devel') }}        # [linux]
+    - {{ cdt('xorg-x11-proto-devel') }} # [linux]
+    - cmake
+    - ninja
+
+  host:
+    - libglu # [linux]
+    - freeimageplus-static
+    - python
+    - freetype-static
+
+
+about:
+  home: https://github.com/tpaviot/oce
+  license: LGPL
+  summary: OpenCASCADE community edition

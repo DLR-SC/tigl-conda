@@ -1,0 +1,77 @@
+From 2dc0f9173011c1ee9821cb7962982b9d7d1fd730 Mon Sep 17 00:00:00 2001
+From: Martin Siggel <martin.siggel@dlr.de>
+Date: Wed, 24 Apr 2019 21:55:40 +0200
+Subject: [PATCH] Make linking to dependencies private
+
+Also fixed some cmake issues
+---
+ CMakeLists.txt                    | 8 ++++----
+ adm/cmake/BuildToolkit.cmake      | 2 +-
+ adm/cmake/TKOpenGl/CMakeLists.txt | 4 ++++
+ 3 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git CMakeLists.txt CMakeLists.txt
+index 74a854bbc..94f609929 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -1136,7 +1136,7 @@ if (OCE_AUTOINSTALL_DEPENDENT_LIBS)
+ 
+ 	if (OCE_VISU_DEP AND OCE_WITH_GL2PS)
+ 		get_filename_component(GL2PS_BIN_DIR ${GL2PS_LIBRARY} PATH)
+-		get_filename_component(GL2PS_BIN_DIR_DBG ${GL2PS_LIBRARY_DEBUG} PATH)
++		# get_filename_component(GL2PS_BIN_DIR_DBG ${GL2PS_LIBRARY_DEBUG} PATH)
+ 		install(FILES ${GL2PS_BIN_DIR_DBG}/${CMAKE_SHARED_LIBRARY_PREFIX}gl2psd.dll DESTINATION ${OCE_INSTALL_BIN_DIR} CONFIGURATIONS Debug OPTIONAL)
+     	install(FILES ${GL2PS_BIN_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}gl2ps.dll DESTINATION ${OCE_INSTALL_BIN_DIR} CONFIGURATIONS Release RelWithDebInfo MinSizeRel OPTIONAL)
+     	install(FILES ${GL2PS_BIN_DIR_DBG}/${CMAKE_STATIC_LIBRARY_PREFIX}gl2psd.${OCE_LIB_EXTENSION} DESTINATION ${OCE_INSTALL_LIB_DIR} CONFIGURATIONS Debug OPTIONAL)
+@@ -1149,9 +1149,9 @@ if (OCE_AUTOINSTALL_DEPENDENT_LIBS)
+ 
+ 	if (OCE_VISU_DEP AND OCE_WITH_FREEIMAGE)
+ 		get_filename_component(FREEIMAGE_BIN_DIR ${FREEIMAGE_LIBRARY} PATH)
+-		get_filename_component(FREEIMAGE_BIN_DIR_DBG ${FREEIMAGE_LIBRARY_DEBUG} PATH)
++		# get_filename_component(FREEIMAGE_BIN_DIR_DBG ${FREEIMAGE_LIBRARY_DEBUG} PATH)
+ 		get_filename_component(FREEIMAGEPLUS_BIN_DIR ${FREEIMAGE_LIBRARY} PATH)
+-		get_filename_component(FREEIMAGEPLUS_BIN_DIR_DBG ${FREEIMAGE_LIBRARY_DEBUG} PATH)
++		# get_filename_component(FREEIMAGEPLUS_BIN_DIR_DBG ${FREEIMAGE_LIBRARY_DEBUG} PATH)
+ 		install(FILES ${FREEIMAGE_BIN_DIR_DBG}/${CMAKE_SHARED_LIBRARY_PREFIX}freeimaged.dll DESTINATION ${OCE_INSTALL_BIN_DIR} CONFIGURATIONS Debug OPTIONAL)
+     	install(FILES ${FREEIMAGE_BIN_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}freeimage.dll DESTINATION ${OCE_INSTALL_BIN_DIR} CONFIGURATIONS Release RelWithDebInfo MinSizeRel OPTIONAL)
+     	install(FILES ${FREEIMAGE_BIN_DIR_DBG}/${CMAKE_STATIC_LIBRARY_PREFIX}freeimaged.${OCE_LIB_EXTENSION} DESTINATION ${OCE_INSTALL_LIB_DIR} CONFIGURATIONS Debug OPTIONAL)
+@@ -1181,7 +1181,7 @@ if (OCE_AUTOINSTALL_DEPENDENT_LIBS)
+ 	if(OCE_MULTITHREAD_LIBRARY STREQUAL "TBB")
+ 		IF(NOT DEFINED TBB_BIN_DIR)
+ 			get_filename_component(TBB_BIN_DIR ${TBB_LIBRARY} PATH)
+-			get_filename_component(TBB_BIN_DIR_DBG ${TBB_LIBRARY_DEBUG} PATH)
++			# get_filename_component(TBB_BIN_DIR_DBG ${TBB_LIBRARY_DEBUG} PATH)
+ 		ENDIF()
+ 		if(NOT OCE_BUILD_SHARED_LIB)
+ 			set(tbb_prefix "_static")
+diff --git adm/cmake/BuildToolkit.cmake adm/cmake/BuildToolkit.cmake
+index 1b70df9a1..66f885835 100644
+--- adm/cmake/BuildToolkit.cmake
++++ adm/cmake/BuildToolkit.cmake
+@@ -244,7 +244,7 @@ endif()
+ if ( NOT "${TOOLKIT}" STREQUAL "TKernel" )
+ 	list(REMOVE_DUPLICATES TOOLKIT_DEPENDS)
+ endif ( NOT "${TOOLKIT}" STREQUAL "TKernel" )
+-target_link_libraries(${TOOLKIT} ${TOOLKIT_DEPENDS} ${TOOLKIT_LIBS} ${WIN32_LIBS})
++target_link_libraries(${TOOLKIT} PUBLIC ${TOOLKIT_DEPENDS} PRIVATE ${TOOLKIT_LIBS} ${WIN32_LIBS})
+ 
+ if(TOOLKIT_LIBS_OPTIMIZED)
+ 	foreach(lib ${TOOLKIT_LIBS_OPTIMIZED})
+diff --git adm/cmake/TKOpenGl/CMakeLists.txt adm/cmake/TKOpenGl/CMakeLists.txt
+index 7d5d40855..cf416dd0b 100644
+--- adm/cmake/TKOpenGl/CMakeLists.txt
++++ adm/cmake/TKOpenGl/CMakeLists.txt
+@@ -62,6 +62,10 @@ if(WIN32)
+     list(APPEND TOOLKIT_LIBS vfw32)
+ endif()
+ 
++if (APPLE AND OCE_OSX_USE_COCOA)
++	list(APPEND TOOLKIT_LIBS /System/Library/Frameworks/Cocoa.framework)
++endif(APPLE AND OCE_OSX_USE_COCOA)
++
+ include(../BuildToolkit.cmake)
+ 
+ if(BORLAND AND BORLAND_VERSION_RS_XE2)
+-- 
+2.21.0.windows.1
+
