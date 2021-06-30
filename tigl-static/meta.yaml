@@ -30,6 +30,7 @@ requirements:
   run:
     - tixi ==2.2.4
     - python {{ python }}
+    - llvm-opemp          # [osx]
 
 test:
   imports:
