@@ -7,9 +7,11 @@ package:
 source:
   git_url: https://github.com/DLR-SC/tigl.git
   git_tag: v{{ version }}
+  patches:
+    - fix_build_py39.patch
 
 build:
-  number: 1
+  number: 4
 
 
 requirements:

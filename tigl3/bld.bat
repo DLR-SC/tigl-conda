@@ -1,9 +1,6 @@
 mkdir build
 cd build
 
-REM Remove dot from PY_VER for use in library name
-set MY_PY_VER=%PY_VER:.=%
-
 REM Configure step
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
@@ -11,10 +8,9 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DTIGL_VIEWER=OFF ^
  -DTIGL_BINDINGS_PYTHON_INTERNAL=ON ^
  -DPythonOCC_SOURCE_DIR="%LIBRARY_PREFIX%"\src\pythonocc-core ^
- -DPYTHON_EXECUTABLE:FILEPATH="%PYTHON%" ^
- -DPYTHON_INCLUDE_DIR:PATH="%PREFIX%"/include ^
  -DTIGL_CONCAT_GENERATED_FILES=ON ^
- -DPYTHON_LIBRARY:FILEPATH="%PREFIX%"/libs/python%MY_PY_VER%.lib ^
+ -DPython3_FIND_STRATEGY=LOCATION ^
+ -DPython3_FIND_REGISTRY=NEVER ^
  ..
 if errorlevel 1 exit 1
 
