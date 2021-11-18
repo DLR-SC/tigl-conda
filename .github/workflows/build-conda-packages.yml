@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - '**'
-  pull_request_target:
+  pull_request:
 
 env:
   GH_HEAD_REF: ${{ github.head_ref }}
