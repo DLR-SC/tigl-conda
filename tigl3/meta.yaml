@@ -11,7 +11,7 @@ source:
     - fix_build_py39.patch
 
 build:
-  number: 4
+  number: 5
 
 
 requirements:
@@ -26,7 +26,7 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 ==3.1.1
+    - tixi3 ==3.2.0
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.1
     - tbb-devel ==2019.5
