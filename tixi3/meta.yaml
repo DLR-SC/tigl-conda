@@ -1,4 +1,4 @@
-{% set version = "3.1.1" %}
+{% set version = "3.2.0" %}
 
 package:
   name: tixi3
@@ -10,7 +10,7 @@ source:
   md5: d75e189d578aff8794355a1b180080d6
 
 build:
-  number: 5
+  number: 0
 
 requirements:
   build:
