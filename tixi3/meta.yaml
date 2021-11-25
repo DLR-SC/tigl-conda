@@ -7,7 +7,7 @@ package:
 source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
-  md5: d75e189d578aff8794355a1b180080d6
+  md5: fdbc67ab0826dfc5d1838083c8511329
 
 build:
   number: 0
