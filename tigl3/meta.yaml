@@ -33,7 +33,7 @@ requirements:
     - python {{ python }}
 
   run:
-    - tixi3 ==3.1.1
+    - tixi3 ==3.2.0
     - pyqt
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.1
