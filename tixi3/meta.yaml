@@ -8,6 +8,8 @@ source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
   md5: fdbc67ab0826dfc5d1838083c8511329
+  patches:
+    - disabled-fortran-example.patch
 
 build:
   number: 0
