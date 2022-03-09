@@ -7,8 +7,6 @@ package:
 source:
   git_url: https://github.com/DLR-SC/tigl.git
   git_tag: v{{ version }}
-  patches:
-    - fix_build_py39.patch
 
 build:
   number: 0
@@ -26,14 +24,14 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 ==3.2.0
+    - tixi3 ==3.3.0
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.1
     - tbb-devel ==2019.5
     - python {{ python }}
 
   run:
-    - tixi3 ==3.2.0
+    - tixi3 ==3.3.0
     - pyqt
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.1
