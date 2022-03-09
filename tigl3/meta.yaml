@@ -1,4 +1,4 @@
-{% set version = "3.2.2" %}
+{% set version = "3.2.3" %}
 
 package:
   name: tigl3
@@ -11,7 +11,7 @@ source:
     - fix_build_py39.patch
 
 build:
-  number: 5
+  number: 0
 
 
 requirements:
