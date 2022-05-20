@@ -14,7 +14,7 @@ source:
     - jupyter-renderer-unix.patch # [unix]
 
 build:
-  number: 10
+  number: 11
   binary_relocation: false [osx]
 
 requirements:
