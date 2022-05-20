@@ -40,11 +40,11 @@ requirements:
     - qt
 
   run:
-    - tixi3 ==3.0.3
+    - tixi3 ==3.3.0
     - pyqt
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
-    - python
+    - python {{ python }}
 
 test:
   imports:
