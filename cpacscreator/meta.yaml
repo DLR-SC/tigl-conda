@@ -34,10 +34,10 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 ==3.0.3
+    - tixi3 ==3.3.0
     - oce ==0.17.2
     - pythonocc-core ==0.17.3
-    - python
+    - python {{ python }}
     - qt
 
   run:
