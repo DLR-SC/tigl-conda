@@ -16,7 +16,7 @@ source:
     - dlr-feature-coons_c2.patch
 
 build:
-  number: 8
+  number: 9
   detect_binary_files_with_prefix: True
 
 requirements:
