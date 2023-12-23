@@ -1,6 +1,6 @@
 {% set name = "opencascade" %}
-{% set version = "7.4.0" %}
-{% set commit = "V7_4_0" %}
+{% set version = "7.6.2" %}
+{% set commit = "V7_6_2" %}
 package:
   name: {{ name }}
   version: {{ version }}
@@ -8,15 +8,13 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: http://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h={{ commit }};sf=tgz
-  sha256: 9614c2075cef53e30b25317fc8fcfb71d60a69181d562e1c56469ed8e54ad758
+  sha256: 9f7285acdfe63754955dfba1114010d5f273ac2be189c9717c4228bb28fd675f
   patches:
-    - no-xmu.patch     # [linux]
     - fix-private-linking.patch
-    - fix_brepblend.patch
     - dlr-feature-coons_c2.patch
 
 build:
-  number: 10
+  number: 0
   detect_binary_files_with_prefix: True
 
 requirements:
@@ -38,6 +36,7 @@ requirements:
     - tbb-devel ==2019.5
     - python
     - freetype
+    - rapidjson
     - fontconfig # [unix]
 
   run:
@@ -45,6 +44,7 @@ requirements:
     - tbb ==2019.5
     - freetype
     - six
+    - rapidjson
 
 test:
   requires:
