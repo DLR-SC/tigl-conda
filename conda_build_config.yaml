@@ -7,5 +7,5 @@ c_compiler:
 cxx_compiler:
  - vs2015                     # [win]
 
- cxx_compiler_version:
-  - 9.4.0                     # [linux]
+cxx_compiler_version:
+ - 9.3.0                     # [linux]
