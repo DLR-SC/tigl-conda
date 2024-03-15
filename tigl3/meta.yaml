@@ -1,4 +1,4 @@
-{% set version = "3.3.0" %}
+{% set version = "3.3.1" %}
 
 package:
   name: tigl3
@@ -9,7 +9,7 @@ source:
   git_tag: v{{ version }}
 
 build:
-  number: 4
+  number: 0
 
 
 requirements:
