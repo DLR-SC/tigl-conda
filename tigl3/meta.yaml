@@ -1,4 +1,4 @@
-{% set version = "3.4.0" %}
+{% set version = "3.3.1-issue_cells_overlap" %}
 
 package:
   name: tigl3
@@ -6,7 +6,7 @@ package:
 
 source:
   git_url: https://github.com/DLR-SC/tigl.git
-  git_tag: v{{ version }}
+  git_branch: issue_cells_overlap
 
 build:
   number: 0
