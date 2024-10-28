@@ -27,7 +27,6 @@ requirements:
     - {{ cdt('libXdamage') }}           # [linux]
     - {{ cdt('libXfixes') }}            # [linux]
     - {{ cdt('libXxf86vm') }}           # [linux]
-    - {{ cdt('freeglut3-dev') }}        # [linux]
     - ninja
     - cmake
     - swig >=3.0.11
@@ -39,7 +38,7 @@ requirements:
     - pythonocc-core ==7.4.1
     - tbb-devel ==2019.5
     - python {{ python }}
-    
+    - qt
 
   run:
     - tixi3 ==3.3.0
