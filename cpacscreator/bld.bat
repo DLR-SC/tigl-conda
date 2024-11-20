@@ -1,10 +1,14 @@
 mkdir build
 cd build
 
+REM We need own flags as conda turns on program size optimization
+REM which ends up in huge static library sizes
+set CFLAGS=
+set CXXFLAGS=
+
 REM Configure step
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
- -DCMAKE__STATIC_LINKER_FLAGS="/LTCG" ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DTIGL_VIEWER=ON ^
  -DTIGL_BINDINGS_PYTHON_INTERNAL=ON ^
