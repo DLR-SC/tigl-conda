@@ -41,7 +41,7 @@ python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl3/tigl3wrapper.py libtigl3
 
 cat > $SP_DIR/cpacscreator-$PKG_VERSION.egg-info <<FAKE_EGG
 Metadata-Version: 2.1
-Name: tigl3
+Name: cpacscreator
 Version: $PKG_VERSION
 Summary: The TiGL Geometry Library to process aircraft geometries in pre-design
 Platform: UNKNOWN

@@ -1,5 +1,3 @@
-copy %RECIPE_DIR%\boost-patch\* thirdparty\
-
 mkdir build
 cd build
 
@@ -33,7 +31,7 @@ REM See https://setuptools.readthedocs.io/en/latest/pkg_resources.html#workingse
 
 set egg_info=%SP_DIR%\cpacscreator-%PKG_VERSION%.egg-info
 echo>%egg_info% Metadata-Version: 2.1
-echo>>%egg_info% Name: tigl3
+echo>>%egg_info% Name: cpacscreator
 echo>>%egg_info% Version: %PKG_VERSION%
 echo>>%egg_info% Summary: The TiGL Geometry Library to process aircraft geometries in pre-design
 echo>>%egg_info% Platform: UNKNOWN
