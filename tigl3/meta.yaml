@@ -18,6 +18,15 @@ requirements:
     - {{ cdt('libx11-devel') }}         # [linux]
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
     - {{ cdt('mesa-libgl-devel') }}     # [linux]
+    - {{ cdt('mesa-dri-drivers') }}     # [linux]
+    - {{ cdt('libxcb') }}               # [linux]
+    - {{ cdt('libxi-devel') }}          # [linux]
+    - {{ cdt('libxau-devel') }}         # [linux]
+    - {{ cdt('libxext-devel') }}        # [linux]
+    - {{ cdt('libselinux') }}           # [linux]
+    - {{ cdt('libXdamage') }}           # [linux]
+    - {{ cdt('libXfixes') }}            # [linux]
+    - {{ cdt('libXxf86vm') }}           # [linux]
     - ninja
     - cmake
     - swig >=3.0.11
@@ -29,6 +38,8 @@ requirements:
     - pythonocc-core ==7.4.1
     - tbb-devel ==2019.5
     - python {{ python }}
+    - libglu                            # [linux]
+    - qt
 
   run:
     - tixi3 ==3.3.0
