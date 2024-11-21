@@ -39,7 +39,7 @@ requirements:
     - tbb-devel ==2019.5
     - python {{ python }}
     - libglu                            # [linux]
-    - qt
+    - qt >=5.15.7,<6.0.0
 
   run:
     - tixi3 ==3.3.0
