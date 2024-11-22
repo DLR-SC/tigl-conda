@@ -9,7 +9,7 @@ source:
   git_tag: cpacscreator-v{{ version }}
 
 build:
-  number: 0
+  number: 1
 
 
 requirements:
@@ -43,7 +43,7 @@ requirements:
 
   run:
     - tixi3 ==3.3.0
-    - pyqt
+    - pyqt >=5.15.7,<6.0.0
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.1
     - tbb ==2019.5
