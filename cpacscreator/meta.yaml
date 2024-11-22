@@ -43,6 +43,7 @@ requirements:
 
   run:
     - tixi3 ==3.3.0
+    - qt >=5.15.7,<6.0.0
     - pyqt >=5.15.7,<6.0.0
     - opencascade ==7.4.0
     - pythonocc-core ==7.4.1
