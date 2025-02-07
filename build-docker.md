@@ -33,7 +33,7 @@ Setup build env
 Upload tigl3 package
 
     anaconda login
-    anaconda updload tigl3
+    anaconda upload /opt/conda/conda-bld/linux-64/tigl3*
 
 
 ## Snippets
