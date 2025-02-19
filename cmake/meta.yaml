@@ -5,8 +5,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://gitlab.kitware.com/cmake/cmake/-/archive/v{{ version }}/cmake-v{{ version }}.tar.bz2
-  sha256: 5424e2961b83d659520bd83a3304d1d84aa1e6320efc8b57fa9e0a6bd433a23a
+  url: https://gitlab.kitware.com/cmake/cmake/-/archive/v{{ version }}/cmake-v{{ version }}.tar.gz
+  sha256: 66fb53a145648be56b46fa9e8ccade3a4d0dfc92e401e52ce76bdad1fea43d27
 
 build:
   number: 0
