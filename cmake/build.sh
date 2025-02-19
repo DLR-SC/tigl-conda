@@ -7,8 +7,8 @@ set -ex
 # include paths correctly.
 export CFLAGS=$(echo "$CFLAGS" |sed -e "s|-I$PREFIX/include||")
 export DEBUG_CFLAGS=$(echo "$DEBUG_CFLAGS" |sed -e "s|-I$PREFIX/include||")
-export CXXFLAGS=$(echo "$CXXFLAGS" |sed -e "s|-I$PREFIX/include||")
-export DEBUG_CXXFLAGS=$(echo "$DEBUG_CXXFLAGS" |sed -e "s|-I$PREFIX/include||")
+export CXXFLAGS=$(echo "$CXXFLAGS -D_LIBCPP_DISABLE_AVAILABILITY" |sed -e "s|-I$PREFIX/include||")
+export DEBUG_CXXFLAGS=$(echo "$DEBUG_CXXFLAGS -D_LIBCPP_DISABLE_AVAILABILITY" |sed -e "s|-I$PREFIX/include||")
 
 ./bootstrap \
              --verbose \
