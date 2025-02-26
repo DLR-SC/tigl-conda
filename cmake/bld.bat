@@ -1,6 +1,6 @@
 
-if "%ARCH%"=="32" (set CPU_ARCH=x86) else (set CPU_ARCH=x64)
-curl https://cmake.org/files/v%PKG_VERSION:~0,4%/cmake-%PKG_VERSION%-win%ARCH%-%CPU_ARCH%.zip -o cmake-win.zip
+if "%ARCH%"=="32" (set CPU_ARCH=i386) else (set CPU_ARCH=x64_64)
+curl https://github.com/Kitware/CMake/releases/download/v%PKG_VERSION%/cmake-%PKG_VERSION%-windows-%CPU_ARCH%.zip -o cmake-win.zip
 7z x cmake-win.zip > nil
 set PATH=%CD%\cmake-%PKG_VERSION%-win%ARCH%-%CPU_ARCH%\bin;%PATH%
 cmake --version
