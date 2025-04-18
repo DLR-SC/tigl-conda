@@ -121,7 +121,7 @@ def main():
         print("On branch {}.".format(active_branch))
     else:
         print ("Could not determine branch name.")
-    if not active_branch == 'master':
+    if not active_branch == 'master-daha96':
         print ("The current branch is not the master branch. Packages will not be uploaded.")
         upload_to_anaconda = False
 
@@ -131,7 +131,7 @@ def main():
     if len(modules) > 0:
         print("conda build " + " ".join(modules))
         if upload_to_anaconda:
-            conda_build.api.build(modules, user="dlr-sc", token=api_token)
+            conda_build.api.build(modules, user="d.hardt", token=api_token)
         else:
             conda_build.api.build(modules)
     else:
