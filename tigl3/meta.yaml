@@ -6,10 +6,10 @@ package:
 
 source:
   git_url: https://github.com/daha96/tigl.git
-  git_branch: 1037-fix-new-rebased3
+  git_branch: 1037-fix-new-rebased4
 
 build:
-  number: 25
+  number: 26
 
 
 requirements:
