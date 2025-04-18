@@ -15,3 +15,7 @@ See http://conda.pydata.org/docs/building/build.html for information on how to m
 # Build for Windows
 
 conda build --override-channels -c dlr-sc -c dlr-sc/label/tigl3-dev -c conda-forge tigl3 --python 3.11
+
+# Build for Linux (in VM)
+
+conda build --override-channels -c dlr-sc -c dlr-sc/label/tigl3-dev -c conda-forge tigl3 --python 3.11
