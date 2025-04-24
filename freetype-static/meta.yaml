@@ -18,7 +18,7 @@ requirements:
     - cmake
     - ninja
     - python
-    - bzip2 [linux]
+    - {{ ctd('libbz2-dev')}}  # [linux]
 
 
 about:
