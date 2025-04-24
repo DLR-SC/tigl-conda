@@ -32,7 +32,7 @@ requirements:
     - ninja
   host:
     - libglu # [linux]
-    - freetype-static ==2.6
+    - freetype-static ==2.6.5
     - freeimageplus-static ==3.18.0
     - tbb
     - tbb-devel
@@ -43,7 +43,7 @@ requirements:
   run:
     - freeimageplus-static ==3.18.0
     - tbb
-    - freetype-static ==2.6
+    - freetype-static ==2.6.5
     - six
     - rapidjson
 
