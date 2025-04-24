@@ -18,7 +18,6 @@ requirements:
     - cmake
     - ninja
     - python
-    - {{ cdt('libbz2-devel')}}  # [linux]
 
 
 about:
