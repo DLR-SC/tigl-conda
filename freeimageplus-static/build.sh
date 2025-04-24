@@ -1,12 +1,14 @@
 #!/bin/bash
 
+export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+
 # Build step 
 make -j $CPU_COUNT -f Makefile.fip libfreeimageplus.a
 
-mkdir $PREFIX/include
+mkdir -p $PREFIX/include
 cp Source/FreeImage.h $PREFIX/include
 cp Wrapper/FreeImagePlus/FreeImagePlus.h $PREFIX/include
-mkdir $PREFIX/lib
+mkdir -p $PREFIX/lib
 cp *.a $PREFIX/lib
 cd $PREFIX/lib
 ln -s libfreeimageplus.a libfreeimage.a
