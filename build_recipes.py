@@ -29,7 +29,9 @@ def sorted_packages(packages_to_build):
                    'doxygen',
                    'tbb',
                    'freeimage',
+                   'freeimageplus-static'
                    'freetype',
+                   'freetype-static',
                    'gl2ps',
                    'curl',
                    'curl-static'
@@ -42,6 +44,7 @@ def sorted_packages(packages_to_build):
                    'oce-0.16',
                    'oce-0.17',
                    'opencascade',
+                   'opencascade-static',
                    'python-occ',
                    'python-occ_0.17',
                    'python-occ-7x',
