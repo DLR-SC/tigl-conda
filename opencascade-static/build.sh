@@ -21,6 +21,7 @@ cmake -G "Ninja" .. \
       -D USE_FREEIMAGE:BOOL=ON \
       -D BUILD_LIBRARY_TYPE=Static \
       -D BUILD_RELEASE_DISABLE_EXCEPTIONS=OFF \
+      -D USE_VTK:BOOL=OFF
 
 # Build step
 cmake --build . 
