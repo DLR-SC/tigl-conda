@@ -8,7 +8,7 @@ cmake -G "Ninja" .. ^
       -D INSTALL_DIR_LAYOUT="Unix" ^
       -D BUILD_MODULE_Draw=OFF ^
       -D 3RDPARTY_DIR:FILEPATH="%LIBRARY_PREFIX%" ^
-      -D CMAKE_BUILD_TYPE="MinSizeRel" ^
+      -D CMAKE_BUILD_TYPE="Release" ^
       -D USE_TBB=ON ^
       -D USE_FREEIMAGE=ON ^
       -D BUILD_LIBRARY_TYPE=Static ^
