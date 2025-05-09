@@ -41,9 +41,7 @@ requirements:
     - fontconfig # [unix]
 
   run:
-    - freeimageplus-static ==3.18.0
     - tbb
-    - freetype-static ==2.6.5
     - six
     - rapidjson
 
