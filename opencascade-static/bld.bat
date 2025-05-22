@@ -9,6 +9,7 @@ cmake -G "Ninja" .. ^
       -D BUILD_MODULE_Draw=OFF ^
       -D 3RDPARTY_DIR:FILEPATH="%LIBRARY_PREFIX%" ^
       -D CMAKE_BUILD_TYPE="Release" ^
+      -D CMAKE_EXE_LINKER_FLAGS_RELEASE = /INCREMENTAL:NO ^
       -D USE_TBB=ON ^
       -D USE_FREEIMAGE=ON ^
       -D BUILD_LIBRARY_TYPE=Static ^
