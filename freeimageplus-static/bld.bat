@@ -1,6 +1,9 @@
 mkdir buildd
 cd buildd
 
+REM export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+set CXXFLAGS="%CXXFLAGS% -std=c++98"
+
 REM Configure step
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_BUILD_TYPE=Release ^
