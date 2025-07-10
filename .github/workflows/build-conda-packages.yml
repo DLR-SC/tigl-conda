@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         arch: ['x64']
-        os: [windows-2019, ubuntu-22.04, macos-latest]
+        os: [windows-latest, ubuntu-22.04, macos-latest]
         python: ['3.9', '3.10', '3.11', '3.12']
         exclude:
           - arch: x86
@@ -48,15 +48,6 @@ jobs:
         python-version: ${{ matrix.python }}
         channels: dlr-sc,dlr-sc/label/tigl-dev
 
-    - name: Install compiler (macos)
-      if: contains(matrix.os, 'macos')
-      shell: bash -l {0}
-      run: |
-        /usr/bin/curl -o MacOSX10.9.sdk.tar.xz -L https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
-        tar xf MacOSX10.9.sdk.tar.xz
-        sudo mv MacOSX10.9.sdk /opt/
-        ls /opt
-
     - name: Install requirements (ubuntu, macos)
       if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
       shell: bash -l {0}
@@ -82,6 +73,10 @@ jobs:
       run: |
         python --version
         python build_recipes.py
+
+    - name: setup MSVC
+      if: contains(matrix.os, 'windows')
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: build conda packages
       if: contains(matrix.os, 'windows')
