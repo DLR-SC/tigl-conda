@@ -1,5 +1,5 @@
-CONDA_BUILD_SYSROOT:
-  - /opt/MacOSX10.9.sdk       # [osx]
+MACOSX_SDK_VERSION:
+  - '10.14'                   # [osx]
   
 c_compiler:
  - vs2015                     # [win]
