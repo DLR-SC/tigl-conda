@@ -12,10 +12,7 @@ source:
     - installlinux.patch [linux]
 
 build:
-  number: 3
-  script_env:
-    - CFLAGS = "-D FREEIMAGE_LIB"
-    - CXXFLAGS = "-D FREEIMAGE_LIB"
+  number: 4
 
 requirements:
   build:
