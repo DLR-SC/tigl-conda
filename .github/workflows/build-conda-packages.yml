@@ -74,6 +74,10 @@ jobs:
         python --version
         python build_recipes.py
 
+    - name: setup MSVC
+      if: contains(matrix.os, 'windows')
+      uses: ilammy/msvc-dev-cmd@v1
+
     - name: build conda packages
       if: contains(matrix.os, 'windows')
       shell: cmd /C call {0}
