@@ -57,10 +57,6 @@ jobs:
         conda list
         echo $PATH
 
-    - name: Set up MSVC environment
-      if: contains(matrix.os, 'windows')
-      uses: ilammy/msvc-dev-cmd@v1
-
     - name: Install requirements (windows)
       if: contains(matrix.os, 'windows')
       shell: cmd /C call {0}
