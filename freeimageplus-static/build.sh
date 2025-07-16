@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export CFLAGS="${CFLAGS} -D_LARGEFILE64_SOURCE=1"
 export CXXFLAGS="$CXXFLAGS -std=gnu++98"
 
 # Build step 
