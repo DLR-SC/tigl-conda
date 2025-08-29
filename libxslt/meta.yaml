@@ -17,9 +17,13 @@ requirements:
     - {{ compiler('c') }}
     - gnuconfig  # [unix]
     - pkg-config  # [not win]
+    - make # [not win]
+
+  host:
+   - libxml2 ==2.14.5
 
   run:
-    - libxml2
+    - libxml2 ==2.14.5
 
 about:
   home: http://xmlsoft.org/XSLT/
