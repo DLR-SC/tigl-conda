@@ -7,8 +7,6 @@ package:
 source:
   fn: libxslt-{{ version }}.tar.gz
   url: https://download.gnome.org/sources/libxslt/1.1/libxslt-{{ version }}.tar.xz
-  patches:
-   - fixmemcpy.patch
 
 
 build:
