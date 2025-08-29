@@ -3,9 +3,11 @@ MACOSX_SDK_VERSION:
   
 c_compiler:
  - vs2019                     # [win]
+ - clang_bootstrap            # [osx]
  
 cxx_compiler:
  - vs2019                     # [win]
+ - clang_bootstrap            # [osx]
 
 cxx_compiler_version:
  - 9.3.0                     # [linux]
