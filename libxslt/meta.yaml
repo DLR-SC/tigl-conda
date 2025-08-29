@@ -16,9 +16,7 @@ build:
 
 requirements:
   build:
-    - python
-    - libxml2
-    - gcc               [linux]
+    - {{ compiler('c') }}
 
   run:
     - libxml2
