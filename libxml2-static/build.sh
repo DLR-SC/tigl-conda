@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export CFLAGS="-fPIC $CFLAGS"
-export CXXFLAGS="-fPIC $CXXFLAGS"
-./configure --without-zlib --without-lzma --enable-shared=no --without-python --without-iconv --prefix=$PREFIX
+export CFLAGS="-fPIC $CFLAGS -O2 -fno-semantic-interposition"
+export CXXFLAGS="-fPIC $CXXFLAGS -O2 -fno-semantic-interposition"
+./autogen.sh  --without-zlib --without-lzma --without-python --without-iconv --prefix=$PREFIX --enable-shared=no 
 make -j $CPU_COUNT
 make install
 
