@@ -12,7 +12,10 @@ build:
 
 requirements:
   build:
+    - autoconf          # [osx]
     - automake          # [osx]
+    - libtool           # [osx]
+    - pkg-config        # [osx]
     - {{ compiler('c') }}
 
 about:
