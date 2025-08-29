@@ -1,6 +1,11 @@
 #!/bin/bash
 
-./configure --without-zlib --without-lzma --without-python --prefix=$PREFIX
+export CFLAGS="-fPIC $CFLAGS -O2 -fno-semantic-interposition"
+export CXXFLAGS="-fPIC $CXXFLAGS -O2 -fno-semantic-interposition"
+./autogen.sh  --without-zlib --without-lzma --without-python --prefix=$PREFIX
 make -j $CPU_COUNT
 make install
+
+# remove xml binaries
+rm $PREFIX/bin/xmlcatalog $PREFIX/bin/xmllint
 
