@@ -1,4 +1,4 @@
-{% set version = "1.1.29" %}
+{% set version = "1.1.43" %}
 
 package:
   name: libxslt-static
@@ -17,10 +17,10 @@ requirements:
     - {{ compiler('c') }}
 
   host:
-    - libxml2-static ==2.9.3
+    - libxml2-static ==2.14.5
 
   run:
-    - libxml2-static ==2.9.3
+    - libxml2-static ==2.14.5
 
 about:
   home: http://xmlsoft.org/XSLT/
