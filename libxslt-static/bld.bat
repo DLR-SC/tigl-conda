@@ -1,18 +1,23 @@
-cd win32
+mkdir build 
+cd build
 
-cscript configure.js iconv=no prefix="%LIBRARY_PREFIX%" lib="%LIBRARY_PREFIX%"\lib include="%LIBRARY_PREFIX%"\include\libxml2
+cmake .. ^
+ -DBUILD_SHARED_LIBS=OFF ^
+ -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% % ^
+ -DCMAKE_C_FLAGS="/MD /O2 /fno-semantic-interposition" ^
+ -DCMAKE_CXX_FLAGS="/MD /O2 /fno-semantic-interposition" ^
+ -DLIBXSLT_WITH_CRYPTO=OFF ^
+ -DLIBXSLT_WITH_PYTHON=OFF ^
+ -DLIBXSLT_WITH_TESTS=OFF
 if errorlevel 1 exit 1
 
-REM define LIBXML_STATIC to avoid linking against libxml2.dll
-set CFLAGS=/D LIBXML_STATIC
-set CXXFLAGS=/D LIBXML_STATIC
 
 REM Build step 
-nmake
+cmake --build . --config Release
 if errorlevel 1 exit 1
 
 REM Install step
-nmake install
+cmake --install . --config Release
 if errorlevel 1 exit 1
 
 REM Remove test runners
