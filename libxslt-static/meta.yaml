@@ -16,8 +16,8 @@ requirements:
   build:
     - {{ compiler('c') }}
     - gnuconfig  # [unix]
-    - pkg-config  # [not win]
-    - make # [not win]
+    - pkg-config  # [osx]
+    - make # [osx]
 
   host:
     - libxml2-static ==2.14.5
