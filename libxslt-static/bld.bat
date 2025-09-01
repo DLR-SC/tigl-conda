@@ -7,7 +7,8 @@ cmake .. ^
  -DLIBXSLT_WITH_CRYPTO=OFF ^
  -DLIBXSLT_WITH_PYTHON=OFF ^
  -DLIBXSLT_WITH_TESTS=OFF ^
- -DLIBXSLT_WITH_PROGRAMS=OFF
+ -DLIBXSLT_WITH_PROGRAMS=OFF ^
+ -DLIBXSLT_WITH_PROFILER=OFF
 if errorlevel 1 exit 1
 
 
@@ -16,7 +17,8 @@ cmake --build . --config Release
 if errorlevel 1 exit 1
 
 REM Install step
-cmake --install . --config Release
+cmake --install . --config Release --component Development
+cmake --install . --config Release --component Runtime
 if errorlevel 1 exit 1
 
 REM Remove test runners
