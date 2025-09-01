@@ -24,10 +24,6 @@ REM Install step
 cmake --install . --config Release
 if errorlevel 1 exit 1
 
-REM Rename libxml2s.lib to libxml2.lib
-rename "%LIBRARY_PREFIX%\lib\libxml2s.lib" "libxml2.lib"
-if errorlevel 1 exit 1
-
 REM Remove test runners
 del "%LIBRARY_PREFIX%"\bin\run*.exe /F /Q
 del "%LIBRARY_PREFIX%"\bin\test*.exe /F /Q
