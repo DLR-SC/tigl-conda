@@ -1,5 +1,8 @@
 cd win32
 
+REM define LIBXML_STATIC to avoid linking against libxml2.dll
+set CFLAGS=/D LIBXML_STATIC
+set CXXFLAGS=/D LIBXML_STATIC
 
 cscript configure.js iconv=no prefix="%LIBRARY_PREFIX%" lib="%LIBRARY_PREFIX%"\lib include="%LIBRARY_PREFIX%"\include\libxml2
 if errorlevel 1 exit 1
