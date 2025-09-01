@@ -1,8 +1,13 @@
 mkdir build 
 cd build
 
+REM define LIBXML_STATIC to avoid linking against libxml2.dll
+set CFLAGS=/D LIBXML_STATIC
+set CXXFLAGS=/D LIBXML_STATIC
+
 cmake .. ^
  -DBUILD_SHARED_LIBS=OFF ^
+ -DLIBXML_STATIC=ON ^
  -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% % ^
  -DCMAKE_C_FLAGS="/MD /O2 /fno-semantic-interposition" ^
  -DCMAKE_CXX_FLAGS="/MD /O2 /fno-semantic-interposition" ^
