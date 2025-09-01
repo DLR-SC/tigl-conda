@@ -4,11 +4,10 @@ cd build
 cmake .. ^
  -DBUILD_SHARED_LIBS=OFF ^
  -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% % ^
- -DCMAKE_C_FLAGS="/MD /O2 /fno-semantic-interposition" ^
- -DCMAKE_CXX_FLAGS="/MD /O2 /fno-semantic-interposition" ^
  -DLIBXSLT_WITH_CRYPTO=OFF ^
  -DLIBXSLT_WITH_PYTHON=OFF ^
- -DLIBXSLT_WITH_TESTS=OFF
+ -DLIBXSLT_WITH_TESTS=OFF ^
+ -DLIBXSLT_WITH_PROGRAMS=OFF
 if errorlevel 1 exit 1
 
 
