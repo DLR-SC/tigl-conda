@@ -1,29 +1,29 @@
+{% set version = "1.1.43" %}
+
 package:
   name: libxslt
-  version: 1.1.29
+  version: {{ version }}
 
 source:
-  fn: libxslt-1.1.29.tar.gz
-  url: ftp://xmlsoft.org/libxslt/libxslt-1.1.29.tar.gz
-  patches:
-   - fixmemcpy.patch
+  fn: libxslt-{{ version }}.tar.gz
+  url: https://download.gnome.org/sources/libxslt/1.1/libxslt-{{ version }}.tar.xz
 
 
 build:
-  number: 2
-  features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+  number: 0
 
 requirements:
   build:
-    - python
-    - libxml2
-    - gcc               [linux]
+    - {{ compiler('c') }}
+    - gnuconfig  # [unix]
+    - pkg-config  # [osx]
+    - make # [osx]
+
+  host:
+   - libxml2 ==2.14.5
 
   run:
-    - libxml2
+    - libxml2 ==2.14.5
 
 about:
   home: http://xmlsoft.org/XSLT/
