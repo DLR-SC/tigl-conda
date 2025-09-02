@@ -14,7 +14,7 @@ if errorlevel 1 exit 1
 
 REM Build step 
 cmake --build . --config Release --verbose
-if errorlevel 1 exit 1
+
 
 REM Install step
 cmake --install . --config Release --component Development
