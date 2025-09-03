@@ -4,7 +4,7 @@ package:
 
 source:
   fn: new-bundle.zip [win]
-  url: https://github.com/joergbrech/oce-win-bundle/archive/refs/heads/master.zip [win]
+  url: https://github.com/QbProg/oce-win-bundle/archive/qb/new-bundle.zip [win]
   fn: FreeImage3180.zip [unix]
   url: http://downloads.sourceforge.net/freeimage/FreeImage3180.zip [unix]
   patches:
