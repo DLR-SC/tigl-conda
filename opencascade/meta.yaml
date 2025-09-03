@@ -10,6 +10,7 @@ source:
   url: http://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h={{ commit }};sf=tgz
   sha256: 9f7285acdfe63754955dfba1114010d5f273ac2be189c9717c4228bb28fd675f
   patches:
+    - fix-invalid-conversion.patch # https://github.com/Open-Cascade-SAS/OCCT/discussions/48
     - fix-private-linking.patch
     - dlr-feature-coons_c2.patch
 
