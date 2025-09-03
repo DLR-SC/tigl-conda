@@ -11,6 +11,7 @@ source:
     - installdir.patch   [win]
     - installlinux.patch [linux]
     - fix-fp_h-not-found.patch [osx]
+    - fix-macos-macros.patch [osx]
 
 build:
   number: 5
