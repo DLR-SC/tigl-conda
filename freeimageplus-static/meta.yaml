@@ -10,6 +10,7 @@ source:
   patches:
     - installdir.patch   [win]
     - installlinux.patch [linux]
+    - fix-fp_h-not-found.patch [osx]
 
 build:
   number: 5
