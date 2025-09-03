@@ -2,23 +2,23 @@ mkdir build
 cd build
 
 REM Configure step
-cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+cmake -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_BUILD_TYPE=Release ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DBUILD_SHARED_LIBS=ON ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
- -DLIBXML2_LIBRARY="%LIBRARY_PREFIX%\lib\libxml2_a.lib" ^
- -DLIBXSLT_LIBRARIES="%LIBRARY_PREFIX%\lib\libxslt_a.lib" ^
+ -DLIBXML2_LIBRARY="%LIBRARY_PREFIX%\lib\libxml2s.lib" ^
+ -DLIBXSLT_LIBRARIES="%LIBRARY_PREFIX%\lib\libxslts.lib" ^
  -DTIXI_ENABLE_FORTRAN=ON ^
  ..
 if errorlevel 1 exit 1
 
 REM Build step 
-nmake
+cmake --build . --config Release --verbose
 if errorlevel 1 exit 1
 
 REM Install step
-nmake install
+cmake --install . --config Release
 if errorlevel 1 exit 1
 
 REM install python packages
