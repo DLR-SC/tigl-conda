@@ -13,9 +13,10 @@ source:
     - fix-invalid-conversion.patch # https://github.com/Open-Cascade-SAS/OCCT/discussions/48
     - fix-private-linking.patch
     - dlr-feature-coons_c2.patch
+    - oceonly-freeimage_staticlib_support.patch
 
 build:
-  number: 6
+  number: 7
   detect_binary_files_with_prefix: True
 
 requirements:
