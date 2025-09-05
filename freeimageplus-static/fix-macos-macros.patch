@@ -1,0 +1,21 @@
+--- FreeImage/Source/ZLib/zutil.h	2025-09-03 23:07:14.482371200 +0200
++++ FreeImage/Source/ZLib/zutil_fix.h	2025-09-04 00:00:10.434996000 +0200
+@@ -130,17 +130,8 @@
+ #  endif
+ #endif
+ 
+-#if defined(MACOS) || defined(TARGET_OS_MAC)
++#if defined(MACOS)
+ #  define OS_CODE  7
+-#  ifndef Z_SOLO
+-#    if defined(__MWERKS__) && __dest_os != __be_os && __dest_os != __win32_os
+-#      include <unix.h> /* for fdopen */
+-#    else
+-#      ifndef fdopen
+-#        define fdopen(fd,mode) NULL /* No fdopen() */
+-#      endif
+-#    endif
+-#  endif
+ #endif
+ 
+ #ifdef __acorn

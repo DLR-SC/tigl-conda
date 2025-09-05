@@ -1,4 +1,4 @@
-{% set version = "3.3.0" %}
+{% set version = "3.3.1" %}
 
 package:
   name: tixi3
@@ -7,12 +7,12 @@ package:
 source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
-  md5: 0553639fd6ab2c797f4945c22e94b377
+  md5: d4e76a0bbc79445016bec8470833b0c3
   patches:
     - disabled-fortran-example.patch
 
 build:
-  number: 6
+  number: 0
 
 requirements:
   build:
@@ -24,8 +24,8 @@ requirements:
   host:
     - python {{ python }}
     - curl-static ==7.50.3
-    - libxml2-static ==2.9.3
-    - libxslt-static ==1.1.29
+    - libxml2-static ==2.14.5
+    - libxslt-static ==1.1.43
 
   run:
     - python
