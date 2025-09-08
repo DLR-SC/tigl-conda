@@ -24,17 +24,17 @@ requirements:
     - doxygen
 
   host:
-    - tixi3 ==3.3.0
-    - opencascade ==7.4.0
-    - pythonocc-core ==7.4.1
+    - tixi3 ==3.3.1
+    - opencascade ==7.6.2
+    - pythonocc-core ==7.6.2
     - tbb-devel ==2019.5
     - python {{ python }}
 
   run:
-    - tixi3 ==3.3.0
+    - tixi3 ==3.3.1
     - pyqt
-    - opencascade ==7.4.0
-    - pythonocc-core ==7.4.1
+    - opencascade ==7.6.2
+    - pythonocc-core ==7.6.2
     - tbb ==2019.5
     - python
 
@@ -48,3 +48,4 @@ about:
   home: https://github.com/DLR-SC/tigl
   license: Apache 2.0
   summary: The TiGL Geometry Library to process aircraft geometries in pre-design
+
