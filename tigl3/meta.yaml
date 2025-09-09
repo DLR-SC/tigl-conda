@@ -7,6 +7,8 @@ package:
 source:
   git_url: https://github.com/DLR-SC/tigl.git
   git_tag: v{{ version }}
+  patches:
+    - conda-prefix.patch
 
 build:
   number: 0
