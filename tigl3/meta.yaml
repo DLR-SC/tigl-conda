@@ -2,7 +2,7 @@
 
 package:
   name: tigl3
-  version: {{ version }}
+  version: 3.5.0rc1 #TODO: Change back to {{ version }} (- not allowed in version string)
 
 source:
   git_url: https://github.com/DLR-SC/tigl.git
