@@ -38,7 +38,7 @@ requirements:
     - pythonocc-core ==7.6.2
     - tbb-devel ==2019.5
     - python {{ python }}
-    - libglu
+    - libglu                            # [linux]
     - qt ==5.15.7
 
   run:
