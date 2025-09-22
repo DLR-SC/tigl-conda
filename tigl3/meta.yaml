@@ -1,4 +1,4 @@
-{% set version = "3.4.1" %}
+{% set version = "3.5.0-rc1" %}
 
 package:
   name: tigl3
