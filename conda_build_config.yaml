@@ -5,12 +5,12 @@ MACOSX_DEPLOYMENT_TARGET:
   - '15.0'                   # [osx]  
 
 c_compiler:
- - vs2022                     # [win]
+ - vs2019                     # [win]
  - clang_bootstrap            # [osx]
  
 cxx_compiler:
- - vs2022                     # [win]
+ - vs2019                     # [win]
  - clang_bootstrap            # [osx]
 
 cxx_compiler_version:
- - 14                     # [linux]
+ - 9.3.0                     # [linux]
