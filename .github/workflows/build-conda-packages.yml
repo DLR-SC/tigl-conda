@@ -18,7 +18,7 @@ jobs:
       matrix:
         arch: ['x64']
         os: [windows-2022, ubuntu-22.04, macos-15]
-        python: ['3.9', '3.10', '3.11', '3.12']
+        python: ['3.10', '3.11', '3.12', '3.13']
         exclude:
           - arch: x86
             os: macos-latest
