@@ -46,7 +46,7 @@ jobs:
         miniconda-version: 'latest'
         architecture: ${{ matrix.arch }}
         python-version: ${{ matrix.python }}
-        channels: dlr-sc,dlr-sc/label/tigl-dev
+        channels: dlr-sc,dlr-sc/label/tigl-dev,conda-forge
 
     - name: Install requirements (ubuntu, macos)
       if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
