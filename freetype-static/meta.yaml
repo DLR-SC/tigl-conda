@@ -6,8 +6,8 @@ package:
 
 source:
   fn: freetype-{{ version }}.tar.gz
-  url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
-  md5: 6a386964e18ba28cb93370e57a19031b
+  url: https://sourceforge.net/projects/freetype/files/freetype2/{{ version }}/freetype-{{ version }}.tar.gz/download
+  md5: d8c8b0c3a6d4c7ed4c90e1a8c7171887
 
 build:
   number: 5
