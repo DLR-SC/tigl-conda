@@ -1,6 +1,7 @@
 from git import Repo
 import os
 import conda_build.api
+from conda_build.config import Config
 
 def split_dir_parts(path):
     allparts = []
@@ -131,12 +132,18 @@ def main():
     modules = get_changed_recipes()
     modules = sorted_packages(modules)
 
+    # Define the channels explicitly
+    channels = ['dlr-sc', 'conda-forge']
+
+    # Create a custom config object with the desired channels
+    config = Config(channels=channels)
+
     if len(modules) > 0:
         print("conda build " + " ".join(modules))
         if upload_to_anaconda:
-            conda_build.api.build(modules, user="dlr-sc", token=api_token)
+            conda_build.api.build(modules, config=config, user="dlr-sc", token=api_token)
         else:
-            conda_build.api.build(modules)
+            conda_build.api.build(modules, config=config)
     else:
         print("No packages changed. Nothing to be built.")
 
