@@ -1,11 +1,11 @@
 package:
   name: freetype
-  version: 2.14.1
+  version: 2.6.5
 
 source:
-  fn: freetype-2.14.1.tar.gz
-  url: https://sourceforge.net/projects/freetype/files/freetype2/2.14.1/freetype-2.14.1.tar.gz/download
-  md5: d8c8b0c3a6d4c7ed4c90e1a8c7171887
+  fn: freetype-2.6.5.tar.bz2
+  url: https://sourceforge.net/projects/freetype/files/freetype2/2.6.5/freetype-2.6.5.tar.bz2/download
+  md5: 6a386964e18ba28cb93370e57a19031b
 
 build:
   number: 0
