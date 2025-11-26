@@ -1,3 +1,7 @@
+channels:
+  - dlr-sc
+  - conda-forge
+
 MACOSX_SDK_VERSION:
   - '15.0'                   # [osx]
 
