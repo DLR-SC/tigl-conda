@@ -53,7 +53,7 @@ jobs:
       shell: bash -l {0}
       run: |
         sudo apt-get update && sudo apt-get install -y build-essential
-        conda install -y conda-build==25.7.0 gitpython anaconda-client mesa-dri-drivers-cos6-x86_64
+        conda install -y conda-build gitpython anaconda-client mesa-dri-drivers-cos6-x86_64
         conda info -a
         conda list
         echo $PATH
