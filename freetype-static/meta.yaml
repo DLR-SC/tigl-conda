@@ -1,4 +1,4 @@
-{% set version = "2.6.5" %}
+{% set version = "2.14.1" %}
 
 package:
   name: freetype-static
@@ -6,7 +6,7 @@ package:
 
 source:
   fn: freetype-{{ version }}.tar.gz
-  url: https://download-mirror.savannah.gnu.org/releases/freetype/freetype-old/freetype-{{ version }}.tar.bz2
+  url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
   md5: 6a386964e18ba28cb93370e57a19031b
 
 build:
