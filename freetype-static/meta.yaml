@@ -8,6 +8,8 @@ source:
   fn: freetype-{{ version }}.tar.bz2
   url: https://sourceforge.net/projects/freetype/files/freetype2/{{ version }}/freetype-{{ version }}.tar.bz2/download
   md5: 6a386964e18ba28cb93370e57a19031b
+  patches:
+    - zconf.patch   [osx]
 
 build:
   number: 5
