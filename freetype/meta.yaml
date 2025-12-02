@@ -16,7 +16,6 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - ninja
-    - brotli
 
 
 about:
