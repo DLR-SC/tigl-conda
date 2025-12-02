@@ -5,21 +5,17 @@ package:
   version: {{ version }}
 
 source:
-  fn: freetype-{{ version }}.tar.bz2
-  url: https://sourceforge.net/projects/freetype/files/freetype2/{{ version }}/freetype-{{ version }}.tar.bz2/download
-  md5: 6a386964e18ba28cb93370e57a19031b
-  patches:
-    - zconf.patch   [osx]
+  url: https://download.savannah.gnu.org/releases/freetype/freetype-{{ version }}.tar.gz
+  sha256: 174d9e53402e1bf9ec7277e22ec199ba3e55a6be2c0740cb18c0ee9850fc8c34
 
 build:
-  number: 5
+  number: 0
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - cmake <4.0
+    - {{ stdlib("c") }}
     - ninja
-    - python
 
 
 about:
