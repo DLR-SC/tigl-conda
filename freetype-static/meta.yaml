@@ -1,4 +1,4 @@
-{% set version = "2.6.5" %}
+{% set version = "2.14.1" %}
 
 package:
   name: freetype-static
