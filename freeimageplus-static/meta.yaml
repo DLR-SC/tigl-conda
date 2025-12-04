@@ -12,6 +12,7 @@ source:
     - installlinux.patch [linux]
     - fix-fp_h-not-found.patch [osx]
     - fix-macos-macros.patch [osx]
+    - Imath_dynamic_exceptions.patch
 
 build:
   number: 6

@@ -10,6 +10,7 @@ source:
   patches:
     - installdir.patch   [win]
     - installlinux.patch [linux]
+    - Imath_dynamic_exceptions.patch
 
 build:
   number: 3
