@@ -10,7 +10,7 @@ source:
   patches:
     - installdir.patch   [win]
     - installlinux.patch [linux]
-    - Imath_dynamic_exceptions.patch [unix]
+    - OpenEXR-C++17.patch [unix]
 
 build:
   number: 3
