@@ -1,0 +1,36 @@
+diff -ru --ignore-all-space a/Source/FreeImage/PluginRAW.cpp b/Source/FreeImage/PluginRAW.cpp
+--- a/Source/FreeImage/PluginRAW.cpp	2023-01-22 18:26:33.813178243 -0500
++++ b/Source/FreeImage/PluginRAW.cpp	2023-01-22 18:27:45.240175107 -0500
+@@ -694,7 +694,7 @@
+ 		// --------------------------------------------
+ 
+ 		// (-s [0..N-1]) Select one raw image from input file
+-		RawProcessor->imgdata.params.shot_select = 0;
++		RawProcessor->imgdata.rawparams.shot_select = 0;
+ 		// (-w) Use camera white balance, if possible (otherwise, fallback to auto_wb)
+ 		RawProcessor->imgdata.params.use_camera_wb = 1;
+ 		// (-M) Use any color matrix from the camera metadata. This option only affects Olympus, Leaf, and Phase One cameras.
+diff -ru --ignore-all-space a/Source/LibRawLite/internal/var_defines.h b/Source/LibRawLite/internal/var_defines.h
+--- a/Source/LibRawLite/internal/var_defines.h	2023-01-22 18:26:33.825177335 -0500
++++ b/Source/LibRawLite/internal/var_defines.h	2023-01-22 18:27:10.190532894 -0500
+@@ -102,7 +102,7 @@
+ #define aber            (imgdata.params.aber)
+ #define gamm            (imgdata.params.gamm)
+ #define user_mul        (imgdata.params.user_mul)
+-#define shot_select     (imgdata.params.shot_select)
++#define shot_select     (imgdata.rawparams.shot_select)
+ #define bright          (imgdata.params.bright)
+ #define threshold       (imgdata.params.threshold)
+ #define half_size       (imgdata.params.half_size)
+diff -ru --ignore-all-space a/Source/LibRawLite/src/libraw_cxx.cpp b/Source/LibRawLite/src/libraw_cxx.cpp
+--- a/Source/LibRawLite/src/libraw_cxx.cpp	2023-01-22 18:26:33.825177335 -0500
++++ b/Source/LibRawLite/src/libraw_cxx.cpp	2023-01-22 18:27:32.876986189 -0500
+@@ -2963,7 +2963,7 @@
+ {
+   int base_offset = 0;
+   int row_size = imgdata.sizes.raw_width * 2; // in bytes
+-  if (imgdata.idata.raw_count == 2 && imgdata.params.shot_select)
++  if (imgdata.idata.raw_count == 2 && imgdata.rawparams.shot_select)
+   {
+     libraw_internal_data.internal_data.input->seek(-row_size, SEEK_CUR);
+     base_offset = row_size; // in bytes

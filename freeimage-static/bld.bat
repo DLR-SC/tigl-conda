@@ -30,7 +30,7 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
       -DCMAKE_INSTALL_LIBDIR=lib ^
-      -DBUILD_SHARED_LIBS=ON ^
+      -DBUILD_SHARED_LIBS=OFF ^
       -DCMAKE_BUILD_TYPE=Release ^
       -G "Ninja" ^
       ..

@@ -17,8 +17,8 @@ jobs:
       fail-fast: false
       matrix:
         arch: ['x64']
-        os: [windows-2022, ubuntu-22.04, macos-13]
-        python: ['3.9', '3.10', '3.11', '3.12']
+        os: [windows-2022, ubuntu-22.04, macos-15]
+        python: ['3.10', '3.11', '3.12', '3.13']
         exclude:
           - arch: x86
             os: macos-latest
@@ -46,7 +46,7 @@ jobs:
         miniconda-version: 'latest'
         architecture: ${{ matrix.arch }}
         python-version: ${{ matrix.python }}
-        channels: dlr-sc,dlr-sc/label/tigl-dev
+        channels: dlr-sc,dlr-sc/label/tigl-dev,conda-forge
 
     - name: Install requirements (ubuntu, macos)
       if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
