@@ -13,6 +13,7 @@ source:
     - fix-fp_h-not-found.patch [osx]
     - fix-macos-macros.patch [osx]
     - OpenEXR-C++17.patch [unix]
+    - LibRawLite-autoptr.patch [osx]
 
 build:
   number: 6

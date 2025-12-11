@@ -2,7 +2,7 @@
 
 # The following CFFLAGS are required on macOS for FreeImage to build correctly. Note that this may not be the cleanest solution, but it works.
 export CFLAGS="${CFLAGS} -D_LARGEFILE64_SOURCE=1 -Wno-error=implicit-function-declaration"
-export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+export CXXFLAGS="$CXXFLAGS -std=gnu++98" # seems to be ignored on macos?
 
 # Build step 
 make -j $CPU_COUNT -f Makefile.fip libfreeimageplus.a

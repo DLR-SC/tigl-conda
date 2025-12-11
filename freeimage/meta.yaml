@@ -11,6 +11,7 @@ source:
     - installdir.patch   [win]
     - installlinux.patch [linux]
     - OpenEXR-C++17.patch [unix]
+    - LibRawLite-autoptr.patch [osx]
 
 build:
   number: 3
