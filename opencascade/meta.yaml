@@ -15,7 +15,7 @@ source:
     - dlr-feature-coons_c2.patch
 
 build:
-  number: 0
+  number: 1
   detect_binary_files_with_prefix: True
 
 requirements:
@@ -32,7 +32,7 @@ requirements:
     - ninja
   host:
     - libglu # [linux]
-    - freeimageplus
+    - freeimage
     - tbb ==2019.5
     - tbb-devel ==2019.5
     - python
@@ -41,7 +41,7 @@ requirements:
     - fontconfig # [unix]
 
   run:
-    - freeimageplus
+    - freeimage
     - tbb ==2019.5
     - freetype
     - six
