@@ -1,5 +1,5 @@
 {% set version = "3.18.0" %}
-{% set name = 'freeimage' %}
+{% set name = 'freeimage-static' %}
 
 package:
     name: {{ name }}
@@ -63,15 +63,11 @@ requirements:
 
 test:
   commands:
-    - test -f $PREFIX/lib/libfreeimage${SHLIB_EXT}  # [linux]
-    - test -f $PREFIX/lib/libfreeimage${SHLIB_EXT}.{{ version.split('.')[0] }}  # [linux]
-    - test -f $PREFIX/lib/libfreeimage.{{ version.split('.')[0] }}${SHLIB_EXT}  # [osx]
-    - test -f $PREFIX/lib/libfreeimage-{{ version }}${SHLIB_EXT}  # [unix]
+    #TODO test existence of FreeImage.a?
     - test -f $PREFIX/include/FreeImage.h  # [unix]
     # The FreeImage name (camelcase in Windows) is for backward compatibility
     - if not exist %PREFIX%\\Library\\include\\FreeImage.h (exit 1)  # [win]
     - if not exist %PREFIX%\\Library\\lib\\FreeImage.lib (exit 1)  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\FreeImage.dll (exit 1)  # [win]
 about:
   home: http://freeimage.sourceforge.net/
   license: GPL-2.0-or-later OR GPL-3.0-or-later OR FreeImage
