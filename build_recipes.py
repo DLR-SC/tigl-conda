@@ -29,7 +29,7 @@ def sorted_packages(packages_to_build):
                    'doxygen',
                    'tbb',
                    'freeimage',
-                   'freeimageplus-static'
+                   'freeimage-static'
                    'freetype',
                    'freetype-static',
                    'gl2ps',

@@ -1,0 +1,26 @@
+diff --git a/Source/FreeImage/NNQuantizer.cpp b/Source/FreeImage/NNQuantizer.cpp
+index f907c41..bb17a02 100644
+--- a/Source/FreeImage/NNQuantizer.cpp
++++ b/Source/FreeImage/NNQuantizer.cpp
+@@ -272,7 +272,7 @@ int NNQuantizer::contest(int b, int g, int r) {
+ 		*f++ -= betafreq;
+ 		*p++ += (betafreq << gammashift);
+ 	}
+-	freq[bestpos] += beta;
++	freq[bestpos] += nnbeta;
+ 	bias[bestpos] -= betagamma;
+ 	return bestbiaspos;
+ }
+diff --git a/Source/Quantizers.h b/Source/Quantizers.h
+index 7591c9b..83468d0 100644
+--- a/Source/Quantizers.h
++++ b/Source/Quantizers.h
+@@ -111,7 +111,7 @@ static const int gammashift = 10;
+ // static const int gamma = (((int)1) << gammashift);
+ /// beta = 1 / 1024
+ static const int betashift = 10;
+-static const int beta = (intbias >> betashift);
++static const int nnbeta = (intbias >> betashift);
+ static const int betagamma = (intbias << (gammashift-betashift));
+ //@}
+ 

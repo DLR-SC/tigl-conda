@@ -1,0 +1,912 @@
+diff --git a/Makefile.fip b/Makefile.fip
+index b59c419..d6afcc4 100644
+--- a/Makefile.fip
++++ b/Makefile.fip
+@@ -17,20 +17,22 @@ MODULES = $(SRCS:.c=.o)
+ MODULES := $(MODULES:.cpp=.o)
+ CFLAGS ?= -O3 -fPIC -fexceptions -fvisibility=hidden
+ # OpenJPEG
+-CFLAGS += -DOPJ_STATIC
++override CFLAGS += -DOPJ_STATIC
+ # LibRaw
+-CFLAGS += -DNO_LCMS
++override CFLAGS += -DNO_LCMS
+ # LibJXR
+-CFLAGS += -DDISABLE_PERF_MEASUREMENT -D__ANSI__
+-CFLAGS += $(INCLUDE)
++override CFLAGS += -DDISABLE_PERF_MEASUREMENT -D__ANSI__
++override CFLAGS += $(INCLUDE)
+ CXXFLAGS ?= -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
+ # LibJXR
+-CXXFLAGS += -D__ANSI__
+-CXXFLAGS += $(INCLUDE)
++override CXXFLAGS += -D__ANSI__
++override CXXFLAGS += $(INCLUDE)
++LDFLAGS ?=
++override LDFLAGS += -LDist -lfreeimage-$(VER_MAJOR).$(VER_MINOR)
+ 
+ ifeq ($(shell sh -c 'uname -m 2>/dev/null || echo not'),x86_64)
+-	CFLAGS += -fPIC
+-	CXXFLAGS += -fPIC
++	override CFLAGS += -fPIC
++	override CXXFLAGS += -fPIC
+ endif
+ 
+ TARGET  = freeimageplus
+@@ -68,14 +70,14 @@ $(STATICLIB): $(MODULES)
+ 	$(AR) r $@ $(MODULES)
+ 
+ $(SHAREDLIB): $(MODULES)
+-	$(CC) -s -shared -Wl,-soname,$(VERLIBNAME) $(LDFLAGS) -o $@ $(MODULES) $(LIBRARIES)
++	$(CC) -shared -Wl,-soname,$(VERLIBNAME) $(LDFLAGS) -o $@ $(MODULES) $(LIBRARIES)
+ 
+ install:
+ 	install -d $(INCDIR) $(INSTALLDIR)
+-	install -m 644 -o root -g root $(HEADER) $(INCDIR)
+-	install -m 644 -o root -g root $(HEADERFIP) $(INCDIR)
+-	install -m 644 -o root -g root $(STATICLIB) $(INSTALLDIR)
+-	install -m 755 -o root -g root $(SHAREDLIB) $(INSTALLDIR)
++	install -m 644 $(HEADER) $(INCDIR)
++	install -m 644 $(HEADERFIP) $(INCDIR)
++	install -m 644 $(STATICLIB) $(INSTALLDIR)
++	install -m 755 $(SHAREDLIB) $(INSTALLDIR)
+ 	ln -sf $(SHAREDLIB) $(INSTALLDIR)/$(VERLIBNAME)
+ 	ln -sf $(VERLIBNAME) $(INSTALLDIR)/$(LIBNAME)	
+ 
+diff --git a/Makefile.gnu b/Makefile.gnu
+index 92f6358..55f52be 100644
+--- a/Makefile.gnu
++++ b/Makefile.gnu
+@@ -11,26 +11,14 @@ INSTALLDIR ?= $(DESTDIR)/usr/lib
+ # Converts cr/lf to just lf
+ DOS2UNIX = dos2unix
+ 
+-LIBRARIES = -lstdc++
++LIBRARIES = -lstdc++ -ljpeg -ljpegxr -ljxrglue $(shell pkg-config --libs OpenEXR libopenjp2 libraw libpng libtiff-4 libwebp libwebpmux zlib)
+ 
+ MODULES = $(SRCS:.c=.o)
+ MODULES := $(MODULES:.cpp=.o)
+ CFLAGS ?= -O3 -fPIC -fexceptions -fvisibility=hidden
+-# OpenJPEG
+-CFLAGS += -DOPJ_STATIC
+-# LibRaw
+-CFLAGS += -DNO_LCMS
+-# LibJXR
+-CFLAGS += -DDISABLE_PERF_MEASUREMENT -D__ANSI__
+-CFLAGS += $(INCLUDE)
+-CXXFLAGS ?= -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
+-# LibJXR
+-CXXFLAGS += -D__ANSI__
+-CXXFLAGS += $(INCLUDE)
+-
++override CFLAGS += $(INCLUDE) -D__ANSI__ -I$(PREFIX)/include/jxrlib $(shell pkg-config --cflags OpenEXR libopenjp2 libraw libpng libtiff-4 libwebp libwebpmux zlib)
+ ifeq ($(shell sh -c 'uname -m 2>/dev/null || echo not'),x86_64)
+-	CFLAGS += -fPIC
+-	CXXFLAGS += -fPIC
++	override CFLAGS += -fPIC
+ endif
+ 
+ TARGET  = freeimage
+@@ -61,19 +49,19 @@ FreeImage: $(STATICLIB) $(SHAREDLIB)
+ 	$(CC) $(CFLAGS) -c $< -o $@
+ 
+ .cpp.o:
+-	$(CXX) $(CXXFLAGS) -c $< -o $@
++	$(CXX) $(CFLAGS) -c $< -o $@
+ 
+ $(STATICLIB): $(MODULES)
+ 	$(AR) r $@ $(MODULES)
+ 
+ $(SHAREDLIB): $(MODULES)
+-	$(CC) -s -shared -Wl,-soname,$(VERLIBNAME) $(LDFLAGS) -o $@ $(MODULES) $(LIBRARIES)
++	$(CC) -shared -Wl,-soname,$(VERLIBNAME) $(LDFLAGS) -o $@ $(MODULES) $(LIBRARIES)
+ 
+ install:
+ 	install -d $(INCDIR) $(INSTALLDIR)
+-	install -m 644 -o root -g root $(HEADER) $(INCDIR)
+-	install -m 644 -o root -g root $(STATICLIB) $(INSTALLDIR)
+-	install -m 755 -o root -g root $(SHAREDLIB) $(INSTALLDIR)
++	install -m 644 $(HEADER) $(INCDIR)
++	install -m 644 $(STATICLIB) $(INSTALLDIR)
++	install -m 755 $(SHAREDLIB) $(INSTALLDIR)
+ 	ln -sf $(SHAREDLIB) $(INSTALLDIR)/$(VERLIBNAME)
+ 	ln -sf $(VERLIBNAME) $(INSTALLDIR)/$(LIBNAME)	
+ #	ldconfig
+diff --git a/Makefile.osx b/Makefile.osx
+index c39121d..ce7d449 100644
+--- a/Makefile.osx
++++ b/Makefile.osx
+@@ -15,19 +15,19 @@ CC_X86_64 = $(shell xcrun -find clang)
+ CPP_I386 = $(shell xcrun -find clang++)
+ CPP_X86_64 = $(shell xcrun -find clang++)
+ MACOSX_DEPLOY = -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET)
+-COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__
++COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DDISABLE_PERF_MEASUREMENT
+ COMPILERFLAGS_I386 = -arch i386
+ COMPILERFLAGS_X86_64 = -arch x86_64
+ COMPILERPPFLAGS = -Wno-ctor-dtor-privacy -D__ANSI__ -std=c++11 -stdlib=libc++ -Wc++11-narrowing
+ INCLUDE +=
+ INCLUDE_I386 = -isysroot $(MACOSX_SYSROOT)
+ INCLUDE_X86_64 = -isysroot $(MACOSX_SYSROOT)
+-CFLAGS_I386 = $(COMPILERFLAGS) $(COMPILERFLAGS_I386) $(INCLUDE) $(INCLUDE_I386) $(MACOSX_DEPLOY)
+-CFLAGS_X86_64 = $(COMPILERFLAGS) $(COMPILERFLAGS_X86_64) $(INCLUDE) $(INCLUDE_X86_64) $(MACOSX_DEPLOY)
++CFLAGS_I386 = $(COMPILERFLAGS) $(COMPILERFLAGS_I386) $(INCLUDE) $(INCLUDE_I386) $(MACOSX_DEPLOY) -I"${PREFIX}/include/jxrlib" $(shell pkg-config --cflags OpenEXR libopenjp2 libraw libpng libtiff-4 libwebp libwebpmux zlib)
++CFLAGS_X86_64 = $(COMPILERFLAGS) $(COMPILERFLAGS_X86_64) $(INCLUDE) $(INCLUDE_X86_64) $(MACOSX_DEPLOY) -I"${PREFIX}/include/jxrlib" $(shell pkg-config --cflags OpenEXR libopenjp2 libraw libpng libtiff-4 libwebp libwebpmux zlib)
+ CPPFLAGS_I386 = $(COMPILERPPFLAGS) $(CFLAGS_I386)
+ CPPFLAGS_X86_64 = $(COMPILERPPFLAGS) $(CFLAGS_X86_64)
+-LIBRARIES_I386 = $(MACOSX_DEPLOY) -Wl,-syslibroot $(MACOSX_SYSROOT)
+-LIBRARIES_X86_64 = $(MACOSX_DEPLOY) -Wl,-syslibroot $(MACOSX_SYSROOT)
++LIBRARIES_I386 = $(MACOSX_DEPLOY) -Wl,-syslibroot $(MACOSX_SYSROOT) -L"${PREFIX}/lib" -ljpeg -ljpegxr -ljxrglue $(shell pkg-config --libs OpenEXR libopenjp2 libraw libpng libtiff-4 libwebp libwebpmux zlib)
++LIBRARIES_X86_64 = $(MACOSX_DEPLOY) -Wl,-syslibroot $(MACOSX_SYSROOT) -L"${PREFIX}/lib" -ljpeg -ljpegxr -ljxrglue $(shell pkg-config --libs OpenEXR libopenjp2 libraw libpng libtiff-4 libwebp libwebpmux zlib)
+ LIBTOOL = libtool
+ LIPO = lipo
+ 
+@@ -43,7 +43,6 @@ MODULES_X86_64 = $(SRCS:.c=.o-x86_64)
+ MODULES_I386 := $(MODULES_I386:.cpp=.o-i386)
+ MODULES_X86_64 := $(MODULES_X86_64:.cpp=.o-x86_64)
+ 
+-PREFIX = /usr/local
+ INSTALLDIR = $(PREFIX)/lib
+ INCDIR = $(PREFIX)/include
+ 
+@@ -53,28 +52,28 @@ all: dist
+ 
+ # ONLY STATIC AND 64 BIT // START ---
+ 
+-dist: FreeImage
+-	cp *.a Dist
+-	cp Source/FreeImage.h Dist
++# dist: FreeImage
++# 	cp *.a Dist
++# 	cp Source/FreeImage.h Dist
+ 
+-FreeImage: $(STATICLIB)
++# FreeImage: $(STATICLIB)
+ 
+-$(STATICLIB): $(STATICLIB)-x86_64
+-	cp -p $(STATICLIB)-x86_64 $(STATICLIB)
++# $(STATICLIB): $(STATICLIB)-x86_64
++# 	cp -p $(STATICLIB)-x86_64 $(STATICLIB)
+ 
+ # --- END
+ 
+ # STATIC AND DYNAMIC 32 and 64 BIT // START ---
+ 
+-#dist: FreeImage
+-#	cp *.a Dist
+-#	cp *.dylib Dist
+-#	cp Source/FreeImage.h Dist
++dist: FreeImage
++	cp *.a Dist
++	cp *.dylib Dist
++	cp Source/FreeImage.h Dist
+ 
+-# FreeImage: $(STATICLIB) $(SHAREDLIB )
++FreeImage: $(STATICLIB) $(SHAREDLIB)
+ 
+-#$(STATICLIB): $(STATICLIB)-i386 $(STATICLIB)-x86_64
+-#	$(LIPO) -create $(STATICLIB)-i386 $(STATICLIB)-x86_64 -output $(STATICLIB)
++$(STATICLIB): $(STATICLIB)-x86_64
++	$(LIPO) -create $(STATICLIB)-x86_64 -output $(STATICLIB)
+ 
+ # --- END
+ 
+@@ -84,14 +83,14 @@ $(STATICLIB)-i386: $(MODULES_I386)
+ $(STATICLIB)-x86_64: $(MODULES_X86_64)
+ 	$(LIBTOOL) -arch_only x86_64 -o $@ $(MODULES_X86_64)
+ 
+-$(SHAREDLIB): $(SHAREDLIB)-i386 $(SHAREDLIB)-x86_64
+-	$(LIPO) -create $(SHAREDLIB)-i386 $(SHAREDLIB)-x86_64 -output $(SHAREDLIB)
++$(SHAREDLIB): $(SHAREDLIB)-x86_64
++	$(LIPO) -create $(SHAREDLIB)-x86_64 -output $(SHAREDLIB)
+ 
+ $(SHAREDLIB)-i386: $(MODULES_I386)
+-	$(CPP_I386) -arch i386 -dynamiclib $(LIBRARIES_I386) -o $@ $(MODULES_I386)
++	$(CPP_I386) -arch i386 -dynamiclib -o $@ $(MODULES_I386) $(LIBRARIES_I386)
+ 
+ $(SHAREDLIB)-x86_64: $(MODULES_X86_64)
+-	$(CPP_X86_64) -arch x86_64 -dynamiclib $(LIBRARIES_X86_64) -o $@ $(MODULES_X86_64)
++	$(CPP_X86_64) -arch x86_64 -dynamiclib -o $@ $(MODULES_X86_64) $(LIBRARIES_X86_64)
+ 
+ .c.o-i386:
+ 	$(CC_I386) $(CFLAGS_I386) -c $< -o $@
+@@ -106,11 +105,11 @@ $(SHAREDLIB)-x86_64: $(MODULES_X86_64)
+ 	$(CPP_X86_64) $(CPPFLAGS_X86_64) -c $< -o $@
+ 
+ install:
+-	install -d -m 755 -o root -g wheel $(INCDIR) $(INSTALLDIR)
+-	install -m 644 -o root -g wheel $(HEADER) $(INCDIR)
+-	install -m 644 -o root -g wheel $(SHAREDLIB) $(STATICLIB) $(INSTALLDIR)
++	install -d -m 755 $(INCDIR) $(INSTALLDIR)
++	install -m 644 $(HEADER) $(INCDIR)
++	install -m 644 $(SHAREDLIB) $(STATICLIB) $(INSTALLDIR)
+ 	ranlib -sf $(INSTALLDIR)/$(STATICLIB)
+ 	ln -sf $(SHAREDLIB) $(INSTALLDIR)/$(LIBNAME)
+ 
+ clean:
+-	rm -f core Dist/*.* u2dtmp* $(MODULES_I386) $(MODULES_X86_64) $(STATICLIB) $(STATICLIB)-i386 $(SHAREDLIB) $(SHAREDLIB)-i386 $(SHAREDLIB)-x86_64
++	rm -f core Dist/*.* u2dtmp* $(MODULES_I386) $(MODULES_X86_64) $(STATICLIB) $(STATICLIB)-i386 $(SHAREDLIB) $(SHAREDLIB)-i386 $(SHAREDLIB)-x86_64
+\ No newline at end of file
+diff --git a/Makefile.solaris b/Makefile.solaris
+index 303c2fc..29ff526 100644
+--- a/Makefile.solaris
++++ b/Makefile.solaris
+@@ -57,9 +57,9 @@ $(SHAREDLIB): $(MODULES)
+ 	$(CC) -s -G -Wl,-soname=$(LIBNAME) -o $@ $(MODULES) $(LIBRARIES)
+ 
+ install:
+-	install -m 644 -o root -g root Source/FreeImage.h $(INSTALLDIR)/include
+-	install -m 644 -o root -g root $(STATICLIB) $(INSTALLDIR)/lib
+-	install -m 755 -o root -g root $(SHAREDLIB) $(INSTALLDIR)/lib
++	install -m 644 Source/FreeImage.h $(INSTALLDIR)/include
++	install -m 644 $(STATICLIB) $(INSTALLDIR)/lib
++	install -m 755 $(SHAREDLIB) $(INSTALLDIR)/lib
+ 	ln -sf $(SHAREDLIB) $(INSTALLDIR)/lib/$(LIBNAME)
+ 
+ clean:
+diff --git a/Source/FreeImage.h b/Source/FreeImage.h
+index 12182cd..45d7696 100644
+--- a/Source/FreeImage.h
++++ b/Source/FreeImage.h
+@@ -155,8 +155,11 @@ typedef uint8_t BYTE;
+ typedef uint16_t WORD;
+ typedef uint32_t DWORD;
+ typedef int32_t LONG;
++// Disable these, they conflict with the (wrong) ones of libraw
++#if 0
+ typedef int64_t INT64;
+ typedef uint64_t UINT64;
++#endif
+ #else
+ // MS is not C99 ISO compliant
+ typedef long BOOL;
+@@ -410,7 +413,12 @@ FI_ENUM(FREE_IMAGE_FORMAT) {
+ 	FIF_DDS		= 24,
+ 	FIF_GIF     = 25,
+ 	FIF_HDR		= 26,
+-	FIF_FAXG3	= 27,
++/* The G3 fax format plugin is deliberately disabled in the Fedora build of
++   FreeImage as it requires that FreeImage uses a private copy of libtiff
++   which is a no no because of security reasons. */
++#if 0
++ 	FIF_FAXG3	= 27,
++#endif
+ 	FIF_SGI		= 28,
+ 	FIF_EXR		= 29,
+ 	FIF_J2K		= 30,
+@@ -473,6 +481,10 @@ FI_ENUM(FREE_IMAGE_DITHER) {
+ 	FID_BAYER16x16	= 6		//! Bayer ordered dispersed dot dithering (order 4 dithering matrix)
+ };
+ 
++/* The FreeImage_JPEGTransform functions are deliberately disabled in the
++   Fedora build of FreeImage as they require that FreeImage uses a private copy
++   of libjpeg which is a no no because of security reasons. */
++#if 0
+ /** Lossless JPEG transformations
+ Constants used in FreeImage_JPEGTransform
+ */
+@@ -486,6 +498,7 @@ FI_ENUM(FREE_IMAGE_JPEG_OPERATION) {
+ 	FIJPEG_OP_ROTATE_180	= 6,	//! 180-degree rotation
+ 	FIJPEG_OP_ROTATE_270	= 7		//! 270-degree clockwise (or 90 ccw)
+ };
++#endif
+ 
+ /** Tone mapping operators.
+ Constants used in FreeImage_ToneMapping.
+@@ -1088,7 +1101,10 @@ DLL_API const char* DLL_CALLCONV FreeImage_TagToString(FREE_IMAGE_MDMODEL model,
+ // --------------------------------------------------------------------------
+ // JPEG lossless transformation routines
+ // --------------------------------------------------------------------------
+-
++/* The FreeImage_JPEGTransform functions are deliberately disabled in the
+++   Fedora build of FreeImage as they require that FreeImage uses a private copy
+++   of libjpeg which is a no no because of security reasons. */
++#if 0
+ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGTransform(const char *src_file, const char *dst_file, FREE_IMAGE_JPEG_OPERATION operation, BOOL perfect FI_DEFAULT(TRUE));
+ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGTransformU(const wchar_t *src_file, const wchar_t *dst_file, FREE_IMAGE_JPEG_OPERATION operation, BOOL perfect FI_DEFAULT(TRUE));
+ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGCrop(const char *src_file, const char *dst_file, int left, int top, int right, int bottom);
+@@ -1097,6 +1113,7 @@ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGTransformFromHandle(FreeImageIO* src_io,
+ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGTransformCombined(const char *src_file, const char *dst_file, FREE_IMAGE_JPEG_OPERATION operation, int* left, int* top, int* right, int* bottom, BOOL perfect FI_DEFAULT(TRUE));
+ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGTransformCombinedU(const wchar_t *src_file, const wchar_t *dst_file, FREE_IMAGE_JPEG_OPERATION operation, int* left, int* top, int* right, int* bottom, BOOL perfect FI_DEFAULT(TRUE));
+ DLL_API BOOL DLL_CALLCONV FreeImage_JPEGTransformCombinedFromMemory(FIMEMORY* src_stream, FIMEMORY* dst_stream, FREE_IMAGE_JPEG_OPERATION operation, int* left, int* top, int* right, int* bottom, BOOL perfect FI_DEFAULT(TRUE));
++#endif
+ 
+ 
+ // --------------------------------------------------------------------------
+diff --git a/Source/FreeImage/J2KHelper.cpp b/Source/FreeImage/J2KHelper.cpp
+index 1776c3b..538f1c5 100644
+--- a/Source/FreeImage/J2KHelper.cpp
++++ b/Source/FreeImage/J2KHelper.cpp
+@@ -21,7 +21,7 @@
+ 
+ #include "FreeImage.h"
+ #include "Utilities.h"
+-#include "../LibOpenJPEG/openjpeg.h"
++#include <openjpeg.h>
+ #include "J2KHelper.h"
+ 
+ // --------------------------------------------------------------------------
+diff --git a/Source/FreeImage/PSDParser.cpp b/Source/FreeImage/PSDParser.cpp
+index 5865216..fc7e2a8 100644
+--- a/Source/FreeImage/PSDParser.cpp
++++ b/Source/FreeImage/PSDParser.cpp
+@@ -133,8 +133,8 @@ public:
+ template <>
+ class PSDGetValue<8> {
+ public:
+-	static inline UINT64 get(const BYTE * iprBuffer) {
+-		UINT64 v = ((const UINT64*)iprBuffer)[0];
++	static inline uint64_t get(const BYTE * iprBuffer) {
++		uint64_t v = ((const uint64_t*)iprBuffer)[0];
+ #ifndef FREEIMAGE_BIGENDIAN
+ 		SwapInt64(&v);
+ #endif
+@@ -147,7 +147,7 @@ public:
+ 
+ // --------------------------------------------------------------------------
+ 
+-static UINT64
++static uint64_t
+ psdReadSize(FreeImageIO *io, fi_handle handle, const psdHeaderInfo& header) {
+ 	if(header._Version == 1) {
+ 		BYTE Length[4];
+@@ -199,11 +199,11 @@ public:
+ template <>
+ class PSDSetValue<8> {
+ public:
+-	static inline void set(const BYTE * iprBuffer, UINT64 v) {
++	static inline void set(const BYTE * iprBuffer, uint64_t v) {
+ #ifndef FREEIMAGE_BIGENDIAN
+ 		SwapInt64(&v);
+ #endif
+-		((UINT64*)iprBuffer)[0] = v;
++		((uint64_t*)iprBuffer)[0] = v;
+ 	}
+ };
+ 
+@@ -213,7 +213,7 @@ public:
+ // --------------------------------------------------------------------------
+ 
+ static inline bool
+-psdWriteSize(FreeImageIO *io, fi_handle handle, const psdHeaderInfo& header, UINT64 v) {
++psdWriteSize(FreeImageIO *io, fi_handle handle, const psdHeaderInfo& header, uint64_t v) {
+ 	if(header._Version == 1) {
+ 		BYTE Length[4];
+ 		psdSetLongValue(Length, sizeof(Length), (DWORD)v);
+@@ -1063,10 +1063,10 @@ unsigned psdParser::GetChannelOffset(FIBITMAP* bitmap, unsigned c) const {
+ bool psdParser::ReadLayerAndMaskInfoSection(FreeImageIO *io, fi_handle handle)	{
+ 	bool bSuccess = true;
+ 
+-	UINT64 nTotalBytes = psdReadSize(io, handle, _headerInfo);
++	uint64_t nTotalBytes = psdReadSize(io, handle, _headerInfo);
+ 
+ 	// Hack to handle large PSB files without using fseeko().
+-	if (sizeof(long) < sizeof(UINT64)) {
++	if (sizeof(long) < sizeof(uint64_t)) {
+ 		const long offset = 0x10000000;
+ 		while (nTotalBytes > offset) {
+ 			if (io->seek_proc(handle, offset, SEEK_CUR) != 0) {
+@@ -1672,7 +1672,7 @@ bool psdParser::WriteLayerAndMaskInfoSection(FreeImageIO *io, fi_handle handle)
+ 	// Short section with no layers.
+ 	BYTE IntValue[4];
+ 
+-	UINT64 size;
++	uint64_t size;
+ 	if(_headerInfo._Version == 1) {
+ 		size = 8;
+ 	} else {
+diff --git a/Source/FreeImage/Plugin.cpp b/Source/FreeImage/Plugin.cpp
+index 11e7294..c32e88d 100644
+--- a/Source/FreeImage/Plugin.cpp
++++ b/Source/FreeImage/Plugin.cpp
+@@ -263,7 +263,12 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
+ 			s_plugins->AddNode(InitDDS);
+ 	        s_plugins->AddNode(InitGIF);
+ 	        s_plugins->AddNode(InitHDR);
+-			s_plugins->AddNode(InitG3);
++/* The G3 fax format plugin is deliberately disabled in the Fedora build of
++   FreeImage as it requires that FreeImage uses a private copy of libtiff
++   which is a no no because of security reasons. */
++#if 0
++ 			s_plugins->AddNode(InitG3);
++#endif
+ 			s_plugins->AddNode(InitSGI);
+ 			s_plugins->AddNode(InitEXR);
+ 			s_plugins->AddNode(InitJ2K);
+diff --git a/Source/FreeImage/PluginEXR.cpp b/Source/FreeImage/PluginEXR.cpp
+index b286430..9bf3ada 100644
+--- a/Source/FreeImage/PluginEXR.cpp
++++ b/Source/FreeImage/PluginEXR.cpp
+@@ -28,16 +28,16 @@
+ #pragma warning (disable : 4800) // ImfVersion.h - 'const int' : forcing value to bool 'true' or 'false' (performance warning)
+ #endif 
+ 
+-#include "../OpenEXR/IlmImf/ImfIO.h"
+-#include "../OpenEXR/Iex/Iex.h"
+-#include "../OpenEXR/IlmImf/ImfOutputFile.h"
+-#include "../OpenEXR/IlmImf/ImfInputFile.h"
+-#include "../OpenEXR/IlmImf/ImfRgbaFile.h"
+-#include "../OpenEXR/IlmImf/ImfChannelList.h"
+-#include "../OpenEXR/IlmImf/ImfRgba.h"
+-#include "../OpenEXR/IlmImf/ImfArray.h"
+-#include "../OpenEXR/IlmImf/ImfPreviewImage.h"
+-#include "../OpenEXR/Half/half.h"
++#include <OpenEXR/ImfIO.h>
++#include <OpenEXR/Iex.h>
++#include <OpenEXR/ImfOutputFile.h>
++#include <OpenEXR/ImfInputFile.h>
++#include <OpenEXR/ImfRgbaFile.h>
++#include <OpenEXR/ImfChannelList.h>
++#include <OpenEXR/ImfRgba.h>
++#include <OpenEXR/ImfArray.h>
++#include <OpenEXR/ImfPreviewImage.h>
++#include <OpenEXR/half.h>
+ 
+ 
+ // ==========================================================
+diff --git a/Source/FreeImage/PluginJ2K.cpp b/Source/FreeImage/PluginJ2K.cpp
+index b8bcfc8..621a903 100644
+--- a/Source/FreeImage/PluginJ2K.cpp
++++ b/Source/FreeImage/PluginJ2K.cpp
+@@ -21,7 +21,7 @@
+ 
+ #include "FreeImage.h"
+ #include "Utilities.h"
+-#include "../LibOpenJPEG/openjpeg.h"
++#include <openjpeg.h>
+ #include "J2KHelper.h"
+ 
+ // ==========================================================
+diff --git a/Source/FreeImage/PluginJP2.cpp b/Source/FreeImage/PluginJP2.cpp
+index 742fe2c..c57f626 100644
+--- a/Source/FreeImage/PluginJP2.cpp
++++ b/Source/FreeImage/PluginJP2.cpp
+@@ -21,7 +21,7 @@
+ 
+ #include "FreeImage.h"
+ #include "Utilities.h"
+-#include "../LibOpenJPEG/openjpeg.h"
++#include <openjpeg.h>
+ #include "J2KHelper.h"
+ 
+ // ==========================================================
+diff --git a/Source/FreeImage/PluginJPEG.cpp b/Source/FreeImage/PluginJPEG.cpp
+index 8db177d..80af4a8 100644
+--- a/Source/FreeImage/PluginJPEG.cpp
++++ b/Source/FreeImage/PluginJPEG.cpp
+@@ -30,21 +30,35 @@
+ #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
+ #endif
+ 
+-extern "C" {
+-#define XMD_H
+-#undef FAR
+-#include <setjmp.h>
+-
+-#include "../LibJPEG/jinclude.h"
+-#include "../LibJPEG/jpeglib.h"
+-#include "../LibJPEG/jerror.h"
+-}
+-
+ #include "FreeImage.h"
+ #include "Utilities.h"
+ 
+ #include "../Metadata/FreeImageTag.h"
+ 
++#include <stdio.h>
++#include <setjmp.h>
++
++#ifdef FAR
++#undef FAR
++#endif
++
++// including jpeglib.h seems to be a little messy
++extern "C" {
++// jpeglib.h->jmorecfg.h tries to typedef int boolean; but this conflicts with
++// some Windows headers that may or may not have been included
++#ifdef HAVE_BOOLEAN
++#  undef HAVE_BOOLEAN
++#endif
++#define boolean jboolean
++
++#define XMD_H           // shut JPEGlib up
++#include <jpeglib.h>
++#include <jerror.h>
++
++#ifdef const
++#  undef const          // remove crazy C hackery in jconfig.h
++#endif
++}
+ 
+ // ==========================================================
+ // Plugin Interface
+@@ -503,7 +517,7 @@ marker_is_icc(jpeg_saved_marker_ptr marker) {
+   return FALSE.  You might want to issue an error message instead.
+ */
+ static BOOL 
+-jpeg_read_icc_profile(j_decompress_ptr cinfo, JOCTET **icc_data_ptr, unsigned *icc_data_len) {
++jpeg_read_icc_profile_(j_decompress_ptr cinfo, JOCTET **icc_data_ptr, unsigned *icc_data_len) {
+ 	jpeg_saved_marker_ptr marker;
+ 	int num_markers = 0;
+ 	int seq_no;
+@@ -745,7 +759,7 @@ read_markers(j_decompress_ptr cinfo, FIBITMAP *dib) {
+ 	BYTE *icc_profile = NULL;
+ 	unsigned icc_length = 0;
+ 
+-	if( jpeg_read_icc_profile(cinfo, &icc_profile, &icc_length) ) {
++	if( jpeg_read_icc_profile_(cinfo, &icc_profile, &icc_length) ) {
+ 		// copy ICC profile data
+ 		FreeImage_CreateICCProfile(dib, icc_profile, icc_length);
+ 		// clean up
+@@ -785,7 +799,7 @@ jpeg_write_comment(j_compress_ptr cinfo, FIBITMAP *dib) {
+ 	Write JPEG_APP2 marker (ICC profile)
+ */
+ static BOOL 
+-jpeg_write_icc_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
++jpeg_write_icc_profile_(j_compress_ptr cinfo, FIBITMAP *dib) {
+     // marker identifying string "ICC_PROFILE" (null-terminated)
+ 	BYTE icc_signature[12] = { 0x49, 0x43, 0x43, 0x5F, 0x50, 0x52, 0x4F, 0x46, 0x49, 0x4C, 0x45, 0x00 };
+ 
+@@ -1038,7 +1052,7 @@ write_markers(j_compress_ptr cinfo, FIBITMAP *dib) {
+ 	jpeg_write_comment(cinfo, dib);
+ 
+ 	// write ICC profile
+-	jpeg_write_icc_profile(cinfo, dib);
++	jpeg_write_icc_profile_(cinfo, dib);
+ 
+ 	// write IPTC profile
+ 	jpeg_write_iptc_profile(cinfo, dib);
+diff --git a/Source/FreeImage/PluginJXR.cpp b/Source/FreeImage/PluginJXR.cpp
+index 0e14e09..3e9fb87 100644
+--- a/Source/FreeImage/PluginJXR.cpp
++++ b/Source/FreeImage/PluginJXR.cpp
+@@ -23,7 +23,7 @@
+ #include "Utilities.h"
+ #include "../Metadata/FreeImageTag.h"
+ 
+-#include "../LibJXR/jxrgluelib/JXRGlue.h"
++#include <JXRGlue.h>
+ 
+ // ==========================================================
+ // Plugin Interface
+diff --git a/Source/FreeImage/PluginPNG.cpp b/Source/FreeImage/PluginPNG.cpp
+index 661f160..504fafe 100644
+--- a/Source/FreeImage/PluginPNG.cpp
++++ b/Source/FreeImage/PluginPNG.cpp
+@@ -40,8 +40,8 @@
+ 
+ // ----------------------------------------------------------
+ 
+-#include "../ZLib/zlib.h"
+-#include "../LibPNG/png.h"
++#include <zlib.h>
++#include <png.h>
+ 
+ // ----------------------------------------------------------
+ 
+diff --git a/Source/FreeImage/PluginRAW.cpp b/Source/FreeImage/PluginRAW.cpp
+index e9bd5bf..c7f8758 100644
+--- a/Source/FreeImage/PluginRAW.cpp
++++ b/Source/FreeImage/PluginRAW.cpp
+@@ -19,7 +19,7 @@
+ // Use at your own risk!
+ // ==========================================================
+ 
+-#include "../LibRawLite/libraw/libraw.h"
++#include <libraw/libraw.h>
+ 
+ #include "FreeImage.h"
+ #include "Utilities.h"
+diff --git a/Source/FreeImage/PluginTIFF.cpp b/Source/FreeImage/PluginTIFF.cpp
+index 67fab0b..cf4ecee 100644
+--- a/Source/FreeImage/PluginTIFF.cpp
++++ b/Source/FreeImage/PluginTIFF.cpp
+@@ -37,9 +37,9 @@
+ 
+ #include "FreeImage.h"
+ #include "Utilities.h"
+-#include "../LibTIFF4/tiffiop.h"
++#include <tiffio.h>
+ #include "../Metadata/FreeImageTag.h"
+-#include "../OpenEXR/Half/half.h"
++#include <OpenEXR/half.h>
+ 
+ #include "FreeImageIO.h"
+ #include "PSDParser.h"
+@@ -193,17 +193,6 @@ TIFFFdOpen(thandle_t handle, const char *name, const char *mode) {
+ 
+ 	return tif;
+ }
+-
+-/**
+-Open a TIFF file for reading or writing
+-@param name
+-@param mode
+-*/
+-TIFF*
+-TIFFOpen(const char* name, const char* mode) {
+-	return 0;
+-}
+-
+ // ----------------------------------------------------------
+ //   TIFF library FreeImage-specific routines.
+ // ----------------------------------------------------------
+diff --git a/Source/FreeImage/PluginWebP.cpp b/Source/FreeImage/PluginWebP.cpp
+index 7c9f62f..c401447 100644
+--- a/Source/FreeImage/PluginWebP.cpp
++++ b/Source/FreeImage/PluginWebP.cpp
+@@ -24,9 +24,9 @@
+ 
+ #include "../Metadata/FreeImageTag.h"
+ 
+-#include "../LibWebP/src/webp/decode.h"
+-#include "../LibWebP/src/webp/encode.h"
+-#include "../LibWebP/src/webp/mux.h"
++#include <webp/decode.h>
++#include <webp/encode.h>
++#include <webp/mux.h>
+ 
+ // ==========================================================
+ // Plugin Interface
+diff --git a/Source/FreeImage/ZLibInterface.cpp b/Source/FreeImage/ZLibInterface.cpp
+index 3ab6d32..1a90904 100644
+--- a/Source/FreeImage/ZLibInterface.cpp
++++ b/Source/FreeImage/ZLibInterface.cpp
+@@ -19,10 +19,9 @@
+ // Use at your own risk!
+ // ==========================================================
+ 
+-#include "../ZLib/zlib.h"
++#include <zlib.h>
+ #include "FreeImage.h"
+ #include "Utilities.h"
+-#include "../ZLib/zutil.h"	/* must be the last header because of error C3163 in VS2008 (_vsnprintf defined in stdio.h) */
+ 
+ /**
+ Compresses a source buffer into a target buffer, using the ZLib library. 
+@@ -115,7 +114,7 @@ FreeImage_ZLibGZip(BYTE *target, DWORD target_size, BYTE *source, DWORD source_s
+ 			return 0;
+         case Z_OK: {
+             // patch header, setup crc and length (stolen from mod_trace_output)
+-            BYTE *p = target + 8; *p++ = 2; *p = OS_CODE; // xflags, os_code
++            BYTE *p = target + 8; *p++ = 2; *p = 0x03; // xflags, os_code (unix)
+  	        crc = crc32(crc, source, source_size);
+ 	        memcpy(target + 4 + dest_len, &crc, 4);
+ 	        memcpy(target + 8 + dest_len, &source_size, 4);
+diff --git a/Source/FreeImageToolkit/JPEGTransform.cpp b/Source/FreeImageToolkit/JPEGTransform.cpp
+index 6f9ba8e..8487265 100644
+--- a/Source/FreeImageToolkit/JPEGTransform.cpp
++++ b/Source/FreeImageToolkit/JPEGTransform.cpp
+@@ -26,10 +26,10 @@ extern "C" {
+ #undef FAR
+ #include <setjmp.h>
+ 
+-#include "../LibJPEG/jinclude.h"
+-#include "../LibJPEG/jpeglib.h"
+-#include "../LibJPEG/jerror.h"
+-#include "../LibJPEG/transupp.h"
++#include <jinclude.h>
++#include <jpeglib.h>
++#include <jerror.h>
++#include <transupp.h>
+ }
+ 
+ #include "FreeImage.h"
+diff --git a/Source/Metadata/TagConversion.cpp b/Source/Metadata/TagConversion.cpp
+index bbba444..bfd57cb 100644
+--- a/Source/Metadata/TagConversion.cpp
++++ b/Source/Metadata/TagConversion.cpp
+@@ -30,6 +30,11 @@
+ 
+ #define MAX_TEXT_EXTENT	512
+ 
++// These were in FreeImage.h, but are moved here to avoid conflicts (see note in FreeImage.h)
++typedef int64_t INT64;
++typedef uint64_t UINT64;
++
++
+ /**
+ Convert a tag to a C string
+ */
+diff --git a/Source/Metadata/XTIFF.cpp b/Source/Metadata/XTIFF.cpp
+index d5be902..2ff64f7 100644
+--- a/Source/Metadata/XTIFF.cpp
++++ b/Source/Metadata/XTIFF.cpp
+@@ -29,13 +29,49 @@
+ #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
+ #endif
+ 
+-#include "../LibTIFF4/tiffiop.h"
++#include <tiffio.h>
+ 
+ #include "FreeImage.h"
+ #include "Utilities.h"
+ #include "FreeImageTag.h"
+ #include "FIRational.h"
+ 
++extern "C"
++{
++#ifndef _WIN32
++    int _TIFFDataSize(TIFFDataType type);
++#else
++    int _TIFFDataSize(TIFFDataType type)
++    {
++   	    switch (type)
++	       {
++		          case TIFF_BYTE:
++		          case TIFF_SBYTE:
++		          case TIFF_ASCII:
++		          case TIFF_UNDEFINED:
++		              return 1;
++		          case TIFF_SHORT:
++		          case TIFF_SSHORT:
++		              return 2;
++		          case TIFF_LONG:
++		          case TIFF_SLONG:
++		          case TIFF_FLOAT:
++		          case TIFF_IFD:
++		          case TIFF_RATIONAL:
++	          	case TIFF_SRATIONAL:
++		              return 4;
++		          case TIFF_DOUBLE:
++		          case TIFF_LONG8:
++		          case TIFF_SLONG8:
++		          case TIFF_IFD8:
++		              return 8;
++		          default:
++		              return 0;
++	       }
++    }
++#endif
++}
++
+ // ----------------------------------------------------------
+ //   Extended TIFF Directory GEO Tag Support
+ // ----------------------------------------------------------
+@@ -224,6 +229,33 @@ tiff_write_geotiff_profile(TIFF *tif, FIBITMAP *dib) {
+ //   TIFF EXIF tag reading & writing
+ // ----------------------------------------------------------
+ 
++static uint32 exif_tag_ids[] = {
++  EXIFTAG_EXPOSURETIME, EXIFTAG_FNUMBER, EXIFTAG_EXPOSUREPROGRAM,
++  EXIFTAG_SPECTRALSENSITIVITY, EXIFTAG_ISOSPEEDRATINGS, EXIFTAG_OECF,
++  EXIFTAG_EXIFVERSION, EXIFTAG_DATETIMEORIGINAL, EXIFTAG_DATETIMEDIGITIZED,
++  EXIFTAG_COMPONENTSCONFIGURATION, EXIFTAG_COMPRESSEDBITSPERPIXEL,
++  EXIFTAG_SHUTTERSPEEDVALUE, EXIFTAG_APERTUREVALUE,
++  EXIFTAG_BRIGHTNESSVALUE, EXIFTAG_EXPOSUREBIASVALUE,
++  EXIFTAG_MAXAPERTUREVALUE, EXIFTAG_SUBJECTDISTANCE, EXIFTAG_METERINGMODE,
++  EXIFTAG_LIGHTSOURCE, EXIFTAG_FLASH, EXIFTAG_FOCALLENGTH,
++  EXIFTAG_SUBJECTAREA, EXIFTAG_MAKERNOTE, EXIFTAG_USERCOMMENT,
++  EXIFTAG_SUBSECTIME, EXIFTAG_SUBSECTIMEORIGINAL,
++  EXIFTAG_SUBSECTIMEDIGITIZED, EXIFTAG_FLASHPIXVERSION, EXIFTAG_COLORSPACE,
++  EXIFTAG_PIXELXDIMENSION, EXIFTAG_PIXELYDIMENSION,
++  EXIFTAG_RELATEDSOUNDFILE, EXIFTAG_FLASHENERGY,
++  EXIFTAG_SPATIALFREQUENCYRESPONSE, EXIFTAG_FOCALPLANEXRESOLUTION,
++  EXIFTAG_FOCALPLANEYRESOLUTION, EXIFTAG_FOCALPLANERESOLUTIONUNIT,
++  EXIFTAG_SUBJECTLOCATION, EXIFTAG_EXPOSUREINDEX, EXIFTAG_SENSINGMETHOD,
++  EXIFTAG_FILESOURCE, EXIFTAG_SCENETYPE, EXIFTAG_CFAPATTERN,
++  EXIFTAG_CUSTOMRENDERED, EXIFTAG_EXPOSUREMODE, EXIFTAG_WHITEBALANCE,
++  EXIFTAG_DIGITALZOOMRATIO, EXIFTAG_FOCALLENGTHIN35MMFILM,
++  EXIFTAG_SCENECAPTURETYPE, EXIFTAG_GAINCONTROL, EXIFTAG_CONTRAST,
++  EXIFTAG_SATURATION, EXIFTAG_SHARPNESS, EXIFTAG_DEVICESETTINGDESCRIPTION,
++  EXIFTAG_SUBJECTDISTANCERANGE, EXIFTAG_GAINCONTROL, EXIFTAG_GAINCONTROL,
++  EXIFTAG_IMAGEUNIQUEID
++};
++static int nExifTags = sizeof(exif_tag_ids) / sizeof(exif_tag_ids[0]);
++
+ /**
+ Read a single Exif tag
+ 
+@@ -575,45 +607,11 @@ tiff_read_exif_tags(TIFF *tif, TagLib::MDMODEL md_model, FIBITMAP *dib) {
+ 
+ 	// loop over all Core Directory Tags
+ 	// ### uses private data, but there is no other way
++	// -> Fedora: Best we can do without private headers is to hard-code a list of known EXIF tags and read those
+ 	if(md_model == TagLib::EXIF_MAIN) {
+-		const TIFFDirectory *td = &tif->tif_dir;
+-
+-		uint32 lastTag = 0;	//<- used to prevent reading some tags twice (as stored in tif_fieldinfo)
+-
+-		for (int fi = 0, nfi = (int)tif->tif_nfields; nfi > 0; nfi--, fi++) {
+-			const TIFFField *fld = tif->tif_fields[fi];
+-
+-			const uint32 tag_id = TIFFFieldTag(fld);
+-
+-			if(tag_id == lastTag) {
+-				continue;
+-			}
+-
+-			// test if tag value is set
+-			// (lifted directly from LibTiff _TIFFWriteDirectory)
+-
+-			if( fld->field_bit == FIELD_CUSTOM ) {
+-				int is_set = FALSE;
+-
+-				for(int ci = 0; ci < td->td_customValueCount; ci++ ) {
+-					is_set |= (td->td_customValues[ci].info == fld);
+-				}
+-
+-				if( !is_set ) {
+-					continue;
+-				}
+-
+-			} else if(!TIFFFieldSet(tif, fld->field_bit)) {
+-				continue;
+-			}
+-
+-			// process *all* other tags (some will be ignored)
+-
+-			tiff_read_exif_tag(tif, tag_id, dib, md_model);
+-
+-			lastTag = tag_id;
++		for (int i = 0; i < nExifTags; ++i) {
++			tiff_read_exif_tag(tif, exif_tag_ids[i], dib, md_model);
+ 		}
+-
+ 	}
+ 
+ 	return TRUE;
+@@ -723,10 +721,9 @@ tiff_write_exif_tags(TIFF *tif, TagLib::MDMODEL md_model, FIBITMAP *dib) {
+ 	
+ 	TagLib& tag_lib = TagLib::instance();
+ 	
+-	for (int fi = 0, nfi = (int)tif->tif_nfields; nfi > 0; nfi--, fi++) {
+-		const TIFFField *fld = tif->tif_fields[fi];
+-		
+-		const uint32 tag_id = TIFFFieldTag(fld);
++	for (int fi = 0; fi < nExifTags; fi++) {
++		const uint32 tag_id = exif_tag_ids[fi];
++		const TIFFField *fld = TIFFFieldWithTag(tif, tag_id);
+ 
+ 		if(skip_write_field(tif, tag_id)) {
+ 			// skip tags that are already handled by the LibTIFF writing process
+diff --git a/Source/Utilities.h b/Source/Utilities.h
+index e4475d5..a93d96f 100644
+--- a/Source/Utilities.h
++++ b/Source/Utilities.h
+@@ -446,12 +446,12 @@ SwapLong(DWORD *lp) {
+ }
+  
+ inline void
+-SwapInt64(UINT64 *arg) {
++SwapInt64(uint64_t *arg) {
+ #if defined(_MSC_VER) && _MSC_VER >= 1310
+ 	*arg = _byteswap_uint64(*arg);
+ #else
+ 	union Swap {
+-		UINT64 sv;
++		uint64_t sv;
+ 		DWORD ul[2];
+ 	} tmp, result;
+ 	tmp.sv = *arg;
+diff --git a/genfipsrclist.sh b/genfipsrclist.sh
+index 84f27e0..200d117 100644
+--- a/genfipsrclist.sh
++++ b/genfipsrclist.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-DIRLIST=". Source Source/Metadata Source/FreeImageToolkit Source/LibJPEG Source/LibPNG Source/LibTIFF4 Source/ZLib Source/LibOpenJPEG Source/OpenEXR Source/OpenEXR/Half Source/OpenEXR/Iex Source/OpenEXR/IlmImf Source/OpenEXR/IlmThread Source/OpenEXR/Imath Source/OpenEXR/IexMath Source/LibRawLite Source/LibRawLite/dcraw Source/LibRawLite/internal Source/LibRawLite/libraw Source/LibRawLite/src Source/LibWebP Source/LibJXR Source/LibJXR/common/include Source/LibJXR/image/sys Source/LibJXR/jxrgluelib Wrapper/FreeImagePlus"
++DIRLIST="Wrapper/FreeImagePlus"
+ 
+ 
+ echo "VER_MAJOR = 3" > fipMakefile.srcs
+@@ -19,5 +19,6 @@ echo -n "INCLUDE =" >> fipMakefile.srcs
+ for DIR in $DIRLIST; do
+ 	echo -n " -I$DIR" >> fipMakefile.srcs
+ done
++echo -n " -IDist" >> fipMakefile.srcs
+ echo >> fipMakefile.srcs
+ 
+diff --git a/gensrclist.sh b/gensrclist.sh
+index d8f46f3..afebd91 100644
+--- a/gensrclist.sh
++++ b/gensrclist.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-DIRLIST=". Source Source/Metadata Source/FreeImageToolkit Source/LibJPEG Source/LibPNG Source/LibTIFF4 Source/ZLib Source/LibOpenJPEG Source/OpenEXR Source/OpenEXR/Half Source/OpenEXR/Iex Source/OpenEXR/IlmImf Source/OpenEXR/IlmThread Source/OpenEXR/Imath Source/OpenEXR/IexMath Source/LibRawLite Source/LibRawLite/dcraw Source/LibRawLite/internal Source/LibRawLite/libraw Source/LibRawLite/src Source/LibWebP Source/LibJXR Source/LibJXR/common/include Source/LibJXR/image/sys Source/LibJXR/jxrgluelib"
++DIRLIST=". Source Source/Metadata Source/FreeImageToolkit"
+ 
+ echo "VER_MAJOR = 3" > Makefile.srcs
+ echo "VER_MINOR = 18.0" >> Makefile.srcs
