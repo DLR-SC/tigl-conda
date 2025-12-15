@@ -6,9 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: http://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h={{ commit }};sf=tgz
-  sha256: 9f7285acdfe63754955dfba1114010d5f273ac2be189c9717c4228bb28fd675f
+  url: https://github.com/Open-Cascade-SAS/OCCT/archive/refs/tags/{{ commit }}.tar.gz
+  sha256: dea04077d71507c666aaa7ccaeacc73ab580d6572d7f75e90a1984c4c0302a7a
   patches:
     - fix-invalid-conversion.patch # https://github.com/Open-Cascade-SAS/OCCT/discussions/48
     - fix-private-linking.patch
