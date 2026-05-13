@@ -19,7 +19,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - doxygen >=1.8.10
-    - cmake   >=3.0.0
+    - cmake   >=3.16.0
 
   host:
     - python {{ python }}
