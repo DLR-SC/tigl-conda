@@ -1,4 +1,4 @@
-{% set version = "3.3.1" %}
+{% set version = "3.3.2" %}
 
 package:
   name: tixi3
@@ -7,7 +7,7 @@ package:
 source:
   fn: tixi-{{ version }}.tar.gz
   url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
-  md5: d4e76a0bbc79445016bec8470833b0c3
+  md5: 071882eb7820214e204191f6c31d4fb3
   patches:
     - disabled-fortran-example.patch
 
@@ -16,10 +16,11 @@ build:
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - doxygen >=1.8.10
-    - cmake   >=3.0.0
+    - cmake   >=3.16.0
 
   host:
     - python {{ python }}
