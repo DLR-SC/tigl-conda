@@ -18,7 +18,7 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DTIGL_BINDINGS_PYTHON_INTERNAL=ON \
  -DPython3_FIND_STRATEGY=LOCATION \
  -DPython3_FIND_FRAMEWORK=NEVER \
- -DPythonOCC_SOURCE_DIR=$PREFIX/src/pythonocc-core \
+ -DPythonOCC_SOURCE_DIR=$SRC_DIR/thirdparty/pythonocc-core \
  -DBUNDLE_APPLE=OFF \
  ..
 

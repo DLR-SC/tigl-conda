@@ -1,12 +1,18 @@
-{% set version = "3.5.0-rc1" %}
+{% set version = "3.5.0" %}
+{% set occt_version = "7.9.3" %}
 
 package:
   name: tigl3
-  version: 3.5.0rc1 #TODO: Change back to {{ version }} (- not allowed in version string)
+  version: {{ version }}
 
 source:
-  git_url: https://github.com/DLR-SC/tigl.git
-  git_tag: v{{ version }}
+  - url: https://github.com/DLR-SC/tigl/archive/v{{ version }}.tar.gz
+    sha256: 2f2161d3b623a9bb6b113ebabe23f028ba5fa3eb6d9be914b59ba2c3e0d724d7
+    patches:
+      - patches/fix-python-site-packages-detection.patch
+  - url: https://github.com/tpaviot/pythonocc-core/archive/{{ occt_version }}.tar.gz
+    sha256: a25e3d136267271abfc71b35dd4b6d0cda65964fb3a69a0b4b7712681113e9a6
+    folder: thirdparty/pythonocc-core
 
 build:
   number: 0
@@ -14,6 +20,8 @@ build:
 
 requirements:
   build:
+    - {{ stdlib("c") }}
+    - {{ compiler("c") }}
     - {{ compiler('cxx') }}
     - {{ cdt('libx11-devel') }}         # [linux]
     - {{ cdt('xorg-x11-proto-devel') }} # [linux]
@@ -27,28 +35,26 @@ requirements:
     - {{ cdt('libXdamage') }}           # [linux]
     - {{ cdt('libXfixes') }}            # [linux]
     - {{ cdt('libXxf86vm') }}           # [linux]
-    - ninja
-    - cmake
-    - swig >=3.0.11
-    - doxygen
+    - ninja >=1.10.0
+    - cmake >=3.11
+    - swig 4.4.*
+    - doxygen ==1.13.2
 
   host:
-    - tixi3 ==3.3.1
-    - opencascade ==7.6.2
-    - pythonocc-core ==7.6.2
-    - tbb-devel ==2019.5
+    - tixi ==3.3.2
+    - occt =={{ occt_version }} *novtk*
+    - pythonocc-core =={{ occt_version }} *novtk*
     - python {{ python }}
     - libglu                            # [linux]
-    - qt ==5.15.7
+    - qt ==5.15.15
 
   run:
-    - tixi3 ==3.3.1
-    - qt >=5.9.7,<6.0.0
-    - pyqt
-    - opencascade ==7.6.2
-    - pythonocc-core ==7.6.2
-    - tbb ==2019.5
+    - tixi ==3.3.2
+    - occt =={{ occt_version }} *novtk*
+    - pythonocc-core =={{ occt_version }} *novtk*
     - python {{ python }}
+    - qt ==5.15.15
+    - pyqt
 
 test:
   imports:
