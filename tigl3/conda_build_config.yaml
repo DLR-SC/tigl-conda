@@ -1,3 +1,6 @@
+cdt_name:
+ - cos7                       # [linux]
+
 cxx_compiler_version:
  - 15                        # [linux]
 

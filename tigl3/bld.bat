@@ -28,7 +28,7 @@ cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
 REM install python packages
-move %LIBRARY_PREFIX%\share\tigl3\python\tigl3 %SP_DIR%
+move "%LIBRARY_PREFIX%\Lib\site-packages\tigl3" "%SP_DIR%"
 
 REM The egg-info file is necessary because some packages,
 REM might require tigl3 in their setup.py.

@@ -29,11 +29,6 @@ ninja
 # Install step
 ninja install
 
-# install python packages
-mkdir -p $SP_DIR/tigl3
-mv $PREFIX/share/tigl3/python/tigl3/* $SP_DIR/tigl3/
-python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl3/tigl3wrapper.py libtigl3
-
 # The egg-info file is necessary because some packages
 # might require tigl3 in their setup.py.
 # See https://setuptools.readthedocs.io/en/latest/pkg_resources.html#workingset-objects
