@@ -12,7 +12,7 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DTIGL_CREATOR=ON ^
  -DTIGL_BINDINGS_PYTHON_INTERNAL=ON ^
- -DPythonOCC_SOURCE_DIR="%LIBRARY_PREFIX%"\src\pythonocc-core ^
+ -DPythonOCC_SOURCE_DIR="%SRC_DIR%\thirdparty\pythonocc-core" ^
  -DTIGL_CONCAT_GENERATED_FILES=OFF ^
  -DPython3_FIND_STRATEGY=LOCATION ^
  -DPython3_FIND_REGISTRY=NEVER ^
@@ -28,7 +28,7 @@ cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
 REM install python packages
-move %LIBRARY_PREFIX%\share\tigl3\python\tigl3 %SP_DIR%
+move "%LIBRARY_PREFIX%\Lib\site-packages\tigl3" "%SP_DIR%"
 
 REM The egg-info file is necessary because some packages,
 REM might require tigl3 in their setup.py.

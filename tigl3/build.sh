@@ -18,7 +18,7 @@ cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DTIGL_BINDINGS_PYTHON_INTERNAL=ON \
  -DPython3_FIND_STRATEGY=LOCATION \
  -DPython3_FIND_FRAMEWORK=NEVER \
- -DPythonOCC_SOURCE_DIR=$PREFIX/src/pythonocc-core \
+ -DPythonOCC_SOURCE_DIR=$SRC_DIR/thirdparty/pythonocc-core \
  -DBUNDLE_APPLE=OFF \
  ..
 
@@ -28,11 +28,6 @@ ninja
 
 # Install step
 ninja install
-
-# install python packages
-mkdir -p $SP_DIR/tigl3
-mv $PREFIX/share/tigl3/python/tigl3/* $SP_DIR/tigl3/
-python $RECIPE_DIR/fixosxload.py $SP_DIR/tigl3/tigl3wrapper.py libtigl3
 
 # The egg-info file is necessary because some packages
 # might require tigl3 in their setup.py.
