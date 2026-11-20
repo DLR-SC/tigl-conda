@@ -15,7 +15,7 @@ source:
     folder: thirdparty/pythonocc-core
 
 build:
-  number: 0
+  number: 1
 
 
 requirements:
@@ -49,6 +49,10 @@ requirements:
     - qt ==5.15.15
 
   run:
+    # depend on the dlr-sc::tixi3 metapackage (build number 1), which pulls in conda-forge::tixi.
+    # This avoids installing dlr-sc::tixi3 and conda-forge::tixi side by side,
+    # see https://github.com/DLR-SC/tigl/issues/1462
+    - tixi3 3.3.2 *_1
     - tixi ==3.3.2
     - occt =={{ occt_version }} *novtk*
     - pythonocc-core =={{ occt_version }} *novtk*

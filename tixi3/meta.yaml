@@ -1,41 +1,35 @@
 {% set version = "3.3.2" %}
 
+# tixi3 has moved to conda-forge, where it is called "tixi".
+# This is a transitional metapackage that only depends on conda-forge::tixi,
+# so that environments requesting dlr-sc::tixi3 (directly or via dlr-sc::tigl3)
+# get exactly one copy of the library. It must not be installed next to the
+# old, self-contained dlr-sc::tixi3 builds (build number 0).
+# See https://github.com/DLR-SC/tigl/issues/1462
+
 package:
   name: tixi3
   version: {{ version }}
 
-source:
-  fn: tixi-{{ version }}.tar.gz
-  url: https://github.com/DLR-SC/tixi/archive/v{{ version }}.tar.gz
-  md5: 071882eb7820214e204191f6c31d4fb3
-  patches:
-    - disabled-fortran-example.patch
-
 build:
-  number: 0
+  number: 1
+  script: {{ PYTHON }} {{ RECIPE_DIR }}/write_egg_info.py
 
 requirements:
-  build:
-    - {{ stdlib("c") }}
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - doxygen >=1.8.10
-    - cmake   >=3.16.0
-
   host:
     - python {{ python }}
-    - curl-static ==7.50.3
-    - libxml2-static ==2.14.5
-    - libxslt-static ==1.1.43
 
   run:
     - python
+    - tixi =={{ version }}
 
 test:
-    commands:
-    - tixiDemo
+  imports:
+    - tixi3.tixi3wrapper
+  commands:
+    - python -c "import importlib.metadata as m; assert m.version('tixi3') == '{{ version }}'"
 
 about:
   home: https://github.com/DLR-SC/tixi
   license: Apache 2.0
-  summary: Fast and simple XML interface library
+  summary: Transitional package for conda-forge::tixi (Fast and simple XML interface library)
